@@ -1,0 +1,34 @@
+//
+//  pchFile.pch
+//  yiyuangou
+//
+//  Created by roen on 15/9/28.
+//  Copyright © 2015年 atobo. All rights reserved.
+//
+
+#ifndef pchFile_pch
+#define pchFile_pch
+
+#define kWIDTH  [UIScreen mainScreen].bounds.size.width
+#define  kHEIGHT  [UIScreen mainScreen].bounds.size.height
+/**
+ * 基本参数
+ */
+
+#define PACKNAME  @"youmobi"
+#define APPKEY    @"123456"
+#define CHANNEL   @"1.25"
+#define USRID @"userID"
+
+#define SYSTEMVERSION [UIDevice currentDevice].systemVersion //版本号
+
+#import "UILabel+tmri.h"
+#import "UIView+tmri.h"
+#import "UIButton+tmri.h"
+#import "Masonry.h"
+#import "MJExtension.h"
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* pchFile_pch */
