@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMQuestionController : UITableViewController
+@interface YMQuestionController : YMBaseTableViewController
 
 @end

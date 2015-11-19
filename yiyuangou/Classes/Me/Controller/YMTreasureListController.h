@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMTreasureListController : UITableViewController
+@interface YMTreasureListController : YMBaseViewController
+
+@property (nonatomic,assign)BOOL isHidenRight;
 
 @end

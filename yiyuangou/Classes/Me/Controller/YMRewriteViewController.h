@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMRewriteViewController : UITableViewController
-
+@interface YMRewriteViewController : YMBaseTableViewController
+@property(nonatomic,strong) UIViewController *addListViewController;
+@property(nonatomic,strong) NSDictionary  *addressDic;
 @end

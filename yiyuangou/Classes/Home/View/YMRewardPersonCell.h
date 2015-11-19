@@ -7,17 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YMDetailResult.h"
 @interface YMRewardPersonCell : UITableViewCell
 @property (strong, nonatomic) UILabel* productionLable;
-@property (strong, nonatomic) UIImageView* stateView;
+@property (strong, nonatomic) UILabel* stateView;
 @property (strong, nonatomic) UIView* lineView;
-@property (strong, nonatomic) UIView* detailView;
 @property (strong, nonatomic) UILabel* pastGetterLable;
 @property (strong, nonatomic) UIImageView* iconView;
 @property (strong, nonatomic) UILabel* phoneLable;
 @property (strong, nonatomic) UILabel* totalLable;
 @property (strong, nonatomic) UILabel* timeLable;
--(id)congifgWithMode;
+@property (strong, nonatomic) UILabel* luckLable;
+@property (strong, nonatomic) UIButton *checkluckButton;
+-(id)congifgWithMode:(YMDetailResult *)model;
 
 @end

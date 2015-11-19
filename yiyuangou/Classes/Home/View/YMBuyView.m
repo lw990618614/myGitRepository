@@ -14,12 +14,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         NSArray*nameArray=@[@"加入购物车",@"立即抢购"];
-        NSArray*imageArray=@[@"mySelIcon",@"myDefIcon"];
+        NSArray*imageArray;
         
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-//        self.contentView=[[UIView alloc]initWithFrame:CGRectMake(0, kWIDTH-200+66, kWIDTH, 100)];
-//        self.contentView.backgroundColor=[UIColor whiteColor];
-//        [self addSubview:self.contentView];
         
         self.shareView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kWIDTH, 50)];
         self.shareView.backgroundColor=[UIColor whiteColor];
@@ -28,10 +25,17 @@
         for (int i=0; i<nameArray.count; i++) {
             
             UIVerticalButton*button=[UIVerticalButton buttonWithFrame:CGRectMake(i%2*(kWIDTH/2.0), i/2*self.shareView.tmri_height/1.0f , self.shareView.tmri_width/2.0, self.shareView.tmri_height/1.0f) target:self action:@selector(keyButtonClicked:) title:nameArray[i] cornerRadius:0];
-            button.titleLabel.font=[UIFont systemFontOfSize:12];
+            button.titleLabel.font=[UIFont systemFontOfSize:16];
             button.tag=i+10000;
             [button setImage:[UIImage imageNamed:imageArray[i]] forState:UIControlStateNormal];
             [self.shareView addSubview:button];
+            if (i == 0) {
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                button.backgroundColor = [UIColor orangeColor];
+            }else{
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                button.backgroundColor = [UIColor  colorWithHex:@"#DD2727"];
+            }
         }
 
     }

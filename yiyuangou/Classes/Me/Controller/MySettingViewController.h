@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MySettingViewController : UITableViewController
-
+@interface MySettingViewController : YMBaseTableViewController
+-(void)refreshUserInfo;
 @end

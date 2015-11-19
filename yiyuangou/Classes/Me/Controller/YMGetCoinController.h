@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface YMGetCoinController : UITableViewController
-
+#import "MySettingViewController.h"
+typedef NS_ENUM(NSUInteger,platformType)
+{
+    YMWeiXin,
+    YMWeiBo,
+    YMQQ
+};
+@interface YMGetCoinController : YMBaseTableViewController
+@property(nonatomic,strong)MySettingViewController *mySetting;
 @end

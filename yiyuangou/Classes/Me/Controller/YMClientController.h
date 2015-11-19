@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMClientController : UITableViewController
+@interface YMClientController : YMBaseTableViewController
 
 @end

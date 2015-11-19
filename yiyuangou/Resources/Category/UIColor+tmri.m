@@ -147,5 +147,14 @@
 +(UIColor *)PwdRuoColor{
     return [UIColor colorWithHex:@"FF8180"];
 }
++(UIColor *)lightColor
+{
+    return [UIColor colorWithHex:@"999999"];
+}
++(UIColor *)heightBlacKColor
+{
+    return [UIColor colorWithHex:@"444444"];
+
+}
 
 @end

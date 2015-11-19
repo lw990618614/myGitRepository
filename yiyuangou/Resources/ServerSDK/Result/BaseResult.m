@@ -16,4 +16,20 @@
         return NO;
     }
 }
+-(BOOL)isaLackParam
+{
+    if (self.code == 5) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+-(BOOL)isOther
+{
+    if (self.code == 6) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 @end

@@ -176,8 +176,8 @@ NSString * getIMEI()
     return @"simulator";
 #else
 
-    NSArray *results = getValue(@"device-imei");
-    if (results) return [results objectAtIndex:0];
+//    NSArray *results = getValue(@"device-imei");
+//    if (results) return [results objectAtIndex:0];
     return nil;
 #endif
 }
@@ -187,8 +187,8 @@ NSString * getSerialnumber()
 #if TARGET_IPHONE_SIMULATOR
     return @"simulator";
 #else
-    NSArray *results = getValue(@"serial-number");
-    if (results) return [results objectAtIndex:0];
+//    NSArray *results = getValue(@"serial-number");
+//    if (results) return [results objectAtIndex:0];
     return nil;
 #endif
 }
@@ -198,8 +198,8 @@ NSString * getBacklightlevel()
 #if TARGET_IPHONE_SIMULATOR
     return @"simulator";
 #else
-    NSArray *results = getValue(@"backlight-level");
-    if (results) return [results objectAtIndex:0];
+//    NSArray *results = getValue(@"backlight-level");
+//    if (results) return [results objectAtIndex:0];
     return nil;
 #endif
 }

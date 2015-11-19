@@ -15,7 +15,10 @@
 - (BOOL)isValidEmail;
 - (BOOL)isValidPhoneNumber;
 - (BOOL)isValidUrl;
+-(BOOL) isValidCode;//判断是不是有效的邮政编码
 - (BOOL)isValidPassword;//判断密码是否是6—16位
+-(BOOL) isValidNickName;//判断是不是有效的用户名
+-(BOOL) isValidAdress;//判断是不是有效的地址
 - (NSString *)removeWhiteSpacesFromString;
 
 - (NSUInteger)countNumberOfWords;
@@ -87,5 +90,6 @@
 //过滤业务须知等等，需要webview显示的数据
 - (NSString *)filterWebString;
 
-
+//lable中不同的字体的颜色
+-(NSMutableAttributedString *)alllString:(NSString *)allstring andallcolor:(UIColor *)allcolor andallFont:(UIFont*)allfont subString:(NSString *)substring andColor:(UIColor*)subColor andsubFont:(UIFont *)subFont;
 @end

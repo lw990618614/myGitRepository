@@ -9,16 +9,33 @@
 #import "RewardViewController.h"
 #import "RewardViewControllerCell.h"
 #import "YMDetailProductionController.h"
-@interface RewardViewController ()
-
+#import "RewardManager.h"
+#import "YMRewardResult.h"
+#import "HomeManager.h"
+#import "YMRefreshResult.h"
+#import "YMPastRewardResult.h"
+@interface RewardViewController ()<RewardCellDelegate>
+{
+    YMRewardResult *rewardResult;
+}
+@property (nonatomic,assign)NSInteger lotteryStart;
 @end
 
 @implementation RewardViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadData];
 
+}
 -(void)viewDidLoad
 {
     [super viewDidLoad];
     self.title = @"最近开奖";
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64) style:UITableViewStyleGrouped];
+
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -26,47 +43,152 @@
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectMake(0,0,kWIDTH,0)]];
+    self.tableView.footer = [MJRefreshBackNormalFooter  footerWithRefreshingBlock:^{
+        [self addMoreHotstatus];
+        [self.tableView.footer endRefreshing];
+    }];
+    
+    self.tableView.header =  [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 结束刷新
+        [self loadData];
+        [self.tableView.header endRefreshing];
+    }];
+
 }
+
+#pragma mark -- UITableViewDelegate & UITableViewDataSource
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return rewardResult.flowList.count + rewardResult.lotteryList.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 120;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 0.0001;
+    return HEIGHT_SERO;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *rewardViewCell = @"rewardViewCell";
-    RewardViewControllerCell *cell = [tableView dequeueReusableCellWithIdentifier:rewardViewCell];
+    static NSString *rewardViewCell12 = @"rewardViewCell12";
+    RewardViewControllerCell *cell = [tableView dequeueReusableCellWithIdentifier:rewardViewCell12];
     if (cell == nil) {
-        cell = [[RewardViewControllerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:rewardViewCell];
+        cell = [[RewardViewControllerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:rewardViewCell12];
+        cell.delegate = self;
     }
-    if (indexPath.row < 3) {
-        cell.messageView.hidden  = YES;
+    if (indexPath.row <  rewardResult.flowList.count) {
+        RewardFlowList *list = rewardResult.flowList[indexPath.row];
+        cell = [cell configWithMode:list];
+        cell.row = indexPath.row;
+        return cell;
+       
     }else{
-        cell.timeClock.hidden = YES;
+         RewardLotteryList *list = rewardResult.lotteryList[indexPath.row- rewardResult.flowList.count];
+         cell = [cell configWithMode:list];
+         return cell;
     }
-    cell = [cell configWithMode];
-    return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self setHidesBottomBarWhenPushed:YES];
     YMDetailProductionController *controller = [[YMDetailProductionController alloc] init];
+    if (indexPath.row < rewardResult.flowList.count) {
+        RewardFlowList *list = rewardResult.flowList[indexPath.row];
+        controller.gid = list.gid;
+        controller.gsid = list.gsid;
+    }else{
+        RewardFlowList *list = rewardResult.lotteryList[indexPath.row - rewardResult.flowList.count];
+        controller.gid = list.gid;
+        controller.gsid = list.gsid;
+    }
+    
     [self.navigationController pushViewController:controller animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 
 }
+-(void)loadData
+{
+    [self.view makeToastActivity:kLoadingText];
+    SAFE;
+    [[RewardManager sharedManager] rewardStatusWith:self.lotteryStart completion:^(id result, NSInteger statusCode, NSString *msg) {
+        [weakSelf.view hideToastActivity];
+        if (statusCode == 0) {
+            rewardResult = result;
+            [[NSNotificationCenter defaultCenter]postNotificationName:TIME_RECENT object:nil];
 
+            [weakSelf.tableView reloadData];
+        }else
+        {
+            [weakSelf.view makeToast:msg];
+        }
+    }];
+}
+-(void)timedownDidEnd:(RewardViewControllerCell *)cell
+{
+
+    [self reloadDataWith:cell];
+}
+-(void)reloadDataWith:(RewardViewControllerCell*)cell
+{
+    //    self.model = model;
+    [CATransaction begin];
+
+    __weak typeof(self) weakSelf = self;
+    NSIndexPath *path = [NSIndexPath indexPathForRow:cell.row inSection:0];
+
+    
+    RewardFlowList *model = rewardResult.flowList[path.row];
+    
+    [self.view makeToastActivity:kLoadingText];
+
+    [[HomeManager sharedManager] homeRefreshCellStatusWithModle:model.gsid completion:^(id result, NSInteger statusCode, NSString *msg) {
+        [weakSelf.view hideToastActivity];
+
+        if (statusCode == 0) {
+            YMRefreshResult *re = result;
+            for (RewardFlowList *list in rewardResult.flowList) {
+                if (list.gsid == model.gsid) {
+                    list.phone =re.phone;
+                    list.showPhone = YES;
+                    list.menber = re.menber;
+                    list .createTime = re.createTime;
+                }
+            }
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+        }else{
+            [weakSelf.view makeToast:msg];
+        }
+    }];
+    [CATransaction commit];
+    
+    
+}
+-(void)addMoreHotstatus
+{
+    SAFE;
+    [self.view makeToastActivity:kLoadingText];
+
+    [[HomeManager sharedManager] pastRewardStatusWithGid:0 and:++self.lotteryStart and:0 completion:^(id result, NSInteger statusCode, NSString *msg) {
+        [weakSelf.view hideToastActivity];
+
+        if (statusCode == 0) {
+            YMPastRewardResult *re = result;
+            [rewardResult.lotteryList addObjectsFromArray:re.lotteryList];
+            [weakSelf.tableView reloadData];
+            if (re.lotteryList.count < 1) {
+               weakSelf.tableView.footer = nil;
+            }
+        }else{
+            [weakSelf.view makeToast:msg];
+        }
+    }];
+}
 /*
 #pragma mark - Navigation
 

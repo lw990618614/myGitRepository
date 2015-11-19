@@ -188,8 +188,8 @@
 
 - (BOOL)isValidPhoneNumber
 {
-    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
-    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+    NSString *regex = @"^((13[0-9])|(17[0-9])|(147)|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     BOOL isValid = [phoneTest evaluateWithObject:self];
     return isValid;
 }
@@ -214,14 +214,30 @@
 }
 
 // Is Valid PassWord
-
+-(BOOL)isValidCode
+{
+    NSString *Regex = @"[1-9]\\d{5}(?!\\d)";
+    NSPredicate *codeTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex];
+    return [codeTest evaluateWithObject:self];
+}
 -(BOOL)isValidPassword
 {
     NSString *Regex = @"\\w{6,16}";
     NSPredicate *passwordTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex];
     return [passwordTest evaluateWithObject:self];
 }
-
+-(BOOL)isValidNickName
+{
+    NSString *Regex = @"\\w{1,12}";
+    NSPredicate *userName = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex];
+    return [userName evaluateWithObject:self];
+}
+-(BOOL)isValidAdress
+{
+    NSString *Regex = @"\\w{2,40}";
+    NSPredicate *userName = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex];
+    return [userName evaluateWithObject:self];
+}
 - (NSArray *)words
 {
 #if ! __has_feature(objc_arc)
@@ -913,6 +929,33 @@ finish:
                                                   withTemplate:rep];
     
     return  result;
+}
+
+-(NSMutableAttributedString *)alllString:(NSString *)allstring andallcolor:(UIColor *)allcolor andallFont:(UIFont*)allfont subString:(NSString *)substring andColor:(UIColor*)subColor andsubFont:(UIFont *)subFont;
+{
+    NSDictionary *allDic = @{
+                              NSFontAttributeName:allfont,
+                              NSForegroundColorAttributeName:allcolor,
+                              };
+    NSDictionary *subDic = @{
+                             NSFontAttributeName:subFont,
+                             NSForegroundColorAttributeName:subColor,
+                             };
+    return [self genAttibuteStr:allstring newhandleStr:substring commonAttDic:allDic handleDic:subDic];
+
+}
+-(NSMutableAttributedString *) genAttibuteStr:(NSString *)str newhandleStr:(NSString *) subStr commonAttDic:(NSDictionary *)commonDic handleDic:(NSDictionary *)handleDic
+{
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] init];
+    
+    NSRange range = [str rangeOfString:subStr];
+    NSString *str1 = [str substringToIndex:range.location];
+    NSString *str2 = subStr;
+    NSString *str3 = [str substringFromIndex:range.location + range.length];
+    [attStr appendAttributedString:[[NSAttributedString alloc] initWithString:str1 attributes: commonDic]];
+    [attStr appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",str2] attributes: handleDic]];
+    [attStr appendAttributedString:[[NSAttributedString alloc] initWithString:str3 attributes: commonDic]];
+    return attStr;
 }
 
 @end

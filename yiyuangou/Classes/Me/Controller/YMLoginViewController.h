@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMLoginViewController : UITableViewController
+@interface YMLoginViewController : YMBaseTableViewController
 
 @end

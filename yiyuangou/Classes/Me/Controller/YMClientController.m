@@ -15,7 +15,7 @@
 @implementation YMClientController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"赚抢币";
+    self.title = @"客服咨询";
     self.tableView= [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64) style:UITableViewStyleGrouped];
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
@@ -24,14 +24,23 @@
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
     lastView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, kWIDTH, 88)];
-    UILabel *titleLabel = [UILabel labelWithFrame:CGRectMake(10, 0, kWIDTH, 44) textAlignment:NSTextAlignmentLeft textColor:[UIColor grayColor ]];
-    titleLabel.text = @"没有解决疑问？发送邮件吐槽产品经理吧~";
-    UIButton *footButton = [UIButton buttonWithFrame:CGRectMake(0, 44, kWIDTH, 44) target:self action:nil title:@"客户邮箱 wangzuan@youmobil.com" cornerRadius:2];
-    footButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [footButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [footButton setImage:[UIImage imageNamed:@"share_03"] forState:UIControlStateNormal];
+    //没能解决问题
+    UILabel *titleLabel = [UILabel labelWithFrame:CGRectMake(50, 10, kWIDTH -50,22.5) textAlignment:NSTextAlignmentLeft textColor:[UIColor heightBlacKColor ]];
+    titleLabel.text = @"发送邮件吐槽产品经理吧~";
+    titleLabel.font = [UIFont systemFontOfSize:15.0];
+    //客服邮箱
+    UILabel *emailLbl = [UILabel labelWithFrame:CGRectMake(50, titleLabel.tmri_bottom, 80,22.5) textAlignment:NSTextAlignmentLeft textColor:[UIColor heightBlacKColor]];
+    emailLbl.text = @"客服邮箱:";
+    emailLbl.font  = [UIFont systemFontOfSize:15.0];
+    
+    UILabel *email = [[UILabel alloc] initWithFrame:CGRectMake(emailLbl.tmri_right, emailLbl.orignY,220 , 22.5)];
+    email.textColor = [UIColor blueColor];
+    email.font = [UIFont systemFontOfSize:14.0];
+    email.text = @"2109700078@qq.com";
+    
     [lastView addSubview:titleLabel];
-    [lastView addSubview:footButton];
+    [lastView addSubview:emailLbl];
+    [lastView addSubview:email];
     
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     // Do any additional setup after loading the view.
@@ -43,14 +52,11 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 2;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.row == 2){
-        return 88;
-    }else{
-        return 44;
-    }
+    
+    return 65;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -68,20 +74,22 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     switch (indexPath.row) {
         case 0:
-            cell.imageView.image = [UIImage imageNamed:@"share_03"];
-            cell.textLabel.text = @"客户QQ 2321312312";
-            break;
-        case 1:
-            cell.imageView.image = [UIImage imageNamed:@"share_02"];
-            cell.textLabel.text = @"微信公众号 youmobi";
+            cell.imageView.image = [UIImage imageNamed:@"qqIcon"];
+            cell.textLabel.text = @"客户QQ:2109700078";
             break;
         case 2:
-//            cell.imageView.image = [UIImage imageNamed:@"share_02"];
+            cell.imageView.image = [UIImage imageNamed:@"wxIcon"];
+            cell.textLabel.text = @"微信公众号:youmobi";
+            break;
+        case 1:
+            cell.imageView.image = [UIImage imageNamed:@"emailIcon"];
             [cell.contentView addSubview:lastView];
             break;
         default:
             break;
     }
+    cell.textLabel.font = [UIFont systemFontOfSize:15.0];
+    cell.textLabel.textColor = [UIColor heightBlacKColor];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

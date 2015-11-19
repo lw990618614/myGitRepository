@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface YMCreatePlaceController : UITableViewController
-
+#import "YMAcceptViewController.h"
+@interface YMCreatePlaceController : YMBaseTableViewController
+@property(nonatomic,strong)YMAcceptViewController *addListViewController;
 @end

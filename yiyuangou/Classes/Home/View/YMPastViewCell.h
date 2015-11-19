@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YMPastRewardResult.h"
 @interface YMPastViewCell : UITableViewCell
 @property (strong, nonatomic) UIImageView* iconView;
 @property (strong, nonatomic) UILabel* productionLabe;
@@ -15,5 +15,5 @@
 @property (strong, nonatomic) UILabel* getterLable;
 @property (strong, nonatomic) UILabel* totalLable;
 @property (strong, nonatomic) UILabel* timeLable;
--(id)configWithModel;
+-(id)configWithModel:(YMLottery *)model;
 @end

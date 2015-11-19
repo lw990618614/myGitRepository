@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TreasureViewController : UITableViewController
+@interface TreasureViewController : YMBaseViewController
+
+@property (copy, nonatomic)NSString * titleName;
+
+@property (assign, nonatomic)NSInteger gid;
+
+@property (assign, nonatomic)NSInteger  uid;
+
+@property (assign,nonatomic)BOOL isHiden;
 
 @end

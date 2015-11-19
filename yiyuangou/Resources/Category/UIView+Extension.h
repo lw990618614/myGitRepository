@@ -37,4 +37,14 @@
 
 -(CGFloat)frameX;
 -(CGFloat)frameY;
+//添加点击事件
+-(void) addTap;
+//关闭键盘
+-(void) closeKeyBoard;
+//显示无数据
+-(void) showEmptyView;
+-(void) showEmptyView:(float) height;
+
+//隐藏无数据
+-(void) hideEmptyView;
 @end

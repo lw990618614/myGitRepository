@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMReceiveListController : UIViewController
 
+@interface YMReceiveListController : YMBaseViewController
 @end

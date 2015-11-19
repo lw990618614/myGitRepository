@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YMDetailResult.h"
 @interface YMDetailViewCell : UITableViewCell
 @property (strong, nonatomic) UIImageView* iconView;
 @property (strong, nonatomic) UILabel*  personLable;
 @property (strong, nonatomic) UILabel*  detailLable;
+-(id)configWithModel:(YMTotalList *)list;
 @end

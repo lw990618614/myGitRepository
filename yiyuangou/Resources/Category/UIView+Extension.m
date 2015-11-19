@@ -7,6 +7,7 @@
 //
 
 #import "UIView+Extension.h"
+#import "YMNoDataView.h"
 
 @implementation UIView (Extension)
 
@@ -68,5 +69,34 @@
 -(CGFloat)frameY
 {
     return self.frame.origin.y + self.frame.size.height;
+}
+-(void)addTap
+{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]init];
+    [tap addTarget:self action:@selector(closeKeyBoard)];
+    [self addGestureRecognizer:tap];
+}
+-(void)closeKeyBoard
+{
+    [self endEditing:YES];
+}
+-(void)showEmptyView
+{
+    YMNoDataView *nodata = [[YMNoDataView alloc] initWithFrame:self.bounds];
+    nodata.backgroundColor = [UIColor clearColor];
+    [self addSubview:nodata];
+}
+-(void)showEmptyView:(float)height
+{
+    YMNoDataView *nodata = [[YMNoDataView alloc] initWithFrame:CGRectMake(0, height, self.width, self.height - height)];
+    [self addSubview:nodata];
+}
+-(void)hideEmptyView
+{
+    for (UIView *subView in [self subviews]) {
+        if ([subView isKindOfClass:[YMNoDataView class]]) {
+            [subView removeFromSuperview];
+        }
+    }
 }
 @end

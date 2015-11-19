@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyCarViewController : UITableViewController
+@interface MyCarViewController : UIViewController
 
 @end

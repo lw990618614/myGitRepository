@@ -7,15 +7,20 @@
 //
 
 #import "YMUser.h"
-
+#import "YMAddress.h"
 @implementation YMUser
 
 
 -(id)init{
     self=[super init];
     if (self) {
-        self.userScore=[[YMUserScore alloc]init];
-    }
+     }
     return self;
+}
++ (NSDictionary *)objectClassInArray
+{
+    return @{
+             @"addressArray" : @"YMAddress",
+             };
 }
 @end

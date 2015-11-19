@@ -13,9 +13,10 @@
 -(instancetype)init{
     if (self = [super init]) {
         NSString *netWorkType = [self getNetWorkType];
-
-        self.Uid = @1;
-        self.IMEI = [YMAppCenter getIMEI];
+        self.uid = [YMInfoCenter userID];
+//        self.uid = @1;
+//        self.IMEI = [YMAppCenter getIMEI];
+        self.IMEI = @"";
         self.packName = PACKNAME;
         self.appkey = APPKEY;
         self.channel = CHANNEL;
@@ -57,6 +58,15 @@
     else
         return @"Wifi";
     return @"Other";
+}
++(id)sharedManager
+{
+    static BaseParam *baseParam = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        baseParam = [[self alloc] init];
+    });
+return baseParam;
 }
 
 @end

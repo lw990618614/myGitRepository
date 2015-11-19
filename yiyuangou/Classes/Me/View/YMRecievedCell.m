@@ -7,53 +7,116 @@
 //
 
 #import "YMRecievedCell.h"
-
+#import "UIImageView+WebCache.h"
 @implementation YMRecievedCell
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 45, 45)];
-        self.iconView.image = [UIImage imageNamed:@"searchSelIcon"];
+        self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 80, 80)];
+        self.iconView.layer.borderWidth = 0.5;
+        self.iconView.layer.borderColor = [UIColor colorWithHex:@"#EAEAEA"].CGColor;
         [self.contentView addSubview:self.iconView];
-        self.productionLabel = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, 10, kWIDTH - 75, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        
+        self.productionLabel = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, self.iconView.orignY + 10, kWIDTH - 75, 30) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
         self.productionLabel.text = @"iphone 6s 就这么吊";
+        self.productionLabel.numberOfLines =  2.0;
+        self.productionLabel.font = [UIFont systemFontOfSize:14];
+        self.productionLabel.textColor = [UIColor heightBlacKColor];
         [self.contentView addSubview:self.productionLabel];
         
-        self.totalLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, self.productionLabel.tmri_bottom, kWIDTH - 75, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-        self.totalLable.text = @"我的参与次数： 123次";
-        [self.contentView addSubview:self.totalLable];
-        
-        self.timeLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, self.totalLable.tmri_bottom, kWIDTH - 75, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        self.fortuneNumlbl = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, self.productionLabel.tmri_bottom + 10, 70, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        self.fortuneNumlbl.text = @"幸运号码：";
+        self.fortuneNumlbl.font = [UIFont systemFontOfSize:14.0];
+        self.fortuneNumlbl.textColor = [UIColor lightColor];
+        [self.contentView addSubview:self.fortuneNumlbl];
+        self.fortuneNum = [[UILabel alloc] initWithFrame:CGRectMake(self.fortuneNumlbl.tmri_right + 10, self.fortuneNumlbl.orignY, 120, 20)];
+        self.fortuneNum.textColor = [UIColor heightBlacKColor];
+        self.fortuneNum.font = [UIFont systemFontOfSize:14.0];
+        [self.contentView addSubview:self.fortuneNum];
+        self.timeLable = [UILabel labelWithFrame:CGRectMake(self.iconView.orignX, self.iconView.tmri_bottom  + 15,180, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
         self.timeLable.text = @"开奖时间：2015-19-09 14：34：34";
+        self.timeLable.font = [UIFont systemFontOfSize:12.0];
+        self.timeLable.textColor = [UIColor lightColor];
         [self.contentView addSubview:self.timeLable];
         
-        self.recivedButton = [UIButton buttonWithFrame:CGRectMake(kWIDTH - 120, 10, 50, 50) target:self action:@selector(recivedButtonclick) title:@"领奖" cornerRadius:2];
+        self.recivedButton = [UIButton buttonWithFrame:CGRectMake(kWIDTH - 160, 10, 70, 25) target:self action:@selector(recivedButtonclick) title:@"领奖" cornerRadius:2];
         [self.recivedButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.recivedButton.backgroundColor = [UIColor redColor];
-        [self.contentView addSubview:self.recivedButton];
-        self.recivedButton.centerY  = self.totalLable.centerY;
+        self.recivedButton.backgroundColor = [UIColor colorWithHex:@"4AD107"];
+//        [self.contentView addSubview:self.recivedButton];
+        self.recivedButton.centerY  = self.timeLable.centerY;
         
-        self.displayButton = [UIButton buttonWithFrame:CGRectMake(self.recivedButton.tmri_right+10, self.totalLable.centerY, 50, 50) target:self action:@selector(displayButtonclick) title:@"晒单" cornerRadius:2];
+        self.displayButton = [UIButton buttonWithFrame:CGRectMake(self.recivedButton.tmri_right+10, self.recivedButton.orignY, 70, 25) target:self action:@selector(btnAction:) title:@"领奖" cornerRadius:2];
         [self.displayButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.displayButton.backgroundColor = [UIColor blueColor];
-        self.displayButton.centerY  = self.totalLable.centerY;
+        self.displayButton.backgroundColor = [UIColor colorWithHex:@"4AD107"];
+//        4D107 DD2727
+        self.displayButton.centerY  = self.timeLable.centerY;
         [self.contentView addSubview:self.displayButton];
         
     }
     return self;
 }
--(id)congfigWithModle
+-(id)congfigWithModle:(NSDictionary *)dict
 {
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:dict[@"goodsImage"] ] placeholderImage:[UIImage  imageNamed:GoodImage]];
+    self.productionLabel.text = [NSString stringWithFormat:@"第%@期 %@",dict[@"period"],dict[@"name"]];
+    NSString *fortunNum =  [NSString stringWithFormat:@"%@",dict[@"luckyNumber"]];
+    self.fortuneNum.text = fortunNum;
+    BOOL isReward = [dict[@"flag"] boolValue];
+    BOOL isShare =  [dict[@"shareStatus"] boolValue];
+    if (isReward) {
+//        self.recivedButton.enabled =  NO;
+//        self.recivedButton.backgroundColor = [UIColor lightColor];
+        [self.displayButton setTitle:@"晒单" forState:UIControlStateNormal];
+        if (isShare) {
+            self.displayButton.backgroundColor = [UIColor lightColor];
+            self.displayButton.enabled  = NO;
+        }
+        else
+        {
+            self.displayButton.backgroundColor = [UIColor colorWithHex:@"DD2727"];
+            self.displayButton.enabled = YES;
+        }
+
+    }
+    else
+    {
+//        self.recivedButton.enabled =  YES;
+//        self.recivedButton.backgroundColor = [UIColor colorWithHex:@"4AD107"];
+        [self.displayButton setTitle:@"领奖" forState:UIControlStateNormal];
+        self.displayButton.backgroundColor = [UIColor colorWithHex:@"4AD107"];
+    }
+    
+    NSString *date = [NSString stringWithFormat:@"%@%@",@"开奖日期:",dict[@"createTime"]];
+    self.timeLable.text = date;
+    
     return self;
 }
+//领奖
 -(void)recivedButtonclick
 {
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(reciviceButtonAction:)]) {
+        [self.delegate reciviceButtonAction:self];
+    }
     NSLog(@"recivedButtonclick");
 }
+//晒单
 -(void)displayButtonclick
 {
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(displayButtonAction:)]) {
+        [self.delegate displayButtonAction:self];
+    }
     NSLog(@"displayButtonclick");
 }
-
+-(void)btnAction:(id) sender
+{
+    UIButton *btn  = (UIButton *) sender;
+    if ([btn.titleLabel.text isEqualToString:@"领奖"]) {
+        [self recivedButtonclick];
+    }
+    else if([btn.titleLabel.text isEqualToString:@"晒单"])
+    {
+        [self displayButtonclick];
+    }
+}
 @end

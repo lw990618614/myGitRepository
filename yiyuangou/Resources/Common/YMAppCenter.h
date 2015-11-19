@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YMProcessManager.h"
+//#import "YMProcessManager.h"
 #import "udidhelper.h"
 
 @interface YMAppCenter : NSObject

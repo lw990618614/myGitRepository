@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMPastRewardController : UITableViewController
-
+@interface YMPastRewardController : YMBaseTableViewController
+@property (nonatomic,assign)NSInteger gid;
 @end

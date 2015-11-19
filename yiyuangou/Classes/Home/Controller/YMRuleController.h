@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMRuleController : UITableViewController
-
+@interface YMRuleController : YMBaseViewController
+@property(nonatomic,assign) BOOL isFinshRule;
+//@interface YMRuleController : UIViewController
 @end

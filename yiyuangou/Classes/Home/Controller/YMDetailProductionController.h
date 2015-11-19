@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMDetailProductionController : UIViewController
-@property (nonatomic,copy)NSString *state;
+@interface YMDetailProductionController : YMBaseViewController
+@property (assign, nonatomic) NSInteger gid;
+@property (assign, nonatomic) NSInteger gsid;
+
 @end

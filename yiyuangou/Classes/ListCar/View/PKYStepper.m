@@ -50,17 +50,21 @@ static const float kButtonWidth = 44.0f;
     _buttonWidth = kButtonWidth;
     
     self.clipsToBounds = YES;
-    [self setBorderWidth:1.0f];
-    [self setCornerRadius:3.0];
+//    [self setBorderWidth:1.0f];
+//    [self setCornerRadius:3.0];
     
-    self.countLabel = [[UILabel alloc] init];
+    self.countLabel = [[UITextField alloc] init];
+    self.countLabel.keyboardType = UIKeyboardTypeNumberPad;
+
     self.countLabel.textAlignment = NSTextAlignmentCenter;
-    self.countLabel.layer.borderWidth = 1.0f;
+    self.countLabel.layer.borderWidth = 0.5f;
+    self.countLabel.textColor = [UIColor colorWithHex:@"#444444"];
     [self addSubview:self.countLabel];
     
     self.incrementButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.incrementButton setTitle:@"+" forState:UIControlStateNormal];
     [self.incrementButton addTarget:self action:@selector(incrementButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+
     [self addSubview:self.incrementButton];
     
     self.decrementButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -69,9 +73,9 @@ static const float kButtonWidth = 44.0f;
     [self addSubview:self.decrementButton];
     
     UIColor *defaultColor = [UIColor colorWithRed:(79/255.0) green:(161/255.0) blue:(210/255.0) alpha:1.0];
-    [self setBorderColor:defaultColor];
-    [self setLabelTextColor:defaultColor];
-    [self setButtonTextColor:defaultColor forState:UIControlStateNormal];
+    [self setBorderColor:[UIColor colorWithHex:@"#EAEAEA"]];
+    [self setLabelTextColor:[UIColor colorWithHex:@"#444444"]];
+    [self setButtonTextColor:[UIColor colorWithHex:@"#444444"] forState:UIControlStateNormal];
     
     [self setLabelFont:[UIFont fontWithName:@"Avernir-Roman" size:14.0f]];
     [self setButtonFont:[UIFont fontWithName:@"Avenir-Black" size:24.0f]];
@@ -84,10 +88,14 @@ static const float kButtonWidth = 44.0f;
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    self.countLabel.frame = CGRectMake(self.buttonWidth, 0, width - (self.buttonWidth * 2), height);
+    self.countLabel.frame = CGRectMake(self.buttonWidth+4, 0, width - (self.buttonWidth * 2) - 8, height);
+    
     self.incrementButton.frame = CGRectMake(width - self.buttonWidth, 0, self.buttonWidth, height);
     self.decrementButton.frame = CGRectMake(0, 0, self.buttonWidth, height);
     
+    self.incrementButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.decrementButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
+
     self.incrementButton.hidden = (self.hidesIncrementWhenMaximum && [self isMaximum]);
     self.decrementButton.hidden = (self.hidesDecrementWhenMinimum && [self isMinimum]);
 }
@@ -96,6 +104,8 @@ static const float kButtonWidth = 44.0f;
 {
     if (self.valueChangedCallback)
     {
+       
+
         self.valueChangedCallback(self, self.value);
     }
 }
@@ -153,7 +163,7 @@ static const float kButtonWidth = 44.0f;
 
 
 #pragma mark setter
-- (void)setValue:(float)value
+- (void)setValue:(NSInteger)value
 {
     _value = value;
     if (self.hidesDecrementWhenMinimum)
@@ -177,6 +187,15 @@ static const float kButtonWidth = 44.0f;
 #pragma mark event handler
 - (void)incrementButtonTapped:(id)sender
 {
+    self.button.backgroundColor = [UIColor whiteColor];
+    [self.button setTitleColor:[UIColor colorWithHex:@"#444444"] forState:UIControlStateNormal];
+
+    self.carinfo.is_end = 0;
+    self.carinfo.lastis_selete = NO;
+    self.lastButton.selected = NO;
+
+    [self.lastButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    self.lastButton.backgroundColor = [UIColor whiteColor];
     if (self.value < self.maximum)
     {
         self.value += self.stepInterval;
@@ -186,9 +205,9 @@ static const float kButtonWidth = 44.0f;
         }
     }
     if (self.value<2) {
-        [self.decrementButton setBackgroundColor:[UIColor lightGrayColor]];
+//        [self.decrementButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     }else{
-        [self.decrementButton setBackgroundColor:[UIColor whiteColor]];
+//        [self.decrementButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     }
 
 }
@@ -196,6 +215,14 @@ static const float kButtonWidth = 44.0f;
 - (void)decrementButtonTapped:(id)sender
 {
 
+    self.button.backgroundColor = [UIColor whiteColor];
+    [self.button setTitleColor:[UIColor colorWithHex:@"#444444"] forState:UIControlStateNormal];
+    self.carinfo.is_end = 0;
+//    self.carinfo.buyCount = [self.countLabel.text integerValue];
+    [self.lastButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    self.lastButton.backgroundColor = [UIColor whiteColor];
+    self.carinfo.lastis_selete = NO;
+    self.lastButton.selected = NO;
     if (self.value > self.minimum)
     {
         self.value -= self.stepInterval;
@@ -205,9 +232,9 @@ static const float kButtonWidth = 44.0f;
         }
     }
     if (self.value<2) {
-        [self.decrementButton setBackgroundColor:[UIColor lightGrayColor]];
+//        [self.decrementButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     }else{
-        [self.decrementButton setBackgroundColor:[UIColor whiteColor]];
+//        [self.decrementButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     }
 
 }

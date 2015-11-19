@@ -32,4 +32,9 @@
 
 //group Table的灰色
 +(UIColor *)tmriLightGrayColor;
+//浅灰色
++(UIColor *) lightColor;
+//黑色
++(UIColor *) heightBlacKColor;
+
 @end

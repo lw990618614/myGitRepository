@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YMCarResult.h"
 @class PKYStepper;
 // called when value is changed
 typedef void (^PKYStepperValueChangedCallback)(PKYStepper *stepper, float newValue);
@@ -21,12 +21,13 @@ typedef void (^PKYStepperDecrementedCallback)(PKYStepper *stepper, float newValu
 
 IB_DESIGNABLE
 @interface PKYStepper : UIControl
-@property(nonatomic, strong) UILabel *countLabel;
+@property (nonatomic, strong)UIButton *button;
+@property(nonatomic, strong) UITextField *countLabel;
 @property(nonatomic, strong) UIColor *labelColor;
 @property(nonatomic, strong) UIButton *incrementButton;
 @property(nonatomic, strong) UIButton *decrementButton;
 
-@property(nonatomic) float value; // default: 0.0
+@property(nonatomic) NSInteger value; // default: 0.0
 @property(nonatomic) float stepInterval; // default: 1.0
 @property(nonatomic) float minimum; // default: 0.0
 @property(nonatomic) float maximum; // default: 100.0
@@ -37,6 +38,8 @@ IB_DESIGNABLE
 @property(nonatomic, copy) PKYStepperValueChangedCallback valueChangedCallback;
 @property(nonatomic, copy) PKYStepperIncrementedCallback incrementCallback;
 @property(nonatomic, copy) PKYStepperDecrementedCallback decrementCallback;
+@property(nonatomic, strong) YMCarInfo *carinfo;
+@property (nonatomic,strong)UIButton *lastButton;
 
 // call this method after setting value(s) and callback(s)
 // This method will call callback

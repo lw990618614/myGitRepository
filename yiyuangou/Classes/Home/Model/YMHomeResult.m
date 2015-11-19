@@ -8,21 +8,35 @@
 
 #import "YMHomeResult.h"
 
-#import "MJExtension.h"
 @implementation YMHomeResult
--(NSDictionary *)objectClassInArray{
-    return @{@"flowList":[FlowList class],@"hotList":[HotList class],@"lotteryList":[LotteryList class]};
++ (NSDictionary *)objectClassInArray
+{
+    return @{
+             @"flowList" : @"HomeFlowList",
+             @"hotList" : @"HomeHotList",
+             @"rewardList":@"HomeRewardList",
+             @"bannerList":@"HomeBannerList",
+             @"lotteryList":@"YMHomelotteryList"
+             };
 }
-@end
-
-@implementation FlowList
 
 @end
 
-@implementation HotList
+@implementation HomeFlowList
 
 @end
 
-@implementation LotteryList
+@implementation HomeHotList
+
+@end
+
+@implementation HomeBannerList
+
+@end
+@implementation HomeRewardList
+
+
+@end
+@implementation YMHomelotteryList
 
 @end

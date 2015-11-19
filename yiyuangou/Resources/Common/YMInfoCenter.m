@@ -40,6 +40,8 @@
     if (self.mainUser.YMUserID) {
         return self.mainUser.YMUserID;
     }else{
+//        return 15;
+//        return 9;
         return 0;
     }
 }
@@ -76,7 +78,7 @@
 
 - (void)saveUserID{
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:[NSNumber numberWithLong:self.mainUser.YMUserID] forKey:USRID];
+    [ud setObject:[NSNumber numberWithInteger:self.mainUser.YMUserID] forKey:USRID];
     [ud synchronize];
 }
 

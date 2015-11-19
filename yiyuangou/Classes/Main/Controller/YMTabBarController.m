@@ -13,7 +13,9 @@
 #import "HomeViewController.h"
 #import "RewardViewController.h"
 #import "YMNavigationController.h"
+#import "YMNotifiyController.h"
 #import "UIImage+tmri.h"
+#import "YMInfoCenter.h"
 @interface YMTabBarController ()
 
 @end
@@ -24,40 +26,45 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    
     // 第1个
     HomeViewController *home = [[HomeViewController alloc] init];
-    [self addChildVC:home title:@"抢购" imgName:@"mainDefIcon" selectedName:@"mainSelIcon"];
+    [self addChildVC:home title:@"抢购" imgName:@"navibar_02" selectedName:@"navibar_01"];
     
     // 第2个
     RewardViewController *reward = [[RewardViewController alloc] init];
-    [self addChildVC:reward title:@"最近开奖" imgName:@"discountDefIcon" selectedName:@"discountSelIcon"];
+    [self addChildVC:reward title:@"最近开奖" imgName:@"navibar_04" selectedName:@"navibar_03"];
     
     // 第3个
     TreasureViewController *treasure = [[TreasureViewController alloc] init];
-    [self addChildVC:treasure title:@"夺宝圈" imgName:@"searchDefIcon" selectedName:@"searchSelIcon"];
+    [self addChildVC:treasure title:@"夺宝圈" imgName:@"navibar_06" selectedName:@"navibar_05"];
     
     // 第4个
     MyCarViewController *mycar = [[MyCarViewController alloc] init];
-    [self addChildVC:mycar title:@"购物车" imgName:@"myDefIcon" selectedName:@"mySelIcon"];
+    [self addChildVC:mycar title:@"购物车" imgName:@"navibar_08" selectedName:@"navibar_07"];
     
     // 第5个
-    MySettingViewController *mysetting = [[MySettingViewController alloc] init];
-    [self addChildVC:mysetting title:@"我的" imgName:@"myDefIcon" selectedName:@"mySelIcon"];
-
+//    YMInfoCenter *center = [YMInfoCenter sharedManager];
+//    if ([center getUserID]) {
+        MySettingViewController *mysetting = [[MySettingViewController alloc] init];
+        [self addChildVC:mysetting title:@"我的" imgName:@"navibar_10" selectedName:@"navibar_09"];
+//    }else{
+//        YMNotifiyController *notify = [[YMNotifiyController alloc] init];
+//        [self addChildVC:notify title:@"我的" imgName:@"navibar_10" selectedName:@"navibar_09"];
+//    }
 }
 
 -(void)addChildVC:(UIViewController *)vc title:(NSString *)title imgName:(NSString *)imgName selectedName:(NSString *)selectedImgName{
     
     YMNavigationController *nav = [[YMNavigationController alloc] initWithRootViewController:vc];
-    // 设置UITabbarButton的图片和文字
     vc.title = title;
     nav.tabBarItem.image = [UIImage imageNamed:imgName];
-    
+    nav.tabBarItem.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     //设置导航栏的颜色
     UINavigationBar *navigationBarAppearance=[UINavigationBar appearance];
     [navigationBarAppearance setTintColor:[UIColor whiteColor]];
-    [navigationBarAppearance setBackgroundImage:[UIImage imageWithColor:[UIColor redColor]] forBarMetrics:UIBarMetricsDefault];
+    [navigationBarAppearance setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHex:@"DD2727"]] forBarMetrics:UIBarMetricsDefault];
     
     //设置导航栏标题的颜色
     NSDictionary *navigationTextAttributes=@{
@@ -65,6 +72,9 @@
                                              };
     [navigationBarAppearance setTitleTextAttributes:navigationTextAttributes];
    
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [UIColor colorWithHex:@"#999999"], UITextAttributeTextColor,
+                                                       nil] forState:UIControlStateSelected];
     // 设置选中图片
     UIImage *selectedImg = [UIImage imageNamed:selectedImgName];
     // 设置图片一个渲染方式,返回一个没有渲染效果图片
@@ -84,7 +94,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 
@@ -94,5 +103,10 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+//-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+//{
+//    
+//    [super tabBar:tabBar didSelectItem:item];
+//    
+//}
 @end

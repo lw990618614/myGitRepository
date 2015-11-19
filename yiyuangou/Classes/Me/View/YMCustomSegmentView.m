@@ -27,7 +27,7 @@
     if (!_identifierView) {
         
         _identifierView=[[UIView alloc]initWithFrame:CGRectZero];
-        _identifierView.backgroundColor = [UIColor tmriBlueColor];
+        _identifierView.backgroundColor = [UIColor  colorWithHex:@"#DD2727"];
         [self addSubview:_identifierView];
     }
     return _identifierView;
@@ -73,9 +73,10 @@
             btn.selected = YES;
         }
         [btn setTitleColor:[UIColor tmriGrayColor] forState:UIControlStateHighlighted];
-        [btn setTitleColor:[UIColor tmriBlueColor] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor midBlackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor  colorWithHex:@"#DD2727"] forState:UIControlStateSelected];
+        [btn setTitleColor:[UIColor lightColor] forState:UIControlStateNormal];
         btn.titleLabel.adjustsFontSizeToFitWidth = YES;
+        btn.titleLabel.font = [UIFont systemFontOfSize:14.0];
         btn.tag = 12340 + i;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RewardViewController : UITableViewController
+@interface RewardViewController : YMBaseTableViewController
+
 
 @end

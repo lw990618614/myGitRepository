@@ -16,7 +16,7 @@
     label.backgroundColor=[UIColor clearColor];
     label.textAlignment=textAlignment;
     label.textColor=textColor;
-    label.font = [UIFont systemFontOfSize:13];
+    label.font = [UIFont systemFontOfSize:12];
     return label;
 }
 - (void)alignTop {

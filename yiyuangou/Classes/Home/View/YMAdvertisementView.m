@@ -9,7 +9,7 @@
 #import "YMAdvertisementView.h"
 #define IMAGE_COUNT  5
 #define IMAGE_HEIGHT 160
-@interface YMAdvertisementView()
+@interface YMAdvertisementView()<UIScrollViewDelegate>
 {
     UIScrollView *addScrollView;//广告滚动
     UIPageControl *pageControl;//广告控制器
@@ -55,7 +55,7 @@
     addScrollView.showsHorizontalScrollIndicator = NO;
     addScrollView.showsVerticalScrollIndicator = NO;
     addScrollView.pagingEnabled = YES;
-//    addScrollView.delegate = self;
+    addScrollView.delegate = self;
     pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, addScrollView.frame.size.height - 30 , kWIDTH, 40)];
     pageControl.numberOfPages = IMAGE_COUNT;
     
@@ -70,7 +70,6 @@
     }else{
         page = pageControl.currentPage+1;
     }
-    //改变当前的图片
     CGPoint  offset = addScrollView.contentOffset;
     offset.x  = page * kWIDTH;
     pageControl.currentPage = page;

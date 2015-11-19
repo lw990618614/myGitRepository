@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMNegotiateController : UITableViewController
+@interface YMNegotiateController : YMBaseTableViewController
 
 @end

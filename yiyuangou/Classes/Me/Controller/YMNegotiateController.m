@@ -45,7 +45,7 @@
 }
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel*titleLabel=[UILabel labelWithFrame:CGRectMake(0, 0, kWIDTH, 44) textAlignment:NSTextAlignmentLeft textColor:[UIColor redColor]];
+    UILabel*titleLabel=[UILabel labelWithFrame:CGRectMake(0, 0, kWIDTH, 44) textAlignment:NSTextAlignmentLeft textColor:[UIColor  colorWithHex:@"#DD2727"]];
     if (section==0) {
         titleLabel.text=@"  抢购规则";
     }else

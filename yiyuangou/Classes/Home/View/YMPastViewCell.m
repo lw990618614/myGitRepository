@@ -13,26 +13,41 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 85, 85)];
-        self.iconView.image = [UIImage imageNamed: @"img_02"];
+        self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 80, 80)];
+        self.iconView.layer.borderColor = [UIColor colorWithHex:@"#EAEAEA"].CGColor;
+        self.iconView.layer.borderWidth = 1;
         
-        self.productionLabe = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, 10, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        //商品
+        self.productionLabe = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 12, 15, kWIDTH, 16) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#777777"]];
+        self.productionLabe.font  = [UIFont systemFontOfSize:16];
         self.productionLabe.text = @"IPHONE 6s 手机中的战斗机";
         
-        self.priceLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10,self.productionLabe.tmri_bottom, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-        self.priceLable.text = @"价格: ¥5111";
-
-        self.getterLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right +10, self.priceLable.tmri_bottom,  kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-        self.getterLable.text = @"获奖者： 159****214";
         
-        self.totalLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right +10, self.getterLable.tmri_bottom, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        //获奖者
+        UILabel *info = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 12, self.productionLabe.tmri_bottom + 2.5, 50, 14) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#777777"]];
+        info.text = @"获奖者:";
+        info.font  =[UIFont systemFontOfSize:14];
+        
+        //获奖id
+        self.getterLable = [UILabel labelWithFrame:CGRectMake(info.tmri_right , self.productionLabe.tmri_bottom + 2.5,  kWIDTH, 14) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#DD2727"]];
+        self.getterLable.font  =[UIFont systemFontOfSize:14];
+        self.getterLable.text = @"获奖者： 159****214";
+
+        //参与人次
+        self.totalLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right +12, info.tmri_bottom+2.5, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
         self.totalLable.text = @"参与人数： 50人次";
 
-        self.timeLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right +10,self.totalLable.tmri_bottom, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        //价格
+        self.priceLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 12,self.totalLable.tmri_bottom, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
+        self.priceLable.text = @"商品价格: ¥5111";
+
+        //时间
+        self.timeLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right +12,self.priceLable.tmri_bottom, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
         self.timeLable.text = @"开奖时间: 2015-9-17 17:19:05:009";
 
         [self.contentView addSubview:self.iconView];
         [self.contentView addSubview:self.productionLabe];
+        [self.contentView addSubview:info];
         [self.contentView addSubview:self.priceLable];
         [self.contentView addSubview:self.getterLable];
         [self.contentView addSubview:self.totalLable];
@@ -41,8 +56,21 @@
     }
     return self;
 }
--(id)configWithModel
+-(id)configWithModel:(YMLottery *)model
 {
+//    NSString *imageUlr = [NSString stringWithFormat:@"%@%@",BaseServerImagesURL,model.goodsImage];
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:model.goodsImage] placeholderImage:placeHolder];
+    
+    self.productionLabe.text = model.name;
+    
+    self.priceLable.text = [NSString stringWithFormat:@"商品价格:  %@ [第%@期]",model.price,model.period];
+    
+    self.getterLable.text = [NSString stringWithFormat:@"%ld",(long)model.uid];
+    
+    self.totalLable.text = [NSString stringWithFormat:@"参与人次: %@次",model.menber];
+
+    self.timeLable.text = [NSString stringWithFormat:@"开奖时间: %@",model.createTime];
+
     return self;
 }
 @end

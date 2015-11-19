@@ -16,4 +16,9 @@
 @property (copy, nonatomic) NSString* msg;
 
 -(BOOL)isSuceess;
+
+-(BOOL)isaLackParam;
+
+-(BOOL)isOther;
+
 @end

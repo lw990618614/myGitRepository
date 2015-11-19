@@ -14,6 +14,7 @@
 {
     UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
     button.frame=frame;
+    button.titleLabel.font  = [UIFont systemFontOfSize:13];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];

@@ -13,28 +13,93 @@
 {
     self =[super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 40, 40)];
-        self.iconView.image =[UIImage imageNamed:@"mySelIcon"];
+        self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 70, 70)];
+        self.iconView.image =[UIImage imageNamed:@"head"];
+        self.iconView.layer.cornerRadius = self.iconView.width/2.0;
+        self.iconView.clipsToBounds = YES;
+        self.iconView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]init];
+        [tap addTarget:self action:@selector(modifyAccount:)];
+        [self.iconView addGestureRecognizer:tap];
         [self.contentView addSubview:self.iconView];
         
-        self.accountLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right, 30, 150, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        self.accountLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right +10, 15, 200, 25) textAlignment:NSTextAlignmentLeft textColor:[UIColor heightBlacKColor]];
         self.accountLable.text = @"帐号：123*****3244";
-        [self.contentView addSubview:self.accountLable];
+        self.accountLable.font = [UIFont systemFontOfSize:16.0];
         
-        self.userNameLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right, self.accountLable.tmri_bottom, 150, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
-        self.userNameLable.text = @"昵称：thoo";
+        self.userNameLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, self.accountLable.tmri_bottom + 10, kWIDTH - self.iconView.tmri_right - 10, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor lightColor]];
+        self.userNameLable.text = @"昵称：";
+        self.userNameLable.font = [UIFont systemFontOfSize:14.0];
+        self.originY =  self.userNameLable.orignY;
         [self.contentView addSubview:self.userNameLable];
         
-        self.leftLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right, self.userNameLable.tmri_bottom, 150, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor]];
+        self.leftLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right +10, self.userNameLable.tmri_bottom +5, 150, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor lightColor]];
         self.leftLable.text = @"抢币余额：123抢币";
+        self.leftLable.font = [UIFont systemFontOfSize:14.0];
         [self.contentView addSubview:self.leftLable];
-        
-        self.fillButton = [UIButton buttonWithFrame:CGRectMake(200, 0, 100, 30) target:nil action:nil title:@"充值" cornerRadius:3];
-        [self.fillButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.fillButton setBackgroundColor:[UIColor redColor]];
-        [self.contentView addSubview:self.fillButton];
-        self.fillButton.centerY = self.userNameLable.centerY;
+        self.userNameLable.frame =  CGRectMake(_userNameLable.orignX, _userNameLable.orignY - 10, _userNameLable.width, _userNameLable.height);
+
     }
     return self;
+}
+-(id)congifgWithMode:(YMSettingResult *)model
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@",BaseServerImagesURL,model.picture_ulr];
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"head"]];
+
+    if ([model.source intValue] == 0) {
+        self.accountLable.text = [NSString stringWithFormat:@"帐号：%@",model.account==nil?@"":model.account];
+        [self addSubview:self.accountLable];
+    }
+    else
+    {
+        [self.accountLable removeFromSuperview];
+        
+    }
+   
+    NSDictionary *attLight = @{
+                              NSFontAttributeName:[UIFont systemFontOfSize:14.0],
+                              NSForegroundColorAttributeName:[UIColor lightColor]
+                              };
+    NSDictionary *attHeightBlack = @{
+                               NSFontAttributeName:[UIFont systemFontOfSize:14.0],
+                               NSForegroundColorAttributeName:[UIColor heightBlacKColor]
+                               };
+    
+    model.LeftMoney = [model.LeftMoney isValid]?model.LeftMoney:@"0";
+    NSDictionary *attRed = @{
+                             NSFontAttributeName:[UIFont systemFontOfSize:14.0],
+                             NSForegroundColorAttributeName:[UIColor  colorWithHex:@"#DD2727"],
+                             };
+    if (model != nil) {
+     self.accountLable.text = [NSString stringWithFormat:@"帐号：%@",model.account==nil?@"":model.account];
+        
+        self.userNameLable.text = [NSString stringWithFormat:@"昵称：%@",model.name];
+        NSString *leftMoney = [NSString stringWithFormat:@"抢币余额：%@抢币",model.LeftMoney];
+      self.leftLable.attributedText  = [self genAttibuteStr:leftMoney newhandleStr:model.LeftMoney commonAttDic:attLight handleDic:attRed otherDic:attHeightBlack];
+    }
+
+    
+    return self;
+}
+//修改账户信息
+-(void)modifyAccount:(UITapGestureRecognizer *)tap
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(accoutChange)]) {
+        [self.delegate accoutChange];
+    }
+}
+-(NSMutableAttributedString *) genAttibuteStr:(NSString *)str newhandleStr:(NSString *) subStr   commonAttDic:(NSDictionary *)commonDic handleDic:(NSDictionary *)handleDic otherDic:(NSDictionary *) others
+{
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] init];
+    
+    NSRange range = [str rangeOfString:subStr];
+    NSString *str1 = [str substringToIndex:range.location];
+    NSString *str2 = subStr;
+    NSString *str3 = [str substringFromIndex:range.location + range.length];
+    [attStr appendAttributedString:[[NSAttributedString alloc] initWithString:str1 attributes: commonDic]];
+    [attStr appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",str2] attributes: handleDic]];
+    [attStr appendAttributedString:[[NSAttributedString alloc] initWithString:str3 attributes: others]];
+    return attStr;
 }
 @end

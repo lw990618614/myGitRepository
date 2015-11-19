@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
 
+#import "YMBaseHttpTool.h"
 //定义任意的single对象
 
 #define SYNTHESIZE_SINGLETON_FOR_CLASS(classname) \
@@ -29,7 +29,7 @@ return shared##classname; \
 }
 
 
-#define BaseServerURL @"http://192.168.1.119:8080/api/v1"
+
 typedef void(^ManagerBlock)(id result, NSInteger statusCode , NSString *msg);
 
 @interface BaseMananger : NSObject
