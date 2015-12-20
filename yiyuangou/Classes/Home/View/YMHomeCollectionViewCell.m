@@ -38,6 +38,7 @@
         [self.contentView addSubview:self.buyView];
 
         self.pro = [[YMProgressView alloc] initWithFrame:CGRectMake(10, self.detailLable.tmri_bottom +10,frame.size.width - 10 - self.buyView.tmri_width - 15 , 23) ];
+        
         self.pro.centerY = self.buyView.centerY;
         [self.contentView addSubview:self.pro];
         

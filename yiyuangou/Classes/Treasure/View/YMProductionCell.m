@@ -44,6 +44,7 @@
         CGSize detaiSize = [[NSString stringWithFormat:@"%@",model.descrip] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(kWIDTH-75, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
         
         self.messgeLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right +10, self.seperateView.tmri_bottom + 15, detaiSize.width, detaiSize.height) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#444444"]];
+        self.messgeLable.font = [UIFont systemFontOfSize:14];
         self.messgeLable.numberOfLines = 0;
         self.messgeLable.text = @"总于中奖了";
 
@@ -93,15 +94,16 @@
     if (model.status == 0) {
         stateString = @"审核中";
         allString = [NSString stringWithFormat:@"%@ %@",dateStr,stateString];
-        self.timeLable.attributedText = [allString alllString:allString andallcolor:[UIColor colorWithHex:@"#999999"] andallFont:[UIFont systemFontOfSize:12] subString:stateString andColor:[UIColor colorWithHex:@"#4AD107"] andsubFont:[UIFont systemFontOfSize:12]];
+        self.timeLable.attributedText = [allString alllString:allString andallcolor:[UIColor colorWithHex:@"#999999"] andallFont:[UIFont systemFontOfSize:14] subString:stateString andColor:[UIColor colorWithHex:@"#4AD107"] andsubFont:[UIFont systemFontOfSize:14]];
     }else if (model.status == 1){
         stateString = @"已发布";
-        allString = [NSString stringWithFormat:@"%@ %@",dateStr,stateString];
-        self.timeLable.attributedText = [allString alllString:allString andallcolor:[UIColor colorWithHex:@"#999999"] andallFont:[UIFont systemFontOfSize:12] subString:stateString andColor:[UIColor colorWithHex:@"#999999"] andsubFont:[UIFont systemFontOfSize:12]];
+        self.timeLable.textColor = [UIColor colorWithHex:@"#999999"];
+        self.timeLable.text =dateStr;
+        //        self.timeLable.attributedText = [allString alllString:allString andallcolor:[UIColor colorWithHex:@"#999999"] andallFont:[UIFont systemFontOfSize:14] subString:stateString andColor:[UIColor colorWithHex:@"#999999"] andsubFont:[UIFont systemFontOfSize:14]];
     }else{
         stateString = @"审核不通过";
         allString = [NSString stringWithFormat:@"%@ %@",dateStr,stateString];
-        self.timeLable.attributedText = [allString alllString:allString andallcolor:[UIColor colorWithHex:@"#999999"] andallFont:[UIFont systemFontOfSize:12] subString:stateString andColor:[UIColor colorWithHex:@"#DD2727"] andsubFont:[UIFont systemFontOfSize:12]];
+        self.timeLable.attributedText = [allString alllString:allString andallcolor:[UIColor colorWithHex:@"#999999"] andallFont:[UIFont systemFontOfSize:14] subString:stateString andColor:[UIColor colorWithHex:@"#DD2727"] andsubFont:[UIFont systemFontOfSize:14]];
     }
     
     for (int i = 0; i < self.imageArray.count ; i ++) {

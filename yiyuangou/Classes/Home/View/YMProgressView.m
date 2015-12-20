@@ -22,6 +22,9 @@
         [self addSubview:ProgressNumber];
         
         UIProgressView * progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0,frame.size.height - 3 , frame.size.width, 3)];
+        CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 2.0f);
+        progressView.transform = transform;
+
         self.progressView = progressView;
         self.progressView.tintColor = [UIColor  colorWithHex:@"#DD2727"];
         [self addSubview:progressView];

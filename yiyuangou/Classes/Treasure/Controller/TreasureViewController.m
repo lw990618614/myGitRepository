@@ -253,7 +253,7 @@
             if (index == 0) {//加载
                 for (ShareProduction *production in treasure.shareList) {
                     NSInteger  height =  [self calculateTheHeightWith:production];
-                    production.height = height + 108;
+                    production.height = height + 113;
                 }
                 [shareListArray addObjectsFromArray:treasure.shareList];
 
@@ -300,7 +300,12 @@
 }
 -(NSInteger)calculateTheHeightWith:(ShareProduction *)production
 {
-    CGSize detailSize = [[NSString stringWithFormat:@"%@",production.descrip] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(kWIDTH-75, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize detailSize;
+    
+    if (production.descrip.length != 0) {
+        detailSize = [[NSString stringWithFormat:@"%@",production.descrip] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(kWIDTH-75, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
+    }
+
     
     NSInteger imageNumber = production.imageList.count;
     
