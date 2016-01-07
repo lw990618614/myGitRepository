@@ -26,7 +26,7 @@ typedef void(^TextFiledBlock)();
 @property (nonatomic,strong)UIView *notiView;
 @property (nonatomic,copy)TextFiledBlock edtingBlock;
 @property (nonatomic,copy)TextFiledBlock endEdtingBlock;
-
+@property (nonatomic,assign)NSInteger *selectCount;
 @end
 
 @implementation MyCarViewController
@@ -81,7 +81,7 @@ typedef void(^TextFiledBlock)();
 -(UITableView*)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64- 50) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64- 49-45) style:UITableViewStyleGrouped];
     }
     return _tableView;
 }
@@ -141,6 +141,7 @@ typedef void(^TextFiledBlock)();
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
+    self.view.backgroundColor  =[UIColor groupTableViewBackgroundColor];
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -161,22 +162,28 @@ typedef void(^TextFiledBlock)();
             [weakSelf.tableView.header endRefreshing];
         }];
     };
+    [self.tableView setSeparatorColor:[UIColor colorWithHex:@"#EAEAEA"]];
+
     [self loadData];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return self.carArray.count;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.carArray.count;
+    return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 130;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 0.0001;
+    return HEIGHT_SERO;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -187,7 +194,7 @@ typedef void(^TextFiledBlock)();
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
-    YMCarInfo*model = self.carArray[indexPath.row];
+    YMCarInfo*model = self.carArray[indexPath.section];
     cell.edtingBlock = self.edtingBlock;
     cell.endEdtingBlock = self.endEdtingBlock;
     cell = [cell configWithMode:model];
@@ -199,26 +206,32 @@ typedef void(^TextFiledBlock)();
 }
 -(void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    YMCarInfo *model = self.carArray[indexPath.row];
-//    [self.view makeToastActivity:kLoadingText];
-    [self.selctCarArray removeObject:model];
+    [CATransaction begin];
+
+    YMCarInfo *model = self.carArray[indexPath.section];
+    [self.view makeToastActivity:kLoadingText];
 
     SAFE;
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         [[MyCarManager sharedManager] deletmyCarStatusWith:model.gid completion:^(id result, NSInteger statusCode, NSString *msg) {
             [weakSelf.view hideToastActivity];
             if (statusCode == 0) {
-                NSInteger row = [indexPath row];
-                [weakSelf.carArray removeObjectAtIndex:row];
-                [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                NSInteger section = [indexPath section];
+                [self.selctCarArray removeObject:model];
+                [weakSelf.carArray removeObjectAtIndex:section];
+                [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
                 NSLog(@"%ld",weakSelf.selctCarArray.count);
                 if (weakSelf.carArray.count == 0) {
                     weakSelf.footView.hidden = YES;
                     [weakSelf.view addSubview:self.notiView];
                 }
+                [[NSNotificationCenter defaultCenter] postNotificationName:TEXT_CHANGE object:nil];
+
             }
         }];
     }
+    [CATransaction commit];
+
 }
 -(NSString*)tableView:(UITableView*)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath*)indexpath
 {
@@ -257,6 +270,9 @@ typedef void(^TextFiledBlock)();
             [_clickButton setImage:[UIImage imageNamed:CellSelectImage] forState:UIControlStateNormal];
             _clickButton.selected= YES;
             [weakSelf.tableView reloadData];
+        }else if(statusCode == 5)
+        {
+//            [weakSelf.view makeToast:@"请登录"];
         }else{
             [weakSelf.view makeToast:msg];
         }
@@ -289,7 +305,6 @@ typedef void(^TextFiledBlock)();
             [self.selctCarArray addObjectsFromArray:self.carArray];
             [btn setImage:[UIImage imageNamed:CellSelectImage] forState:UIControlStateNormal];
             [[NSNotificationCenter defaultCenter] postNotificationName:ADDALL_MYCAR object:nil];
-
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:TEXT_CHANGE object:nil];
         
@@ -301,7 +316,7 @@ typedef void(^TextFiledBlock)();
 {
     
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
-    YMCarInfo *model = self.carArray[path.row];
+    YMCarInfo *model = self.carArray[path.section];
     [self.selctCarArray addObject:model];
     if (self.selctCarArray.count == self.carArray.count) {
         self.clickButton.selected = YES;
@@ -311,35 +326,39 @@ typedef void(^TextFiledBlock)();
         [self.clickButton setImage:[UIImage imageNamed:CellUnSelectImage] forState:UIControlStateNormal];
     }
     
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:TEXT_CHANGE object:nil];
+
     
 }
 -(void)deselectedCell:(MyCarViewCell *)cell
 {
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
-    YMCarInfo *model = self.carArray[path.row];
+    YMCarInfo *model = self.carArray[path.section];
     [self.selctCarArray removeObject:model];
     self.clickButton.selected = NO;
     [self.clickButton setImage:[UIImage imageNamed:CellUnSelectImage] forState:UIControlStateNormal];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:TEXT_CHANGE object:nil];
+
     
 }
 -(void)submitTheOrder
 {
-    if (self.selctCarArray.count == 0) {
-        [self.view makeToast:@"请选择购买物品"];
-        return;
-    }
-    for (YMCarInfo *info in self.carArray) {
-        if (info.buyCount == 0) {
-            [self.selctCarArray removeObject:info];
+    for (int i =0; i < self.selctCarArray.count; i ++) {
+        YMCarInfo *car = self.selctCarArray[i];
+        
+        if (car.buyCount == 0) {
+            [self.selctCarArray removeObjectAtIndex:i];
         }
     }
-    
     if (self.selctCarArray.count == 0) {
-        [self.view makeToast:@"您所选的商品数量\n只剩0份,请重新选择"];
-        return ;
+        [self.view makeToast:@"商品暂被抢光"];
+        return;
+    }
+        
 
+    if (self.selctCarArray.count == 0) {
+        [self.view makeToast:@"请选择商品"];
+        return;
     }
 
     NSMutableArray *carArray  = [[NSMutableArray alloc] init];
@@ -363,7 +382,10 @@ typedef void(^TextFiledBlock)();
             money =  money +goodInfo.allPrice;
         }
     }
-    self.messageLabel.text = [NSString stringWithFormat:@"共%ld件商品,需要消耗%d抢币",(unsigned long)self.selctCarArray.count,money];
+    NSString *allString =[NSString stringWithFormat:@"共%ld件商品,需要消耗%d 抢币",(unsigned long)self.selctCarArray.count,money];
+    NSString *substr = [NSString stringWithFormat:@"%d ",money];
+    self.messageLabel.attributedText = [allString alllString:allString andallcolor:[UIColor colorWithHex:@"#444444"] andallFont:[UIFont systemFontOfSize:12] subString:substr andColor:[UIColor colorWithHex:@"#DD2727"] andsubFont:[UIFont systemFontOfSize:12]];
+//    self.messageLabel.text = [NSString stringWithFormat:@"共%ld件商品,需要消耗%d 抢币",(unsigned long)self.selctCarArray.count,money];
 }
 -(void)goshopping
 {
@@ -372,5 +394,6 @@ typedef void(^TextFiledBlock)();
     [tabbar setSelectedIndex:0];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
 
 @end

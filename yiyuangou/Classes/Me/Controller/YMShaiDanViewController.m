@@ -110,19 +110,26 @@
     [dict setObject:description forKey:@"description"];
     [dict setObject:self.gsid forKey:@"gsid"];
     [dict setObject:self.grid forKey:@"grid"];
-    CGSize imagesize = CGSizeMake(200, 200);
+    CGSize imagesize = CGSizeMake(300, 300);
     //图片数组
     NSMutableArray *imgArray = _gridView.imageArray;
     //二进制数组
     NSMutableArray *imgDataArray = [[NSMutableArray alloc]init];
     for (int i =0;i<imgArray.count  ;i++) {
         UIImageView *imgView  = imgArray[i];
+        //按照图片的此尺寸压缩图片
+        UIImage     *img = imgView.image;
+        float        width = img.size.width;
+        float        height = img.size.height;
+        imagesize =  CGSizeMake(width*2/3.0, height*2/3.0);
         UIImage *imageNew = [self imageWithImage:imgView.image scaledToSize:imagesize];
-        NSData *imageData = UIImageJPEGRepresentation(imageNew,0.5);
-//        NSData *imageData = UIImageJPEGRepresentation(img,1);
-        
+        NSData *imageData;
+        if (UIImagePNGRepresentation(imageNew)==nil) {
+            imageData = UIImageJPEGRepresentation(imageNew, 0.8);
+        }else{
+            imageData = UIImagePNGRepresentation(imageNew);
+        }
         [imgDataArray addObject:imageData];
-//        i++;
     }
 
     NSString *url = [NSString stringWithFormat:@"%@%@",BaseServerURL,@"/share/add"];

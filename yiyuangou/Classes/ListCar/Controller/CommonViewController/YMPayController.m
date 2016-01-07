@@ -11,10 +11,11 @@
 #import "UIButton+Block.h"
 #import "YMCashResult.h"
 #import "YMOAuthViewController.h"
-
+#import "YMTextFild.h"
+#import "YMPayResultController.h"
 @interface YMPayController()<UITextFieldDelegate>
 {
-    UITextField *inputField;
+    YMTextFild *inputField;
     YMPayResult *carresult;
     BOOL isFinshChongZhi;//是否完成充值
     BOOL isFinshBug    ;//是否完成抢购
@@ -25,22 +26,15 @@
 @property(nonatomic,assign) NSUInteger lastTap;//上次选择
 @property (nonatomic,strong)UIButton *payButton;
 @property (nonatomic,assign)NSInteger lastCell;
+@property (nonatomic,strong)UIButton *backBtn;
 
 @end
 
 @implementation YMPayController
 -(void)viewDidDisappear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
-    SAFE;
-    [[MyCarManager sharedManager] dismissTheordercompletion:^(id result, NSInteger statusCode, NSString *msg) {
-        if (statusCode == 0) {
-            
-        }else{
-//            [weakSelf.view makeToast:@"订单取消失败"];
-        }
-    }];
-
+    [super viewDidDisappear:animated];
+ 
     self.payButton.userInteractionEnabled = YES;
 }
 -(UIView *)footerView1
@@ -58,7 +52,7 @@
     if (self.pay_operation == 1) {
         self.title = @"充值";
     }
-    inputField = [[UITextField alloc] initWithFrame:CGRectMake(55, 0, kWIDTH - 100 , 50)];
+    inputField = [[YMTextFild alloc] initWithFrame:CGRectMake(55, 0, kWIDTH - 100 , 50)];
     inputField.keyboardType = UIKeyboardTypeNumberPad;
     inputField.placeholder = @"请输入您要充值的金额";
     inputField.textAlignment = NSTextAlignmentLeft;
@@ -66,11 +60,25 @@
     inputField.font  = [UIFont systemFontOfSize:15];
     inputField.tintColor = [UIColor colorWithHex:@"#c1c1c1"];
     inputField.delegate = self;
-    
-//    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(getback)];
-//    self.navigationItem.leftBarButtonItem = backBarButton;
-    
+    if (self.pay_operation == 0) {
+        UIImage *btnImage = [UIImage imageNamed:@"nav_back"];
+        UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        backBtn.frame = CGRectMake(0,0, btnImage.size.width, btnImage.size.height);
+        [backBtn setBackgroundImage:btnImage forState:UIControlStateNormal];
+        [backBtn addTarget:self action:@selector(goBackTobefore) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+        self.navigationItem.leftBarButtonItem=barBtn;
+        self.backBtn = backBtn;
+    }
     self.payButton = [UIButton buttonWithFrame:CGRectMake(10, 15, kWIDTH- 20, 50) target:self action:@selector(btnClick) title:@"确认支付" cornerRadius:2];
+    UILabel *messageLable = [UILabel labelWithFrame:CGRectMake(10, self.payButton.tmri_bottom, kWIDTH - 20, 50) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#444444"]];
+    messageLable.text = @"由于抢购火热！请在30秒内完成支付。若支付超时，按实际购买份数为准，支付有余的金额退回至抢币余额";
+    if (self.pay_operation == 1) {
+        messageLable.hidden = YES;
+    }
+    messageLable.textColor = [UIColor colorWithHex:@"#DD2727"];
+    messageLable.numberOfLines =2;
+    [self.footerView1 addSubview:messageLable];
     [self.footerView1 addSubview:self.payButton];
     self.payButton.backgroundColor = [UIColor  colorWithHex:@"#DD2727"];
     
@@ -88,6 +96,8 @@
     }else{
     
     }
+    [self.tableView setSeparatorColor:[UIColor colorWithHex:@"#EAEAEA"]];
+
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -178,6 +188,7 @@
             return cell;
         }else{
             if (indexPath.row == self.lastCell-1) {
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 [cell.contentView addSubview:self.footerView1];
                 cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
                 return cell;
@@ -194,7 +205,16 @@
                 cell.textLabel.font  =[UIFont systemFontOfSize:15];
                 
                 UILabel *coinLable = [UILabel labelWithFrame:CGRectMake(70, 0, 200, 65) textAlignment:NSTextAlignmentLeft textColor:nil];
-                NSString *text = [NSString stringWithFormat:@"抢币支付 (%ld个)", (long)carresult.coin];
+                NSString *text;
+
+                if (carresult.coin >= carresult.toatlPrice) {
+                   accessoryView.image=[UIImage imageNamed:CellSelectImage];
+                    text = [NSString stringWithFormat:@"抢币支付 (%ld个)", (long)carresult.coin];
+
+                }else{
+                    text = [NSString stringWithFormat:@"抢币余额  (%ld个)", (long)carresult.coin];
+                }
+
                 NSString *text1 = [NSString stringWithFormat:@"(%ld个)", (long)carresult.coin];
                 NSDictionary *att = @{
                                           NSFontAttributeName:[UIFont systemFontOfSize:15],
@@ -207,11 +227,7 @@
 
                 coinLable.attributedText = [self genAttibuteStr:text newhandleStr:text1 commonAttDic:att handleDic:att1];
                 [cell.contentView addSubview:coinLable];
-                if (carresult.coin >= carresult.toatlPrice) {
-                    accessoryView.image=[UIImage imageNamed:CellSelectImage];
-                }else{
-                    accessoryView.image=[UIImage imageNamed:CellUnSelectImage];
-                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 return cell;
             }else{
                 cell.imageView.image = [UIImage imageNamed:@"爱贝"];
@@ -239,6 +255,7 @@
                 UILabel *labe =  [UILabel labelWithFrame:CGRectMake(10, 0, kWIDTH-20, 65) textAlignment:NSTextAlignmentCenter textColor:[UIColor colorWithHex:@"#DD2727"]];
                 cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
                 labe.text = @"您支付1元购买99网盘空间,系统会自动赠送给您一个夺宝币,即1元=1抢币,可用于夺宝,充值的款项将无法退回.";
+                labe.textColor = [UIColor colorWithHex:@"#DD2727"];
                 labe.numberOfLines = 0;
                 [cell.contentView addSubview:labe];
                 cell.selectionStyle  = UITableViewCellSelectionStyleNone;
@@ -252,6 +269,7 @@
             
         }else{
             if (indexPath.row == 2) {
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 [cell.contentView addSubview:self.footerView1];
                 cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
                 return cell;
@@ -280,18 +298,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 1) {
-        if (indexPath.row !=0&&indexPath.row!= _lastCell-1) {
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_lastTap inSection:1]];
-            UIImageView*accessoryView=(UIImageView*)cell.accessoryView;
-            
-            accessoryView.image=[UIImage imageNamed:CellUnSelectImage];
-            UITableViewCell *curCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:1]];
-            UIImageView*accessoryViewCur=(UIImageView*)curCell.accessoryView;
-            accessoryViewCur.image=[UIImage imageNamed:CellSelectImage];
-            _lastTap = indexPath.row ;
-        }
-    }
 }
 -(void)getback
 {
@@ -300,13 +306,21 @@
          if (statusCode == 0) {
              
          }else{
-             [weakSelf.view makeToast:@"订单取消失败"];
+             [weakSelf.view makeToast:msg];
          }
      }];
     [self dissmissMe];
 }
 -(void)dissmissMe
 {
+    SAFE;
+    [[MyCarManager sharedManager] dismissTheordercompletion:^(id result, NSInteger statusCode, NSString *msg) {
+        if (statusCode == 0) {
+            
+        }else{
+            [weakSelf.view makeToast:msg];
+        }
+    }];
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)hidtheView
@@ -323,15 +337,21 @@
                 return;
             }
             SAFE;
+            self.backBtn .enabled = NO;
             [self.view makeToastActivity:kLoadingText];
             [[MyCarManager sharedManager] MycarFinishiPayStatusWith:carresult withPay_way:_lastTap completion:^(id result, NSInteger statusCode, NSString *msg) {
+                self.backBtn.enabled = YES;
                 [weakSelf.view hideToastActivity];
                 if (statusCode == 0) {
                     [weakSelf.view makeToast:@"  购买成功  "];
                     [[NSNotificationCenter defaultCenter]postNotificationName:CAR_ISCHANGE object:nil];
+                    YMPayResultController *controller = [[YMPayResultController alloc] init];
+                    controller.oid = carresult.oid;
+                    [self setHidesBottomBarWhenPushed:YES];
+                    controller.isHidenRight = YES;
+                    
+                    [self.navigationController pushViewController:controller animated:YES];
 
-                    self.tableView.userInteractionEnabled  =  NO;
-                    [self performSelector:@selector(dissmissMe) withObject:nil afterDelay:1.0];
                 }else{
                     [self.view makeToastActivity:msg];
                 }
@@ -350,6 +370,7 @@
             }
             YMOAuthViewController *controller = [[YMOAuthViewController alloc] init];
             controller.coin =[inputField.text intValue];
+            controller.title = self.title;
             controller.pay_way = 1;
             [self setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:controller animated:YES];
@@ -357,13 +378,16 @@
     }else{
         if (carresult.coin >= carresult.toatlPrice) {
             UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"购买失败" message:@"抢币充足,请用余额支付^-^" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            alterView.tag = 2;
+            alterView.tag = 1;
             [alterView show];
             return;
         }
         YMOAuthViewController *controller = [[YMOAuthViewController alloc] init];
+        controller.oid =carresult.oid;
         controller.car =carresult;
         [self setHidesBottomBarWhenPushed:YES];
+        controller.title = self.title;
+
         [[NSNotificationCenter defaultCenter]postNotificationName:CAR_ISCHANGE object:nil];
         [self.navigationController pushViewController:controller animated:YES];
     }
@@ -382,9 +406,12 @@
             if (carresult.toatlPrice == 0) {
                 UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"哎呀,你的商品已被抢光" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"选其他", nil];
                 alterView.tag = 1;
+                [[NSNotificationCenter defaultCenter]postNotificationName:CAR_ISCHANGE object:nil];
                 [alterView show];
             }
 
+        }else{
+            [weakSelf.view makeToast:msg];
         }
     }];
 
@@ -437,12 +464,26 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSInteger  count = [textField.text integerValue];
-    textField.text = [NSString stringWithFormat:@"%ld",count];
+    textField.text = [NSString stringWithFormat:@"%ld",(long)count];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 1) {
         [self dissmissMe];
+
     }
+    if (alertView.tag == 5) {
+        if (buttonIndex == 0) {
+            [self dissmissMe];
+        }
+
+    }
+}
+-(void)goBackTobefore
+{
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"机会不等人,确定放弃支付" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", @"考虑一下",nil];
+    alterView.tag = 5;
+    [alterView show];
+
 }
 @end

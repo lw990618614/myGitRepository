@@ -49,10 +49,10 @@
         
         self.luckNumBtn = [[UIButton alloc]initWithFrame:CGRectMake(kWIDTH - 120, self.productionLabel.tmri_bottom + 10, 90, 30)];
         [self.luckNumBtn setTitle:@"查看幸运码" forState:UIControlStateNormal];
-        self.luckNumBtn.backgroundColor  = [UIColor redColor];
+//        self.luckNumBtn.backgroundColor  = [UIColor colorWithHex: @"#DD2727"];
         self.luckNumBtn.layer.cornerRadius = 5.0;
-        self.luckNumBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
-        [self.luckNumBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.luckNumBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        [self.luckNumBtn setTitleColor:[UIColor colorWithHex:@"#DD2727"] forState:UIControlStateNormal];
         [self.luckNumBtn addTarget:self action:@selector(luckNumBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.luckNumBtn];
     
@@ -61,7 +61,7 @@
 }
 -(id)congfigWithModle:(NSDictionary *)dict
 {
-    [self.iconView sd_setImageWithURL:[NSURL URLWithString:dict[@"goodsImage"]] placeholderImage:placeHolder];
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:dict[@"goodsImage"]] placeholderImage:carPlaceHolder];
     self.timeLable.text = [NSString stringWithFormat:@"开奖时间:%@",dict[@"endTime"]];
 //    self.productionLabel.text  = dict[@"name"];
     self.productionLabel.text = [NSString stringWithFormat:@"第%@期 %@",dict[@"period"],dict[@"name"]];
@@ -101,8 +101,9 @@
         NSString *name = (dict[@"phone"] == nil || [dict[@"phone"] isEqualToString:@""])?dict[@"sname"]:dict[@"phone"];
         self.rewardPhone.text = [NSString stringWithFormat:@"%@",name];
         NSString *str =  [NSString stringWithFormat:@"开奖时间:%@",dict[@"endTime"]];
-
-        self.timeLable.attributedText = [self genAttibuteStr:str newhandleStr:[NSString stringWithFormat:@"%@",dict[@"endTime"]] commonAttDic:attGray handleDic:attGray];
+        if (![dict[@"endTime"] isValid]) {
+            self.timeLable.attributedText = [self genAttibuteStr:str newhandleStr:[NSString stringWithFormat:@"%@",dict[@"endTime"] ] commonAttDic:attGray handleDic:attGray];
+        }
         NSString *takePart  = [NSString stringWithFormat:@"参与次数:%@",dict[@"actually"]];
         self.totalLable.attributedText = [self genAttibuteStr:takePart newhandleStr:[NSString stringWithFormat:@"%@",dict[@"actually"]] commonAttDic:attGray handleDic:attGreen];
 

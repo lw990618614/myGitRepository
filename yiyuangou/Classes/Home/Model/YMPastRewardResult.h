@@ -29,6 +29,8 @@
  */
 @property (nonatomic,copy) NSString * goodsImage;
 
+@property (nonatomic,copy) NSString * image100by100;
+
 
 @property (nonatomic,copy) NSString * name;
 

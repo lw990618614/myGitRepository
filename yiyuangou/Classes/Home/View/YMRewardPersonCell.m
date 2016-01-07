@@ -28,7 +28,7 @@
         
         [self.contentView addSubview:self.stateView];
         
-        self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.productionLable.tmri_bottom, kWIDTH, 1)];
+        self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.productionLable.tmri_bottom, kWIDTH, 0.5)];
         self.lineView.backgroundColor = [UIColor colorWithHex:@"#EAEAEA"];
         [self.contentView addSubview:self.lineView];
         
@@ -49,11 +49,11 @@
         [self.contentView addSubview:self.phoneLable];
 
         
-        self.totalLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 5, self.pastGetterLable.tmri_bottom , 90, 25) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
+        self.totalLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 5, self.pastGetterLable.tmri_bottom , 110, 25) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
         self.totalLable.text = @"参与人次： 50人次";
         [self.contentView addSubview:self.totalLable];
         
-        self.timeLable = [UILabel labelWithFrame:CGRectMake(self.totalLable.tmri_right ,  self.pastGetterLable.tmri_bottom , kWIDTH -self.iconView.tmri_right -100, 25) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
+        self.timeLable = [UILabel labelWithFrame:CGRectMake(self.totalLable.tmri_right ,  self.pastGetterLable.tmri_bottom , kWIDTH -self.totalLable.tmri_right, 25) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
         self.timeLable.text = @"开奖时间： 2015-8-17 17：08：23：23";
         [self.contentView addSubview:self.timeLable];
         if (kWIDTH <375) {
@@ -64,7 +64,7 @@
         self.luckLable.text = @"中奖号码:1001021";
         [self.contentView addSubview:self.luckLable];
 
-        self.checkluckButton = [UIButton buttonWithFrame:CGRectMake(kWIDTH - 160, self.iconView.tmri_bottom + 10, 150, 20) target:nil action:nil title:@"查看我的幸运号码" cornerRadius:1];
+        self.checkluckButton = [UIButton buttonWithFrame:CGRectMake(kWIDTH - 160, self.iconView.tmri_bottom + 10, 150, 20) target:nil action:nil title:@"查看我的幸运码" cornerRadius:1];
         [self.checkluckButton setTitleColor:[UIColor colorWithHex: @"#DD2727"] forState:UIControlStateNormal];
         self.checkluckButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [self.contentView addSubview:self.checkluckButton];
@@ -75,11 +75,10 @@
 }
 -(id)congifgWithMode:(YMDetailResult *)model
 {
-    self.productionLable.text = [NSString stringWithFormat:@"(第%ld期) %@",model.period,model.name];
-//        NSLog(@"%@",headString);
-        [self.iconView sd_setImageWithURL:[NSURL URLWithString:model.face] placeholderImage:nil];
-    self.phoneLable.text = [NSString stringWithFormat:@"%@",model.mobile.length?model.mobile:model.sname];
-        self.totalLable.text = [NSString stringWithFormat: @"参与人次:%@人次",model.actually];
+    self.productionLable.text = [NSString stringWithFormat:@"(第%ld期) %@",(long)model.period,model.name];
+        [self.iconView sd_setImageWithURL:[NSURL URLWithString:model.face] placeholderImage:headIconHolder];
+    self.phoneLable.text = [NSString stringWithFormat:@"%@",model.phone.length?model.phone:model.sname];
+        self.totalLable.text = [NSString stringWithFormat: @"本期参与:%@人次",model.actually];
         self.timeLable.text = [NSString stringWithFormat:@"开奖时间:%@",model.time?model.time:@""];
         NSString *totalString = [NSString stringWithFormat:@"中奖号码:  %@",model.luckyNumber];
         self.luckLable.attributedText = [totalString alllString:totalString andallcolor:[UIColor colorWithHex:@"#444444"] andallFont:[UIFont systemFontOfSize:12] subString:model.luckyNumber andColor:[UIColor colorWithHex:@"4AD107"] andsubFont:[UIFont systemFontOfSize:12]];

@@ -7,7 +7,6 @@
 //
 
 #import "UIView+Extension.h"
-#import "YMNoDataView.h"
 
 @implementation UIView (Extension)
 
@@ -82,14 +81,19 @@
 }
 -(void)showEmptyView
 {
-    YMNoDataView *nodata = [[YMNoDataView alloc] initWithFrame:self.bounds];
-    nodata.backgroundColor = [UIColor clearColor];
-    [self addSubview:nodata];
+    [self showEmptyView:0];
 }
 -(void)showEmptyView:(float)height
 {
+    
     YMNoDataView *nodata = [[YMNoDataView alloc] initWithFrame:CGRectMake(0, height, self.width, self.height - height)];
+    for (UIView *view in [self subviews]) {
+        if ([view isKindOfClass:[YMNoDataView class]]) {
+            [view removeFromSuperview];
+        }
+    }
     [self addSubview:nodata];
+    [self bringSubviewToFront:nodata];
 }
 -(void)hideEmptyView
 {

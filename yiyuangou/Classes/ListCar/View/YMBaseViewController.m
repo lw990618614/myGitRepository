@@ -29,7 +29,7 @@
 }
 -(UIBarButtonItem *) backItem
 {
-    UIImage *btnImage = [UIImage imageNamed:@"nav_back"];
+    UIImage *btnImage = [UIImage imageNamed:@"返回"];
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(0,0, btnImage.size.width, btnImage.size.height);
     [backBtn setBackgroundImage:btnImage forState:UIControlStateNormal];

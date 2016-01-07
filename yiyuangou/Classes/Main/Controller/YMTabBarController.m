@@ -29,11 +29,11 @@
     
     // 第1个
     HomeViewController *home = [[HomeViewController alloc] init];
-    [self addChildVC:home title:@"抢购" imgName:@"navibar_02" selectedName:@"navibar_01"];
+    [self addChildVC:home title:@"抢购" imgName:@"抢购" selectedName:@"navibar_01"];
     
     // 第2个
     RewardViewController *reward = [[RewardViewController alloc] init];
-    [self addChildVC:reward title:@"最近开奖" imgName:@"navibar_04" selectedName:@"navibar_03"];
+    [self addChildVC:reward title:@"最新揭晓" imgName:@"navibar_04" selectedName:@"navibar_03"];
     
     // 第3个
     TreasureViewController *treasure = [[TreasureViewController alloc] init];

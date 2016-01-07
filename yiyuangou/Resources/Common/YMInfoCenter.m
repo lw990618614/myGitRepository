@@ -40,12 +40,16 @@
     if (self.mainUser.YMUserID) {
         return self.mainUser.YMUserID;
     }else{
-//        return 15;
-//        return 9;
+
         return 0;
     }
 }
-
+-(NSString *)getAccount
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString       *account = [ud valueForKey:Account];
+    return account;
+}
 + (NSUInteger) userID{
     return [[self sharedManager] getUserID];
 }
@@ -82,4 +86,40 @@
     [ud synchronize];
 }
 
+-(void)saveUserAccount
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:self.mainUser.YMAccount forKey:Account];
+    [ud synchronize];
+}
+
+//保存数据
+//+void)savestr:(NSString *)str forkey:(NSString *)key
+//{
+//     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+//    [ud setObject:str  forKey:key];
+//    [ud synchronize];
+//}
++(void)savestr:(NSString *)str forkey:(NSString *)key
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:str  forKey:key];
+    [ud synchronize];
+}
++(NSString *)getforkey:(NSString *)key
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+   return  [ud objectForKey:key];
+}
+-(NSString *)mobile:(NSString *)key
+{
+   NSString *vaule = [[self class] getforkey:key];
+    if (![vaule isValid]) {
+        vaule =  [self.mainUser.YMUserMobile isValid]?self.mainUser.YMUserMobile:self.mainUser.YMAccount;
+        if (![vaule isValidPhoneNumber]) {
+            vaule = @"";
+        }
+    }
+    return vaule;
+}
 @end

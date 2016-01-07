@@ -202,7 +202,12 @@
     BOOL isValid = [phoneTest evaluateWithObject:self];
     return isValid;
 }
-
+-(BOOL)isValidQQ
+{
+    NSString *Regex = @"\\w{5,12}";
+    NSPredicate *passwordTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex];
+    return [passwordTest evaluateWithObject:self];
+}
 
 // Is Valid URL
 
@@ -946,8 +951,13 @@ finish:
 }
 -(NSMutableAttributedString *) genAttibuteStr:(NSString *)str newhandleStr:(NSString *) subStr commonAttDic:(NSDictionary *)commonDic handleDic:(NSDictionary *)handleDic
 {
+//    if (<#condition#>) {
+//        <#statements#>
+//    }
+    if (subStr == nil) {
+        return nil;
+    }
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] init];
-    
     NSRange range = [str rangeOfString:subStr];
     NSString *str1 = [str substringToIndex:range.location];
     NSString *str2 = subStr;

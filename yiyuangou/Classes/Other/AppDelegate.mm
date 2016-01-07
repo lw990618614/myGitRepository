@@ -8,8 +8,8 @@
 
 #import "AppDelegate.h"
 #import "YMTabBarController.h"
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKConnector/ShareSDKConnector.h>
+//#import <ShareSDK/ShareSDK.h>
+//#import <ShareSDKConnector/ShareSDKConnector.h>
 //#import "WXApi.h"
 //#import "WXApiManager.h"
 //腾讯开放平台（对应QQ和QQ空间）SDK头文件
@@ -24,6 +24,7 @@
 #import "UMSocialWechatHandler.h"
 #import "UMSocialSnsPlatformManager.h"
 #import "UMSocialSnsService.h"
+//#import "UMessage.h"
 //#import "UMSocialSinaSSOHandler.h"
 #import "UMSocialSinaHandler.h"
 @interface AppDelegate ()
@@ -34,24 +35,29 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+//    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] init];
     self.window.frame = [UIScreen mainScreen].bounds;
     _mapManager = [[BMKMapManager alloc]init];
+    
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
-    BOOL ret = [_mapManager start:BaiDuKey  generalDelegate:nil];
-    if (!ret) {
-        NSLog(@"manager start failed!");
-    }
+//    BOOL ret = [_mapManager start:BaiDuKey  generalDelegate:nil];
+//    if (!ret) {
+//        NSLog(@"manager start failed!");
+//    }
     self.window.rootViewController = [[YMTabBarController alloc] init];
     // 3.显示窗口
     [self.window makeKeyAndVisible];
-    
+    //友盟分享
     [UMSocialData setAppKey:UMKey];
+    //友盟推送
+//    [UMessage startWithAppkey:UMKey launchOptions:launchOptions];
     [self umConfig];
+    //友盟推送配置
+//    [self umengPushCongfig];
     return YES;
 }
 
@@ -78,6 +84,7 @@
 }
 -(void) umConfig
 {
+    //友盟分享
     [UMSocialQQHandler setQQWithAppId:QQ_Key appKey:QQ_sercert url:@"http://www.umeng.com/social"];
     [UMSocialWechatHandler setWXAppId:WX_ID appSecret:WX_SERCER url:@"http://www.umeng.com/social"];
 //    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:WeiBoKey RedirectURL:WeiBoUrl];
@@ -85,7 +92,8 @@
 
     [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ, UMShareToQzone, UMShareToWechatSession]];
     
-    [MobClick setLogEnabled:YES];
+    //友盟统计
+    [MobClick setLogEnabled:NO];
     //错误日志分析
     [MobClick startWithAppkey:UMKey reportPolicy:BATCH   channelId:CHANNEL];
     //设置version标示
@@ -93,31 +101,62 @@
     [MobClick setAppVersion:version];
 
 }
+//友盟推送配置
+//-(void) umengPushCongfig
+//{
+//#if __IPHONE_OS_VERSION_MAX_ALLOWED >= _IPHONE80_
+//    if([SYSTEMVERSION floatValue] >= 8.0)
+//    {
+//        //register remoteNotification types （iOS 8.0及其以上版本）
+//        UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
+//        action1.identifier = @"action1_identifier";
+//        action1.title=@"Accept";
+//        action1.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
+//        
+//        UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
+//        action2.identifier = @"action2_identifier";
+//        action2.title=@"Reject";
+//        action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
+//        action2.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
+//        action2.destructive = YES;
+//        
+//        UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
+//        categorys.identifier = @"category1";//这组动作的唯一标示
+//        [categorys setActions:@[action1,action2] forContext:(UIUserNotificationActionContextDefault)];
+//        
+//        UIUserNotificationSettings *userSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert
+//                                                                                     categories:[NSSet setWithObject:categorys]];
+//        [UMessage registerRemoteNotificationAndUserNotificationSettings:userSettings];
+//        
+//    } else{
+//        //register remoteNotification types (iOS 8.0以下)
+//        [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
+//         |UIRemoteNotificationTypeSound
+//         |UIRemoteNotificationTypeAlert];
+//    }
+//#else
+//    
+//    //register remoteNotification types (iOS 8.0以下)
+//    [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
+//     |UIRemoteNotificationTypeSound
+//     |UIRemoteNotificationTypeAlert];
+//    
+//#endif
+//    //for log
+//    [UMessage setLogEnabled:YES];
+//    
+//}
 -(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    if ([url.absoluteString hasPrefix:@"http://99duobao"]) {
-        NSLog(@"chulai");
-        return YES;
-    }
     return [self handleAppCallBack:url];
 }
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
-    if ([url.absoluteString hasPrefix:@"http://99duobao"]) {
-        NSLog(@"chulai");
-        return YES;
-    }
-
     return [self handleAppCallBack:url];
 
 }
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    if ([url.absoluteString hasPrefix:@"http://99duobao"]) {
-        NSLog(@"chulai");
-        return YES;
-    }
-
     return [self handleAppCallBack:url];
 
 }
@@ -128,5 +167,17 @@
     [UMSocialSnsService handleOpenURL:url];
     return YES;
 }
-
+#pragma mark  ----- 友盟推送------
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+//{
+//    NSLog(@"deviceToken ====%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
+//                  stringByReplacingOccurrencesOfString: @">" withString: @""]
+//                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
+//    [UMessage registerDeviceToken:deviceToken];
+//}
+//
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+//{
+//    [UMessage didReceiveRemoteNotification:userInfo];
+//}
 @end

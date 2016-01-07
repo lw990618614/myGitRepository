@@ -16,4 +16,5 @@
 @property(nonatomic,copy)NSString *loginName;
 @property(nonatomic,copy)NSString *address;
 @property(nonatomic,strong)NSString *IP;
+//@property(nonatomic,assign)BOOL isNewUsr;//是不是第一次登陆
 @end

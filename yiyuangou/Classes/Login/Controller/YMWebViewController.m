@@ -21,7 +21,6 @@
     if (self) {
         self.title=title;
         self.urlStr=url;
-        
     }
     return self;
 }

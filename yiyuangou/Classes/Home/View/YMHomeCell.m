@@ -8,7 +8,7 @@
 
 #import "YMHomeCell.h"
 
-#define cellWidth frame.size.width
+#define cellWidth (frame.size.width-20)
 #define cellHeight frame.size.height
 @interface YMHomeCell()<TTCounterLabelDelegate>
 @end
@@ -22,21 +22,24 @@
 
         //图
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,frame.size.width, 82.5)];
-        self.iconView.image  = [UIImage imageNamed:GoodImage];
         self.iconView.contentMode =  UIViewContentModeScaleAspectFill;
         [self.iconView setClipsToBounds:YES];
         [self.contentView addSubview:self.iconView];
         
         //商品名称
-        self.productionLable = [UILabel labelWithFrame:CGRectMake(0, self.iconView.tmri_bottom +10, cellWidth, 15) textAlignment:NSTextAlignmentCenter textColor:[UIColor colorWithHex:@"#444444"]];
+        self.productionLable = [UILabel labelWithFrame:CGRectMake(10, self.iconView.tmri_bottom +10, cellWidth, 15) textAlignment:NSTextAlignmentCenter textColor:[UIColor colorWithHex:@"#444444"]];
         self.productionLable.text = @"iPhone 6 S";
         [self.contentView addSubview:self.productionLable];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width-0.5, 0, 0.5, frame.size.height)];
+        lineView.backgroundColor = [UIColor colorWithHex:@"#EAEAEA"];
+        [self.contentView addSubview:lineView];
         
         //获奖者
         self.prizeButton = [UIButton buttonWithFrame:CGRectMake(0, self.productionLable.tmri_bottom + 10, cellWidth, 15) target:nil action:nil title:@"150***3434" cornerRadius:1];
         [self.prizeButton setTitleColor:[UIColor  colorWithHex:@"#999999"] forState:UIControlStateNormal];
         [self.prizeButton setImage:[UIImage imageNamed:@"一元购homepage_03"] forState:UIControlStateNormal];
-        self.prizeButton.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+        self.prizeButton.titleLabel.font = [UIFont systemFontOfSize:12.0f];
         [self.contentView addSubview:self.prizeButton];
         
         //时间跑秒
@@ -60,9 +63,8 @@
         
         self.model = list;
         
-        UIImage *placeholder = [UIImage imageNamed:GoodImage];
         
-        [self.iconView sd_setImageWithURL:[NSURL URLWithString:list.goodsImage] placeholderImage:placeholder];
+        [self.iconView sd_setImageWithURL:[NSURL URLWithString:list.image250by165] placeholderImage:timePlaceHolder];
         
         self.productionLable.text = list.name;
         
@@ -84,9 +86,8 @@
         
 //        self.model = list;
         
-        UIImage *placeholder = [UIImage imageNamed:GoodImage];
         
-        [self.iconView sd_setImageWithURL:[NSURL URLWithString:list.goodsImage] placeholderImage:placeholder];
+        [self.iconView sd_setImageWithURL:[NSURL URLWithString:list.goodsImage] placeholderImage:timePlaceHolder];
         
         self.productionLable.text = list.name;
         

@@ -38,6 +38,9 @@
         self.title = @"选择收货地址";
     }
     _lastTap = 0;
+    if (self.type == YMRewardList && self.isFromBindPhone) {
+        self.navigationItem.leftBarButtonItem = [self backItemRecevice];
+    }
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT-64- 60) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
@@ -223,7 +226,21 @@
     userlbl.text  = addressInfo[@"linkman"];
     //联系地址
     UILabel *address = (UILabel *)[cell.contentView viewWithTag:kymAddress];
-    address.text  = addressInfo[@"address"];
+   NSString *bigPlace = [addressInfo[@"scope"] stringByReplacingOccurrencesOfString:@":" withString:@""];
+    NSString *scope = addressInfo[@"scope"];
+    NSArray *addressArray =  [scope componentsSeparatedByString:@":"];
+    if (addressArray.count == 3) {
+        if ([addressArray[0] isEqualToString:addressArray[1]])
+        {
+            address.text  = [NSString stringWithFormat:@"%@%@%@",addressArray[0],addressArray[2],addressInfo[@"address"]];
+            
+        }
+        else
+        {
+            address.text  = [NSString stringWithFormat:@"%@%@",[bigPlace isValid]?bigPlace:@"" ,addressInfo[@"address"]];
+            
+        }
+    }
     if (indexPath.row == _lastTap) {
         cell.imageView.image = [UIImage imageNamed:CellSelectImage];
     }
@@ -262,7 +279,7 @@
 //设置默认地址
 -(void) setDefaultAddress:(NSString *)gaid
 {
-    
+
     [self.view makeToast:@"正在设置默认地址"];
     NSString *url = [NSString stringWithFormat:@"%@%@",BaseServerURL,@"/address/setDefault"];
     WEAKSELF;
@@ -382,5 +399,27 @@
         }
     }
 
+}
+-(UIBarButtonItem *) backItemRecevice
+{
+    UIImage *btnImage = [UIImage imageNamed:@"nav_back"];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(0,0, btnImage.size.width, btnImage.size.height);
+    [backBtn setBackgroundImage:btnImage forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(popSelfToRecevice:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    return barBtn;
+}
+- (void)popSelfToRecevice:(id)sender{
+    NSArray *viewcontrollers =  self.navigationController.viewControllers;
+    UIViewController *vc ;
+    for (UIViewController *v in viewcontrollers) {
+        if ([v isKindOfClass:[YMReceiveListController class]]) {
+            vc =  v;
+            break;
+        }
+    }
+    
+    [self.navigationController popToViewController:vc animated:YES];
 }
 @end

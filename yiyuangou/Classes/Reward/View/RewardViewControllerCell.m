@@ -15,22 +15,25 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        //商品图片
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 100, 100)];
         self.iconView.layer.borderColor = [UIColor colorWithHex:@"#EAEAEA"].CGColor;
-        self.iconView.layer.borderWidth = 1;
-        self.iconView.contentMode =  UIViewContentModeScaleAspectFill;
-        [self.iconView setClipsToBounds:YES];
+        self.iconView.layer.borderWidth = 0.5;
+//        self.iconView.contentMode =  UIViewContentModeScaleAspectFill;
+//        [self.iconView setClipsToBounds:YES];
 
 //        self.iconView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        
-        self.productionLabel = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, 10, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#777777"]];
+        //商品图片
+        self.productionLabel = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, 10, kWIDTH-130, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#777777"]];
         self.productionLabel.font = [UIFont systemFontOfSize:14];
         self.productionLabel.text = @"IPhone 6S 玫瑰金 16GB";
         
+        //获奖者
         self.getterLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, self.productionLabel.tmri_bottom +5, 10, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#777777"]];
         self.getterLable.font  =[UIFont systemFontOfSize:14];
-        self.getterLable.text = @"获奖者:";
+        self.getterLable.text = @"获得者:";
 
+        //获奖者
         self.phoneLable = [UILabel labelWithFrame:CGRectMake(self.getterLable.tmri_right, self.productionLabel.tmri_bottom +5, kWIDTH, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor  colorWithHex:@"#DD2727"]];
         self.phoneLable.text = @"23";
         self.phoneLable.font  = [UIFont  systemFontOfSize:14];
@@ -75,23 +78,24 @@
     
     if ([model isKindOfClass:[RewardFlowList  class]]) {
         RewardFlowList *flowModel = model;
-        [self.iconView sd_setImageWithURL:[NSURL URLWithString:flowModel.goodsImage] placeholderImage:placeHolder];
+        [self.iconView sd_setImageWithURL:[NSURL URLWithString:flowModel.image100by100] placeholderImage:carPlaceHolder];
         self.productionLabel.text = flowModel.name;
         
         self.priceLable.text = [NSString stringWithFormat:@"商品价格: %@ [第%@期]",flowModel.price,flowModel.period];
         if (flowModel.showPhone) {
             //商品名称
-            self.productionLabel.frame =CGRectMake(self.iconView.tmri_right + 10, 10, kWIDTH, 15);
+            self.productionLabel.frame =CGRectMake(self.iconView.tmri_right + 10, 10,  kWIDTH-130, 15);
             
             //获奖者
             self.getterLable.frame = CGRectMake(self.iconView.tmri_right + 10, self.productionLabel.tmri_bottom +5, 50, 15);
             
             //手机
+            NSString *tx = [NSString stringWithFormat:@"%ld",(long)flowModel.uid];
             self.phoneLable.frame =CGRectMake(self.getterLable.tmri_right, self.productionLabel.tmri_bottom +5, kWIDTH, 15);
-            self.phoneLable.text = flowModel.phone.length>5?flowModel.phone:flowModel.sname;
+            self.phoneLable.text = flowModel.phone.length>5?flowModel.phone:flowModel.sname.length?flowModel.sname:tx;
             
             //参与人次
-            self.totalLable.text = [NSString stringWithFormat:@"参与人数: %ld人",(long)flowModel.menber];
+            self.totalLable.text = [NSString stringWithFormat:@"本期参与: %ld人次",(long)flowModel.menber];
             self.totalLable.frame= CGRectMake(self.iconView.tmri_right + 10, self.phoneLable.tmri_bottom +5, 150, 15);
             
             //商品价格
@@ -136,11 +140,11 @@
         
     }else{
         RewardLotteryList *lotteryList = model;
-        [self.iconView sd_setImageWithURL:[NSURL URLWithString:lotteryList.goodsImage] placeholderImage:placeHolder];
+        [self.iconView sd_setImageWithURL:[NSURL URLWithString:lotteryList.image100by100] placeholderImage:carPlaceHolder];
         
         //商品名称
         self.productionLabel.text = lotteryList.name;
-        self.productionLabel.frame =CGRectMake(self.iconView.tmri_right + 10, 10, kWIDTH, 15);
+        self.productionLabel.frame =CGRectMake(self.iconView.tmri_right + 10, 10,  kWIDTH-130, 15);
         
         //获奖者
         self.getterLable.frame = CGRectMake(self.iconView.tmri_right + 10, self.productionLabel.tmri_bottom +5, 50, 15);
@@ -149,9 +153,8 @@
         self.phoneLable.frame =CGRectMake(self.getterLable.tmri_right, self.productionLabel.tmri_bottom +5, kWIDTH, 15);
         
         self.phoneLable.text = lotteryList.phone.length>5?lotteryList.phone:lotteryList.sname;
-        NSLog(@"%@,",lotteryList.menber);
         //参与人次
-        self.totalLable.text = [NSString stringWithFormat:@"参与人数: %@人",lotteryList.menber];
+        self.totalLable.text = [NSString stringWithFormat:@"本期参与: %@人次",lotteryList.menber];
         self.totalLable.frame= CGRectMake(self.iconView.tmri_right + 10, self.phoneLable.tmri_bottom +5, 150, 15);
         
         //商品价格

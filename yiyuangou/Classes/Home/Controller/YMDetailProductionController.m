@@ -33,14 +33,17 @@
 #import "YMMoreResult.h"
 #import "LuckNumView.h"
 #import "YMDetailRuleCell.h"
+#import "YMLuckNumView.h"
+#import "YMRuleResult.h"
+#import "YMCheckDetailController.h"
 @interface YMDetailProductionController()<YMBuyViewDelegate,UITableViewDataSource,UITableViewDelegate,YMOrderViewDelegate,YMDetailTimeCellDelegate>
 {
     UIScrollView *addScrollView;//广告滚动
     UIPageControl *pageControl;//广告控制器
-
+    NSMutableDictionary *muDic;
     YMDetailResult *detailResult;
     NSInteger allCount;
-    
+    NSString *url;
     YMOrderResult *order;
 }
 @property (nonatomic ,strong) UIView  * footView;
@@ -94,7 +97,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"商品详情";
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -103,7 +106,8 @@
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
-    
+    muDic = [[NSMutableDictionary alloc]init];
+
     self.titleArray = @[@"往期揭晓",@"晒单",@"所有参与人次"];
     [self.view addSubview:self.tableView];
     SAFE;
@@ -111,7 +115,12 @@
         [weakSelf addMoreHotstatus];
         [weakSelf.tableView.footer endRefreshing];
     }];
+    [self.tableView setSeparatorColor:[UIColor colorWithHex:@"#EAEAEA"]];
+
+    [self getTheRule];
     
+    [self getThenumbers];
+
 }
 #pragma mark -- UITableViewDelegate & UITableViewDataSource
 
@@ -136,7 +145,12 @@
     if (indexPath.section == 0 ) {
         if (indexPath.row == 0) {
             if (detailResult.flag == 0) {//处于购买状态
-                return 90;
+                NSArray *numberArray = muDic[@"luckyNumList"];
+
+                if (!numberArray.count) {
+                    return 90;
+                }
+                return 110;
             }else{
                 if (detailResult.status == 1) {//已公布获奖用户
                     return 140;
@@ -146,7 +160,7 @@
             }
         }else
         {
-            return 90;
+            return 70;
         }
     }else if(indexPath.section == 1){
         return 44;
@@ -158,6 +172,11 @@
 {
     return HEIGHT_SERO;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
@@ -172,6 +191,9 @@
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell = [cell congifgWithMode:detailResult];
                     [cell.checkluckButton addTarget:self action:@selector(showLuckView) forControlEvents:UIControlEventTouchUpInside];
+                    NSArray *numberArray = muDic[@"luckyNumList"];
+                    cell.checkluckButton.hidden =!numberArray.count;
+
                     return cell;
                     
                 }else{
@@ -181,8 +203,11 @@
                         cell = [[YMDetailTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:detailTimeCell];
                         cell.delegate = self;
                     }
+                    [cell.luckButton addTarget:self action:@selector(showLuckView) forControlEvents:UIControlEventTouchUpInside];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell = [cell congfigWithModel:detailResult];
+                    NSArray *numberArray = muDic[@"luckyNumList"];
+                    cell.luckButton.hidden =!numberArray.count;
                     return cell;
                 }
             }else{
@@ -192,9 +217,13 @@
                 if (cell == nil) {
                     cell = [[YMDetailProgressCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:progressCell];
                 }
+                [cell.ruleButton addTarget:self action:@selector(showLuckView) forControlEvents:UIControlEventTouchUpInside];
+                
                 cell = [cell congifgWithMode:detailResult];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
+                NSArray *numberArray = muDic[@"luckyNumList"];
+                cell.ruleButton.hidden =!numberArray.count;
+
                 return cell;
             }
         }else{
@@ -205,9 +234,14 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.ruleButton addTarget:self action:@selector(ruleButtonClick) forControlEvents:UIControlEventTouchDown];
+            if (detailResult.status) {
+                [cell.ruleButton setTitle:@"查看计算详情" forState:UIControlStateNormal];
+            }
+            cell.backgroundColor= [UIColor whiteColor];
             return cell;
         }
     }else if (indexPath.section == 1){
+        
         static NSString *tableviewCell = @"tableviewCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:tableviewCell];
         if (cell == nil) {
@@ -216,6 +250,8 @@
 
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text = self.titleArray[indexPath.row];
+        cell.textLabel.font = [UIFont systemFontOfSize:15];
+
         return cell;
         
     }else{
@@ -227,6 +263,7 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.text = @"所有人参与次数";
+            cell.textLabel.font = [UIFont systemFontOfSize:15];
             return cell;
 
         }else{
@@ -285,6 +322,7 @@
         }else if(indexPath.row == 1){
             TreasureViewController *controller = [[TreasureViewController alloc] init];
             controller.gid =detailResult.gid;
+            controller.ishidenTabar = YES;
             [self setHidesBottomBarWhenPushed:YES];
             controller.isHiden= YES;
             controller.titleName = @"商品晒单";
@@ -309,7 +347,7 @@
         [notifyView addSubview:notifyLabel];
         
         UIView *buyView = [[UIView alloc] initWithFrame:CGRectMake(notifyView.tmri_right, 0, kWIDTH*0.34, 50)];
-        UIButton *rightButton = [UIButton buttonWithFrame:buyView.bounds target:self action:@selector(showLatestInformation) title:@"立即抢购" cornerRadius:0];
+        UIButton *rightButton = [UIButton buttonWithFrame:buyView.bounds target:self action:@selector(showLatestInformation) title:@"立即前往" cornerRadius:0];
         [buyView addSubview:rightButton];
 
         rightButton.backgroundColor = [UIColor  colorWithHex:@"#DD2727"];
@@ -350,7 +388,7 @@
             if (statusCode == 0) {
                 order = result;
                 if (order.left <1) {
-                    [weakSelf.view makeToast:@"该商品已经卖完,或者其他客户\n处于购买状态,请稍后购买"];
+                    [weakSelf.view makeToast:@"该商品暂被抢光,再等等哦"];
                     return ;
                 }
                 weakSelf.footView.hidden = YES;
@@ -417,7 +455,6 @@
                 weakSelf.isAdd = YES;
                 weakSelf.tableView.tableHeaderView = addScrollView;
             }
-            
             [weakSelf addTheFooterView];
             [weakSelf.tableView reloadData];
         }else{
@@ -450,9 +487,18 @@
 }
 -(void)ruleButtonClick
 {
-    [self setHidesBottomBarWhenPushed:YES];
-    YMRuleController *controller = [[YMRuleController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (!detailResult.status) {
+        [self setHidesBottomBarWhenPushed:YES];
+        YMRuleController *controller = [[YMRuleController alloc] init];
+        controller.title = @"查看计算方式";
+        controller.url = url;
+        [self.navigationController pushViewController:controller animated:YES];
+    }else{
+        YMCheckDetailController *controller = [[YMCheckDetailController alloc] init];
+        [self setHidesBottomBarWhenPushed:YES];
+        controller.gsid = detailResult.gsid;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 -(void)cancelButtonClick
 {
@@ -478,13 +524,12 @@
     addScrollView.bounces = NO;
     [self.collectionView addSubview:addScrollView];
     for (int i = 0 ; i <  detailResult.bannerList.count; i ++) {
-        UIImage *placeholder = [UIImage imageNamed:GoodImage];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i * kWIDTH, 0, kWIDTH, IMAGE_HEIGHT)];
         
         imageView.tag= 666+i;
         BannerPicture *list = detailResult.bannerList[i];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:list.url] placeholderImage:placeholder];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:list.url] placeholderImage:bannerPlaceHolder];
         [addScrollView addSubview:imageView];
     }
     addScrollView.contentSize = CGSizeMake(detailResult.bannerList.count *kWIDTH, 0);
@@ -511,7 +556,6 @@
     pageControl.currentPage = page;
     [addScrollView setContentOffset:offset animated:YES];
 }
-
 #pragma mark -- scrollViewDelegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -546,15 +590,15 @@
     NSString *allsting = [NSString stringWithFormat:@"总需求%ld/剩余%ld ",(long)order.expected,(long)order.left];
     NSString *leftString = [NSString stringWithFormat:@"%ld ",(long)order.left];
     self.orderView.allLable.attributedText = [allsting alllString:allsting andallcolor:[UIColor colorWithHex:@"#444444"] andallFont:[UIFont systemFontOfSize:14] subString:leftString andColor:[UIColor colorWithHex:@"#DD2727"] andsubFont:[UIFont systemFontOfSize:14]];
-
     
-    [self.orderView.iconView sd_setImageWithURL:[NSURL URLWithString:order.imageUrl] placeholderImage:placeHolder];
+    [self.orderView.iconView sd_setImageWithURL:[NSURL URLWithString:order.imageUrl] placeholderImage:carPlaceHolder];
     self.orderView.steper.maximum = order.left;
     
     self.orderView.productionLable.text = order.name;
 }
 -(void)addMoreHotstatus
 {
+    SAFE;
    [[HomeManager sharedManager] detailMoreStatusWithWithGid:++self.start andGsid:detailResult.gsid completion:^(id result, NSInteger statusCode, NSString *msg) {
        if (statusCode == 0) {
            YMMoreResult *re  =result;
@@ -563,28 +607,59 @@
            }
            [detailResult.totalList addObjectsFromArray:re.totalList];
            [self.tableView reloadData];
+       }else{
+           [weakSelf.view makeToast:msg];
+
        }
     }];
 }
+
 -(void)showLuckView
 {
-    NSMutableDictionary   *muDic = [[NSMutableDictionary alloc]init];
+    YMLuckNumView *luckNum  = [[YMLuckNumView alloc]initWithLuckArray:muDic[@"luckyNumList"] frame:CGRectMake(0, 0, kWIDTH, kHEIGHT)];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    if (!window) {
+        window  = [[UIApplication sharedApplication].windows objectAtIndex:0];
+    }
+    [[[window subviews] objectAtIndex:0] addSubview:luckNum];
+
+}
+
+-(void)showCaculateView
+{
+    YMCheckDetailController *controller = [[YMCheckDetailController alloc] init];
+    [self setHidesBottomBarWhenPushed:YES];
+    controller.gsid = detailResult.gsid;
+    [self.navigationController pushViewController:controller animated:YES];
+
+    
+}
+-(void)getTheRule{
+      [[HomeManager sharedManager] homegetTheRulecompletion:^(id result, NSInteger statusCode, NSString *msg) {
+          if (statusCode == 0) {
+              YMRuleResult *re = result;
+              url = re.url;
+          }
+      }];
+}
+-(void)getThenumbers
+{
     [self.view makeToastActivity:kLoadingText];
     SAFE;
-     [[HomeManager sharedManager] detailGetMyNumberStatusWithWithGsid:detailResult.gsid completion:^(id result, NSInteger statusCode, NSString *msg) {
-         [weakSelf.view hideToastActivity];
-         if (statusCode == 0) {
-             NSDictionary *dict = [result keyValues];
-             [muDic setValue:dict[@"data"][@"period"] forKey:@"period"];
-             [muDic setValue:dict[@"data"][@"luckyNumList"] forKey:@"luckyNumList"];
-             [muDic setValue:detailResult.name forKey:@"name"];
-             LuckNumView *luckNum  = [[LuckNumView alloc]initWithDic:muDic frame:self.view.bounds];
-             UIWindow *window = [UIApplication sharedApplication].keyWindow;
-             if (!window) {
-                 window  = [[UIApplication sharedApplication].windows objectAtIndex:0];
-             }
-             [[[window subviews] objectAtIndex:0] addSubview:luckNum];
-         }   }];
-    
+    [[HomeManager sharedManager] detailGetMyNumberStatusWithWithGsid:self.gsid completion:^(id result, NSInteger statusCode, NSString *msg) {
+        [weakSelf.view hideToastActivity];
+        if (statusCode == 0) {
+            NSDictionary *dict = [result keyValues];
+            [muDic setValue:dict[@"data"][@"period"] forKey:@"period"];
+            [muDic setValue:dict[@"data"][@"luckyNumList"] forKey:@"luckyNumList"];
+            [muDic setValue:detailResult.name forKey:@"name"];
+            [weakSelf.tableView reloadData];
+
+        }else{
+            [weakSelf.view makeToast:msg];
+
+        }
+    }];
+
 }
 @end

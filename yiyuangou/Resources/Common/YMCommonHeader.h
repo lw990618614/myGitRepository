@@ -24,14 +24,20 @@
 #define APPKEY    @"123456"
 #define CHANNEL   @"1.25"
 #define USRID @"userID"
+#define Account @"account"
 
 
 #define SYSTEMVERSION [UIDevice currentDevice].systemVersion //版本号
 //#define BaseServerImagesURL @"http://192.168.1.164:8080/images"//图片地址
 #define BaseServerImagesURL @""//图片地址
 
-//#define BaseServerURL @"http://192.168.1.164:8080/api/v1"
-#define BaseServerURL @"http://123.59.67.181:8081/api/v1"
+
+//#define BaseServerURL @"http://192.168.1.57:8081/api/v1"
+#define BaseServerURL @"http://123.59.67.181:8081/api/v1"//测试
+//#define BaseServerURL @"http://120.132.68.60:9980/api/v1"//正式
+//#define BaseServerURL @"http://123.59.72.155:9980/api/v1"//后台
+
+//#define BaseServerURL @"http://120.132.68.60:9980/api/v1"
 #define WEAKSELF typeof(self) __weak weakSelf = self
 
 #define ADDALL_MYCAR                    @"ALL_ISCHOOSE"
@@ -50,6 +56,13 @@
 #define kLoadingText                    @"加载中"
  #define GoodImage                       @"占位图"
 #define placeHolder                      [UIImage  imageNamed:GoodImage]
+#define bannerPlaceHolder                      [UIImage  imageNamed:@"750X265zwt"]
+#define timePlaceHolder                      [UIImage  imageNamed:@"250x165zwt"]
+#define hotPlaceHolder                      [UIImage  imageNamed:@"375X175zwt"]
+#define goodsPlaceHolder                      [UIImage  imageNamed:@"200x200zwt"]
+#define carPlaceHolder                      [UIImage  imageNamed:@"160x160zwt"]
+#define headIconHolder                      [UIImage  imageNamed:@"个人中心_03"]
+
 #define  CellSelectImage                 @"selected"
 
 #define QQ_Key    @"1104942024"
@@ -212,3 +225,7 @@ typedef NS_ENUM(NSUInteger, BaseServerResponseCode) {
 //友盟统计相关
 #define ymLogin @"login"  //用户登录计数事件
 #define ymShare @"share"  //用户分享计数事件
+#define ymGoodsClick @"goodsClick" //商品点击计算事件
+#define ymGoodsClickNum  @1
+#define ymGoodsBuy   @"goodBuy"   //商品抢购计算事件
+#define ymGoodsBuyNum @2          //商品抢购

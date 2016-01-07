@@ -63,7 +63,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LoginManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
 
 }
@@ -83,7 +83,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LoginManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
 
     }];
 

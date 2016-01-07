@@ -13,4 +13,7 @@
 #import "ELCImagePickerController.h"
 #import "ELCAssetTablePicker.h"
 
+#define imgWidth  (kWIDTH - 4*5) / 4.0 //4.0是每一行的图片个数 5 图片之间的间距
+
+
 #endif

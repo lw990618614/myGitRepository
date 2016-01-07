@@ -15,10 +15,10 @@
     if (self) {
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 80, 80)];
         self.iconView.layer.borderColor = [UIColor colorWithHex:@"#EAEAEA"].CGColor;
-        self.iconView.layer.borderWidth = 1;
+        self.iconView.layer.borderWidth = 0.5;
         
         //商品
-        self.productionLabe = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 12, 15, kWIDTH, 16) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#777777"]];
+        self.productionLabe = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 12, 15, kWIDTH - 110, 16) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#777777"]];
         self.productionLabe.font  = [UIFont systemFontOfSize:16];
         self.productionLabe.text = @"IPHONE 6s 手机中的战斗机";
         
@@ -59,14 +59,16 @@
 -(id)configWithModel:(YMLottery *)model
 {
 //    NSString *imageUlr = [NSString stringWithFormat:@"%@%@",BaseServerImagesURL,model.goodsImage];
-    [self.iconView sd_setImageWithURL:[NSURL URLWithString:model.goodsImage] placeholderImage:placeHolder];
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:model.image100by100] placeholderImage:carPlaceHolder];
     
     self.productionLabe.text = model.name;
     
     self.priceLable.text = [NSString stringWithFormat:@"商品价格:  %@ [第%@期]",model.price,model.period];
     
-    self.getterLable.text = [NSString stringWithFormat:@"%ld",(long)model.uid];
+    NSString *textstr = [NSString stringWithFormat:@"%ld",(long)model.uid];
     
+    self.getterLable.text = model.phone.length?model.phone:model.sname.length?model.sname:textstr;
+
     self.totalLable.text = [NSString stringWithFormat:@"参与人次: %@次",model.menber];
 
     self.timeLable.text = [NSString stringWithFormat:@"开奖时间: %@",model.createTime];

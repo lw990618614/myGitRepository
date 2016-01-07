@@ -11,4 +11,5 @@
 @interface YMLoginResult : BaseResult
 @property (nonatomic,assign)NSInteger uid;
 @property(nonatomic,strong) NSArray *addressList;
+@property(nonatomic,assign)NSUInteger flag;
 @end

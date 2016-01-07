@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 //友盟统计
+//计算事件
 @interface MobClickHelper : NSObject
 + (void)umengEvent:(NSString *)eventId attributes:(NSDictionary *)attributes number:(NSNumber *)number;
+//计数事件
 @end

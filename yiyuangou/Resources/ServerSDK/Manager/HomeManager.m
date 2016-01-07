@@ -31,6 +31,11 @@
 #import "YMLuckParam.h"
 #import "YMRuleParam.h"
 #import "YMRuleResult.h"
+
+#import "YMInquireResult.h"
+
+#import "YMCalculateParam.h"
+#import "YMCaculateResult.h"
 @implementation HomeManager
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
@@ -56,27 +61,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
 
     }];
 }
 //获取我的幸运号码
--(void)detailGetMyNumberStatusWithWithGsid:(NSInteger )gsid completion:(ManagerBlock)block
+-(void)detailGetCalculateStatusWithWithGsid:(NSInteger )gsid completion:(ManagerBlock)block
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",BaseServerURL,@"/reward/luckyNumber"];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",BaseServerURL,@"/rewardProcess/getProcess"];
     YMLuckParam *param = [[YMLuckParam alloc] init];
     param.gsid = gsid;
     [YMBaseHttpTool POST:urlStr params:[param keyValues] success:^(id result) {
-        BaseResult *r = result;
+        YMCaculateResult *r = result;
         if ([r isSuceess]) {
+            YMCaculateResult *re = [[YMCaculateResult alloc] init];
+            re =  [YMCaculateResult objectWithKeyValues:r.data];
             if (block) {
-                block(r,r.code,r.msg);
+                block(re,r.code,r.msg);
             }
+
         }else{
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
         
     }];
 
@@ -101,9 +109,34 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
         
     }];
+
+}
+//获取我的幸运号码
+-(void)detailGetMyNumberStatusWithWithGsid:(NSInteger )gsid completion:(ManagerBlock)block
+{
+
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",BaseServerURL,@"/reward/luckyNumber"];
+    YMLuckParam *param = [[YMLuckParam alloc] init];
+    param.gsid = gsid;
+    [YMBaseHttpTool POST:urlStr params:[param keyValues] success:^(id result) {
+        BaseResult *r = result;
+        if ([r isSuceess]) {
+//            YMMoreResult *re = [[YMMoreResult alloc] init];
+//            re =  [YMMoreResult objectWithKeyValues:r.data];
+            if (block) {
+                block(r,r.code,r.msg);
+            }
+        }else{
+            block(nil,r.code,r.msg);
+        }
+    } failure:^(NSError *error) {
+        block(nil,C100007,@"网络不给力T_T");
+        
+    }];
+
 
 }
 -(void)homeMoreStatusWithPage:(NSInteger )page completion:(ManagerBlock)block
@@ -124,7 +157,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
 
     }];
 }
@@ -146,7 +179,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
 }
 -(void)homeBuyStatusWithGsid:(NSInteger)gsid completion:(ManagerBlock)block
@@ -168,7 +201,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
 
 }
@@ -190,7 +223,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
 }
 -(void)pastRewardStatusWithGid:(NSInteger)gid and:(NSInteger)lotteryStart and:(NSInteger)flag completion:(ManagerBlock)block
@@ -212,7 +245,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
 
 }
@@ -230,11 +263,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
                 block(r,r.code,@"添加成功");
             }
         }else{
-            block (r,r.code,@"该商品已经卖完,或者其他客户\n处于购买状态,请稍后购买");
+            block (r,r.code,@"购物车已有该件商品");
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
+}
+-(void)detailStatusWithWithandGsid:(NSInteger )gsid completion:(ManagerBlock)block
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",BaseServerURL,@"/rewardProcess/getProcess"];
+    YMAddCarParam *param = [[YMAddCarParam alloc] init];
+    param.gsid = gsid;
+    [YMBaseHttpTool POST:urlStr params:[param keyValues] success:^(id result) {
+        BaseResult *r = result;
+        if ([r isSuceess]) {
+            if (block) {
+                block(r,r.code,@"添加成功");
+            }
+        }else{
+            block (r,r.code,@"该商品暂被抢光,再等等哦");
+        }
+    } failure:^(NSError *error) {
+        block(nil,C100007,@"网络不给力T_T");
+    }];
+
 }
 //开奖规则
 -(void)homegetTheRulecompletion:(ManagerBlock)block
@@ -253,10 +305,32 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HomeManager)
                 }
 
         }else{
-            block(nil,C100006,@"网络异常");
+            block(nil,C100006,@"网络不给力T_T");
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
+    }];
+
+}
+//主页面的须知
+-(void)homeInquirecompletion:(ManagerBlock)block
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",BaseServerURL,@"/html/getResourceList"];
+    BaseParam *param = [[BaseParam alloc] init];
+    [YMBaseHttpTool POST:urlStr params:[param keyValues] success:^(id result) {
+        YMInquireResult *r = result;
+        if ([r isSuceess]) {
+            
+            YMInquireResult *pastResult = [[YMInquireResult alloc] init];
+            pastResult =  [YMInquireResult objectWithKeyValues:r.data];
+            if (block) {
+                block(pastResult,r.code,r.msg);
+            }
+        }else{
+            block(nil,C100006,@"网络不给力T_T");
+        }
+    } failure:^(NSError *error) {
+        block(nil,C100007,@"网络不给力T_T");
     }];
 
 }

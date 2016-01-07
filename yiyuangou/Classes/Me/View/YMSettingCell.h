@@ -19,6 +19,7 @@
 @property (nonatomic,strong)UILabel *leftLable;
 @property (strong, nonatomic) UIButton* fillButton;
 @property(nonatomic,assign) float originY;
+@property(nonatomic,strong) UILabel *uidlbl;
 @property(nonatomic,assign) id<YMSettingProtol>delegate;
 -(id)congifgWithMode:(YMSettingResult *)model;
 @end

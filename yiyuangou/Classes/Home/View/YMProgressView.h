@@ -10,6 +10,8 @@
 
 @interface YMProgressView : UIView
 @property (copy, nonatomic) NSString * progress;
+@property (strong, nonatomic) UILabel *expectLable;
+@property (strong, nonatomic) UILabel *actuallyLalbe;
 @property (strong, nonatomic) UILabel * ProgressNumber;;
 @property (strong,nonatomic)UIProgressView *progressView;
 @end

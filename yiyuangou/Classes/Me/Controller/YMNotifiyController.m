@@ -104,7 +104,7 @@
     //注册
     self.registerButton = [UIButton new];
     [self.registerButton setTitle:@"注册" forState:UIControlStateNormal];
-    [self.registerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.registerButton setBackgroundColor:[UIColor whiteColor]];
     [self.registerButton handleControlEvent:UIControlEventTouchUpInside withBlock:^{
         YMRegisterViewController *controller = [[YMRegisterViewController alloc] init];

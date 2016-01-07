@@ -15,5 +15,6 @@
 @property (strong, nonatomic) UILabel* totalLabel;
 @property (strong, nonatomic) UILabel* leftLable;
 @property (strong, nonatomic) UILabel* progressNumber;
+@property (strong, nonatomic) UIButton *ruleButton;
 -(id)congifgWithMode:(YMDetailResult *)model;
 @end

@@ -24,7 +24,7 @@
         self.Lu = @"1";
         self.appVer = @"1.0";
         self.mac = [YMAppCenter getMacAddress];
-        self.idfa = [YMAppCenter advertisingID];
+        self.idfa = @"idfa";
         self.os = SYSTEMVERSION;
         self.platform = @2;
     }

@@ -13,8 +13,8 @@
 #import "YMPayController.h"
 #import "YMTabBarController.h"
 #import "AppDelegate.h"
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKUI/ShareSDK+SSUI.h>
+//#import <ShareSDK/ShareSDK.h>
+//#import <ShareSDKUI/ShareSDK+SSUI.h>
 #import "UMSocialSnsPlatformManager.h"
 #import "UMSocialSnsService.h"
 #import "YMHelpViewController.h"
@@ -269,8 +269,8 @@
             }
             [UMSocialSnsService presentSnsIconSheetView:weakSelf
                                                  appKey:UMKey                                          shareText:@"你要分享的文字"
-                                             shareImage:[UIImage imageNamed:GoodImage]
-                                        shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToQQ,nil]
+                                             shareImage:carPlaceHolder
+                                        shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToQzone,nil]
                                                delegate:weakSelf];
 
         }

@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface YMNoDataView : UIView
+
+-(instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *) image btnTitle:(NSString *)btnTitle action:(SEL) action tagert:(id)  tagrt;
+
 -(instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *) image;
+
 -(instancetype) initWithFrame:(CGRect)frame;
 @end

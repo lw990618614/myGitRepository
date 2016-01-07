@@ -13,6 +13,7 @@
 #define kAccountTag 201
 #define kNickTag 202
 #define kSaveBtn 203
+#define kUId     204
 #define ORIGINAL_MAX_WIDTH 640.0f
 #define KMAXLength 12
 @interface YMAccountChangeViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -23,17 +24,19 @@
 @property(nonatomic,strong) UIView      *footView;
 @property(nonatomic,strong) NSArray     *items;
 @property(nonatomic,strong) UIButton    *saveBtn;
+@property(nonatomic,strong) UILabel     *uid;
 @end
 
 @implementation YMAccountChangeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = kViewControllerBackgroundColor;
     self.title =  @"个人信息";
-    self.items = @[@"账户",@"昵称"];
+    self.items = @[@"账户",@"昵称",@"用户ID"];
     [self initView];
     self.mainTableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH,kHEIGHT - kNav) style:UITableViewStylePlain];
+    self.mainTableview.backgroundColor = [UIColor clearColor];
 //    self.mainTableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.mainTableview.delegate = self;
     self.mainTableview.dataSource = self;
@@ -64,7 +67,7 @@
     NSString *headUrl = mainUser.YMUserAvatarURL;
     NSData *imgData =  mainUser.YMUserHeaderImg;
     if (imgData == nil) {
-        [self.iconeImage sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:placeHolder];
+        [self.iconeImage sd_setImageWithURL:[NSURL URLWithString:headUrl] placeholderImage:carPlaceHolder];
     }
     else
         self.iconeImage.image = [UIImage imageWithData:imgData];
@@ -89,14 +92,23 @@
     [okbuttongNickName addTarget:self action:@selector(okbuttongTouched:) forControlEvents:UIControlEventTouchUpInside];
     [nickNameView addSubview:okbuttongNickName];
     nickNameView.backgroundColor=[UIColor lightGrayColor];
-//    self.nickName.inputAccessoryView = nickNameView;
+    //账户信息
     self.account = [[UILabel alloc]init];
     self.account.text = mainUser.YMAccount;
     self.account.tag = kAccountTag;
     self.account.frame = CGRectMake(kWIDTH - 200, 5, 180, 30);
-    self.account.textAlignment = NSTextAlignmentCenter;
+    self.account.textAlignment = NSTextAlignmentRight;
     self.account.font  = [UIFont systemFontOfSize:16.0];
     self.account.textColor = [UIColor heightBlacKColor];
+    //用户ID
+    self.uid = [[UILabel alloc]init];
+    self.uid.text = [NSString stringWithFormat:@"%ld",[YMInfoCenter userID]];
+    self.uid.tag = kUId;
+    self.uid.frame = CGRectMake(kWIDTH - 200, 5, 180, 30);
+    self.uid.textAlignment = NSTextAlignmentRight;
+    self.uid.font  = [UIFont systemFontOfSize:16.0];
+    self.uid.textColor = [UIColor heightBlacKColor];
+    
     self.footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, 110)];
     self.saveBtn = [[UIButton alloc] init];
     self.saveBtn.frame =  CGRectMake(10, 10, kWIDTH - 20, 30);
@@ -104,14 +116,6 @@
     [self.saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     self.saveBtn.backgroundColor  = [UIColor  colorWithHex:@"#DD2727"];
     [self.saveBtn addTarget:self action:@selector(saveAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.footView addSubview:saveBtn];
-    WEAKSELF;
-//    [self.saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.center.equalTo(weakSelf.footView);
-//        make.left.mas_equalTo(weakSelf.footView).offset(15);
-//        make.right.mas_equalTo(weakSelf.footView).offset(-15);
-//        make.height.mas_equalTo(35);
-//    }];
 }
 #pragma mark ---dataSource--------
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -124,7 +128,7 @@
         return 1;
     }
     else
-        return 2;
+        return self.items.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -142,7 +146,7 @@
     else if(indexPath.section == 1)
     {
 
-        return 40;
+        return 43;
     }
     return 40;
 }
@@ -164,19 +168,20 @@
         if (cell == nil) {
             cell  = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identider2];
         }
-        if (indexPath.row != 2) {
-            cell.textLabel.text = self.items[indexPath.row];
-        }
+        cell.textLabel.text = self.items[indexPath.row];
         if (![cell.contentView viewWithTag:kAccountTag] && indexPath.row == 0) {
             [cell.contentView addSubview:self.account];
         }
         if (![cell.contentView viewWithTag:kNickTag] && indexPath.row == 1) {
             [cell.contentView addSubview:self.nickName];
         }
+        if (![cell.contentView viewWithTag:kNickTag] && indexPath.row == 2) {
+            [cell.contentView addSubview:self.uid];
+        }
     }
     cell.textLabel.font = [UIFont systemFontOfSize:16.0];
     cell.textLabel.textColor = [UIColor heightBlacKColor];
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -234,20 +239,26 @@
         [self.view makeToast:@"用户昵称需在1-12位之间"];
         return;
     }
+//    nickName  = @"\xF0\x9F\x94\x94";
+
     NSMutableDictionary *dict  = [BaseParamDic baseParam];
     //判断电话是否正确
     [dict setValue:nickName forKey:@"sname"];
     NSString *url = [NSString stringWithFormat:@"%@%@",BaseServerURL,str];
-    NSArray *dataArray = @[UIImageJPEGRepresentation(self.iconeImage.image, 0.5)];
+//    NSArray *dataArray = @[UIImageJPEGRepresentation(self.iconeImage.image, 0.5)];
+    NSArray *dataArray = @[UIImageJPEGRepresentation([self.iconeImage.image fixOrientation], 0.5)];
+
     WEAKSELF;
+    [self.view makeToastActivity:kLoadingText];
     [YMBaseHttpTool POST:url params:dict name:@"_face" data:dataArray success:^(id result) {
+        NSDictionary *dict = [result keyValues];
+        [weakSelf.view hideToastActivity];
         YMInfoCenter *infoCenter = [YMInfoCenter sharedManager];
         YMUser *mainUser = infoCenter.mainUser;
         mainUser.YMNickName = nickName;
-        NSDictionary *dict = [result keyValues];
         mainUser.YMUserHeaderImg = UIImageJPEGRepresentation(self.iconeImage.image, 0.5);
         mainUser.YMUserAvatarURL = dict[@"data"][@"face"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ymNotificationRefreshUserInfo object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ymNotificationRefreshUserInfo object:nil userInfo:@{@"type":@"changeAccount"}];
         [weakSelf.navigationController popToRootViewControllerAnimated:YES];
     } failure:^(NSError *error) {
         [weakSelf.view makeToast:@"个人信息更新失败"];

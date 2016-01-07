@@ -33,10 +33,14 @@
 @property (nonatomic,assign)NSInteger gsid;
 
 /**
- *  图片地址
+ *  主页面图片地址
  */
-@property (nonatomic,copy) NSString * goodsImage;
+@property (nonatomic,copy) NSString * image250by165;
 
+/**
+ *  最近开奖图片地址
+ */
+@property (nonatomic,copy) NSString * image100by100;
 
 
 @property (nonatomic,copy) NSString * name;
@@ -74,10 +78,11 @@
 
 @property (nonatomic,copy) NSString * name;
 
-
 @property (nonatomic,copy) NSString * progress;
 
 @property (nonatomic,assign)NSInteger row;
+@property (nonatomic,assign)NSInteger expected;
+@property (nonatomic,assign)NSInteger actually;
 
 @end
 
@@ -86,12 +91,15 @@
 
 @property (nonatomic,copy)NSString *url;
 @property (nonatomic,assign)NSInteger gid;
+//@property(nonatomic,copy) NSString *name;
 @end
 
 @interface HomeRewardList : NSObject
+@property (nonatomic,assign)NSInteger gsid;
+@property (nonatomic,assign)NSInteger gid;
 @property (nonatomic,copy)NSString *name;
 @property (nonatomic,copy)NSString *sname;
-@property (nonatomic,assign)NSInteger grPeriod;
+@property (nonatomic,assign)NSInteger period;
 @property (nonatomic,copy)NSString *phone;
 
 @end

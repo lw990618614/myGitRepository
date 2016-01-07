@@ -11,6 +11,9 @@
 @interface YMNoDataView ()
 @property(nonatomic,strong)UIImage *iconImage;
 @property(nonatomic,strong)NSString *title;
+@property(nonatomic,strong)NSString *btnTitle;
+@property(nonatomic,assign) SEL      action;
+@property(nonatomic,strong) id        Tagert;
 @end
 @implementation YMNoDataView
 -(instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image
@@ -19,7 +22,7 @@
     if (self) {
         _iconImage = image;
         _title = title;
-        [self initWithSubView];
+        [self initWithSubView:NO];
     }
     return self;
 }
@@ -29,11 +32,25 @@
     if (self) {
         _iconImage = [UIImage imageNamed:@"noData"];
         _title = @"暂无记录";
-        [self initWithSubView];
+        [self initWithSubView:NO];
     }
     return self;
 }
--(void) initWithSubView
+-(instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image btnTitle:(NSString *)btnTitle action:(SEL)action tagert:(id)tagrt
+{
+    self =  [super initWithFrame:frame];
+    if (self) {
+        _iconImage = image;
+        _title = title;
+        self.action = action;
+        self.btnTitle =  btnTitle;
+        self.Tagert = tagrt;
+        [self initWithSubView:YES];
+    }
+    return self;
+}
+
+-(void) initWithSubView:(BOOL) btnEnable
 {
     self.backgroundColor = [UIColor colorWithRed:230 green:240 blue:241 alpha:1];
     UIImageView *img = [[UIImageView alloc]init];
@@ -63,6 +80,21 @@
         make.top.equalTo(img.mas_bottom).offset(20);
         make.centerX.equalTo(weakSelf);
     }];
+    //如果有跳转按钮
+    if (btnEnable == YES) {
+        UIButton *btn = [[UIButton alloc] init];
+        [btn setTitle:_btnTitle forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        btn.backgroundColor = [UIColor redColor];
+        btn.layer.cornerRadius = 3.0;
+        [btn addTarget:self.Tagert action:self.action forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btn];
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(lbl.mas_bottom).offset(15);
+            make.centerX.equalTo(weakSelf);
+            make.size.mas_equalTo(CGSizeMake(130, 30));
+        }];
+    }
 }
 -(void) circle:(UIImageView *)headImgView
 {

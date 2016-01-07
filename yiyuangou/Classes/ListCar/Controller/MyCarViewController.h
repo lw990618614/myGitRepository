@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyCarViewController : UIViewController
-
+@interface MyCarViewController : YMBaseViewController
+@property (nonatomic,assign)BOOL isHidenRight;
 @end

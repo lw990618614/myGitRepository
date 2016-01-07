@@ -15,13 +15,13 @@
     if (self) {
         
        //商品名称
-        self.productionLable = [UILabel labelWithFrame:CGRectMake(10, 0, kWIDTH *0.65, 44) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#444444"]];
+        self.productionLable = [UILabel labelWithFrame:CGRectMake(10, 0, kWIDTH , 44) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#444444"]];
         self.productionLable.text = @"(第132 iPhone 6S 玫瑰金 16GB)";
-        self.productionLable.font  = [UIFont systemFontOfSize:16];
+        self.productionLable.font  = [UIFont systemFontOfSize:15];
         [self.contentView addSubview:self.productionLable];
 
         //开奖进度
-        self.progressLable = [UILabel labelWithFrame:CGRectMake(10, self.productionLable.tmri_bottom+5, 70, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
+        self.progressLable = [UILabel labelWithFrame:CGRectMake(10, self.productionLable.tmri_bottom+5, 1, 15) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
         self.progressLable.font  = [UIFont systemFontOfSize:14];
         self.progressLable.text = @"开奖进度";
         
@@ -40,10 +40,17 @@
 
         //剩余数量
         self.leftLable = [UILabel labelWithFrame:CGRectMake(self.totalLabel.tmri_right, self.progressView.tmri_bottom+10, 100, 15) textAlignment:NSTextAlignmentRight textColor:[UIColor  colorWithHex:@"#DD2727"]];
+        
         self.leftLable.tmri_right = self.progressView.tmri_right;
         self.leftLable.font  = [UIFont systemFontOfSize:10];
         self.leftLable.text  = @"剩余1322";
 
+        self.ruleButton = [UIButton buttonWithFrame:CGRectMake(kWIDTH - 110, self.leftLable.tmri_bottom + 10, 100, 10) target:self action:nil title:@"查看我的幸运码" cornerRadius:2];
+        self.ruleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        
+        [self.ruleButton setTitleColor:[UIColor colorWithHex:@"#DD2727"] forState:UIControlStateNormal];
+        [self.contentView addSubview:self.ruleButton];
+        
         [self.contentView addSubview:self.productionLable];
         [self.contentView addSubview:self.progressLable];
         [self.contentView addSubview:self.progressView];

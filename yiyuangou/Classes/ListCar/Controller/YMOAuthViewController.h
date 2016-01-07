@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "YMOrder.h"
 #import "YMPayResult.h"
-@interface YMOAuthViewController : UIViewController
+@interface YMOAuthViewController : YMBaseViewController
 @property (assign,nonatomic)NSInteger coin;
+@property (nonatomic,assign) NSInteger oid;
 @property (strong,nonatomic)YMPayResult * car;
+@property (nonatomic,copy)NSString *title;
 
 @property (assign,nonatomic)NSInteger pay_way;
 

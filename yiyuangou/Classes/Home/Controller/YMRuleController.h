@@ -10,5 +10,6 @@
 
 @interface YMRuleController : YMBaseViewController
 @property(nonatomic,assign) BOOL isFinshRule;
+@property (nonatomic,copy)NSString *url;
 //@interface YMRuleController : UIViewController
 @end

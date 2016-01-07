@@ -9,11 +9,11 @@
 #import "YMBaseTableViewController.h"
 typedef NS_ENUM(NSUInteger,inputMethod)
 {
-    YMBindPhone,  //绑定手机
+    YMBindPhone,  //绑定手机(非虚拟奖品)
     YMRestPhone,  //重置密码
     YMRegistUser  //注册用户
 };
-@interface YMRegisterViewController : UIViewController
+@interface YMRegisterViewController : YMBaseViewController
 @property (copy, nonatomic) NSString* titleName;
 @property(nonatomic,assign) inputMethod method;
 @property(nonatomic,assign)  BOOL isFromLogin;

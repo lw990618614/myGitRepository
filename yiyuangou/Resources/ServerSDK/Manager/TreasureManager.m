@@ -38,7 +38,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TreasureManager)
         }
     } failure:^(NSError *error) {
         //网络请求失败code == 8
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
 
 }

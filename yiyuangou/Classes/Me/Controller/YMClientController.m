@@ -36,7 +36,7 @@
     UILabel *email = [[UILabel alloc] initWithFrame:CGRectMake(emailLbl.tmri_right, emailLbl.orignY,220 , 22.5)];
     email.textColor = [UIColor blueColor];
     email.font = [UIFont systemFontOfSize:14.0];
-    email.text = @"2109700078@qq.com";
+    email.text = @"kf@99duobao.com";
     
     [lastView addSubview:titleLabel];
     [lastView addSubview:emailLbl];
@@ -75,7 +75,7 @@
     switch (indexPath.row) {
         case 0:
             cell.imageView.image = [UIImage imageNamed:@"qqIcon"];
-            cell.textLabel.text = @"客户QQ:2109700078";
+            cell.textLabel.text = @"客服QQ:2109700078";
             break;
         case 2:
             cell.imageView.image = [UIImage imageNamed:@"wxIcon"];

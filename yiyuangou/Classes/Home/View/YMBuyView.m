@@ -13,7 +13,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSArray*nameArray=@[@"加入购物车",@"立即抢购"];
+        NSArray*nameArray=@[@"加入购物车",@"立即参与"];
         NSArray*imageArray;
         
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];

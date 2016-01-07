@@ -16,6 +16,7 @@
 #import "YMAcceptViewController.h"
 #import "YMTextFild.h"
 #import "UILabel+convenice.h"
+#import "YMVirtualGoodsViewController.h"
 #define kMax 60
 #define KMAXLength 12
 #define KMaxLengthVerCode 7
@@ -80,8 +81,8 @@
     [mainTableView setTableFooterView: [[UIView alloc]initWithFrame:CGRectZero]];
     [self.view addSubview:mainTableView];
     
-    footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, 50)];
-    mainTableView.tableFooterView = footerView;
+    footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, 100)];
+//    mainTableView.tableFooterView = footerView;
     //验证手机
     UIButton *regesterButton = [UIButton buttonWithFrame:CGRectMake(10, 15, kWIDTH -20, 40) target:self action:@selector(registerButtonClick) title:@"验证手机 " cornerRadius:1];
     regesterButton.backgroundColor = [UIColor  colorWithHex:@"#DD2727"];
@@ -94,6 +95,7 @@
     agreenBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [agreenBtn setImage:[UIImage imageNamed:CellSelectImage] forState:UIControlStateNormal];
     agreenBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
+//    agreenBtn.enabled =  YES;
     [agreenBtn addTarget:self action:@selector(agreenProAction:) forControlEvents:UIControlEventTouchUpInside];
     [agreenBtn setTitleColor:[UIColor lightColor] forState:UIControlStateNormal];
     
@@ -105,7 +107,9 @@
     [protolbl addGestureRecognizer:tap];
     protolbl.userInteractionEnabled = YES;
     [tap addTarget:self action:@selector(readProtol:)];
+    footerView.backgroundColor = [UIColor clearColor];
     [footerView addSubview:agreenBtn];
+//    footerView.backgroundColor = [UIColor redColor];
     
     if ([mainTableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [mainTableView setSeparatorInset:UIEdgeInsetsZero];
@@ -113,6 +117,7 @@
     if ([mainTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [mainTableView setLayoutMargins:UIEdgeInsetsZero];
     }
+    mainTableView.backgroundColor = [UIColor clearColor];
     //设置定时器
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeStatus:) userInfo:self repeats:YES];
     //暂停定时器
@@ -147,7 +152,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 95;
+    return 100;
 }
 -(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
@@ -266,13 +271,30 @@
             YMInfoCenter *infoCenter = [YMInfoCenter sharedManager];
             YMUser *mainUser = infoCenter.mainUser;
             mainUser.YMUserMobile = tep;
+            mainUser.YMAccount =  tep;
             [weakSelf.view makeToast:@"绑定手机成功"];
-            YMAcceptViewController *accept = [[YMAcceptViewController alloc]init];
-            weakSelf.hidesBottomBarWhenPushed  = YES;
-            accept.type = YMRewardList;
-            accept.isFromBindPhone =  YES;
-            accept.rewardDic = weakSelf.rewardDic;
-            [weakSelf.navigationController pushViewController:accept animated:YES];
+            
+            YMBaseViewController *baseViewController;
+            //虚拟货币
+            if ([weakSelf.rewardDic[@"pattern"] integerValue] == 2) {
+                YMVirtualGoodsViewController *virtual = [[YMVirtualGoodsViewController alloc] init];
+                weakSelf.hidesBottomBarWhenPushed = YES;
+                virtual.goodsDic = self.rewardDic;
+                baseViewController =  virtual;
+            }
+            else if ([weakSelf.rewardDic[@"pattern"] integerValue] == 1)
+            {
+                YMAcceptViewController *accept = [[YMAcceptViewController alloc]init];
+                weakSelf.hidesBottomBarWhenPushed  = YES;
+                accept.type = YMRewardList;
+                accept.isFromBindPhone =  YES;
+                accept.rewardDic = weakSelf.rewardDic;
+                baseViewController = accept;
+            }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:ymNotificationRefreshUserInfo object:nil userInfo:@{@"type":@"bindPhone"}];
+            
+            [weakSelf.navigationController pushViewController:baseViewController animated:YES];
         }
         else
         {
@@ -363,6 +385,7 @@
 -(void)agreenProAction:(id) sender
 {
     UIButton *btn = (UIButton *) sender;
+    isAgreen = !isAgreen;
     if (isAgreen) {
         [btn setImage:[UIImage imageNamed:CellSelectImage] forState:UIControlStateNormal];
     }
@@ -371,7 +394,6 @@
         [btn setImage:[UIImage imageNamed:CellUnSelectImage] forState:UIControlStateNormal];
  
     }
-    isAgreen = !isAgreen;
 }
 
 //开始编辑

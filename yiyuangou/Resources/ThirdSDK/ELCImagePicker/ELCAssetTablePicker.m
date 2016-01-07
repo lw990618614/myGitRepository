@@ -10,7 +10,7 @@
 #import "ELCAsset.h"
 #import "ELCAlbumPickerController.h"
 #import "ELCConsole.h"
-
+#import "ELCImagePickerHeader.h"
 @interface ELCAssetTablePicker ()
 
 @property (nonatomic, assign) int columns;
@@ -263,7 +263,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 79;
+	return imgWidth + 4;
 }
 
 - (int)totalSelectedAssets

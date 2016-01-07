@@ -10,25 +10,25 @@
 #import "YMRuleResult.h"
 @interface YMRuleController()<UIWebViewDelegate>
 @property (nonatomic,strong)UIWebView *webView;
-@property (nonatomic,copy)NSString *url;
+//@property (nonatomic,copy)NSString *url;
 @end
 
 @implementation YMRuleController
 -(void)viewDidLoad{
     [super viewDidLoad];
-    self.title = @"开奖规则";
     self.view.backgroundColor = [UIColor whiteColor];
-    [self loadData];
+//    [self loadData];
+    [self makeUI];
 }
 -(void)loadData{
     SAFE;
-  [[HomeManager sharedManager] homegetTheRulecompletion:^(id result, NSInteger statusCode, NSString *msg) {
-      if (statusCode == 0) {
-          YMRuleResult *re = result;
-          _url = re.url;
-          [weakSelf makeUI];
-      }
-  }];
+//  [[HomeManager sharedManager] homegetTheRulecompletion:^(id result, NSInteger statusCode, NSString *msg) {
+//      if (statusCode == 0) {
+//          YMRuleResult *re = result;
+//          _url = re.url;
+//          [weakSelf makeUI];
+//      }
+//  }];
 }
 -(void)makeUI
 {
@@ -41,7 +41,13 @@
     self.webView.center = self.view.center;
     //    self.webView.scrollView.scrollEnabled = NO;
     [self.view addSubview:self.webView];
-    
+    [_webView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.top.mas_equalTo(0);
+        make.width.equalTo(self.view.mas_width);
+        make.height.equalTo(self.view.mas_height);
+    }];
+
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_url]];
     //    self.backButton = [UIButton buttonWithFrame:CGRectMake(0, 400, 60, 30) target:self action:@selector(backToAPP) title:@"返回" cornerRadius:2];
     //    self.backButton.titleLabel.font = [UIFont systemFontOfSize:14];

@@ -16,7 +16,9 @@
 #import "YMShaiDanViewController.h"
 #import "YMNoDataView.h"
 #import <MobileCoreServices/UTCoreTypes.h>
-
+#import "YMVirtualGoodsViewController.h"
+#import "YMTabBarController.h"
+#import "AppDelegate.h"
 typedef NS_ENUM(NSUInteger,RefreshType)
 {
     AddMore,
@@ -41,7 +43,7 @@ typedef NS_ENUM(NSUInteger,RefreshType)
 {
     if (_notiView == nil) {
         UIImage *img = [UIImage imageNamed:@"noData"];
-        _notiView  = [[YMNoDataView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64 -30)  title:@"暂无记录" image:img];
+        _notiView  = [[YMNoDataView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64) title:@"暂无记录" image:img btnTitle:@"马上夺宝" action:@selector(duobao:) tagert:self];
         _notiView.hidden = YES;
     }
     return _notiView;
@@ -171,7 +173,7 @@ typedef NS_ENUM(NSUInteger,RefreshType)
     return self.rewardList.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 140;
+    return 150;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -208,31 +210,49 @@ typedef NS_ENUM(NSUInteger,RefreshType)
     YMInfoCenter *infoCenter = [YMInfoCenter sharedManager];
     YMUser       *mainUser = infoCenter.mainUser;
     //暂时设置account == mobile相等
-    mainUser.YMUserMobile = mainUser.YMUserMobile;
-    //如果是手机登录
-    if ([mainUser.YMAccount isValid]) {
-        //如果是手机登录无地址
-
-            YMAcceptViewController *acceptAddress  = [[YMAcceptViewController alloc] init];
-            acceptAddress.type = YMRewardList;
-            acceptAddress.rewardDic = dict;
-            self.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:acceptAddress animated:YES];
-    }
-    //第三方登录未绑定手机
-    else
-    {
+//    mainUser.YMAccount = mainUser.YMUserMobile;
+     //如果是手机登录
+    NSString *account = mainUser.YMAccount==nil?[infoCenter getAccount]:mainUser.YMAccount;
+       if ([account isValid]) {
+        //如果是手机登录
+           YMBaseViewController *baseViewController;
+           if ([dict[@"pattern"] integerValue] == 2) {
+               YMVirtualGoodsViewController *virtual = [[YMVirtualGoodsViewController alloc] init];
+               self.hidesBottomBarWhenPushed = YES;
+               virtual.goodsDic = dict;
+               baseViewController =  virtual;
+           }
+           else if ([dict[@"pattern"] integerValue] == 1 || [dict[@"pattern"] integerValue] == 0)
+           {
+               YMAcceptViewController *accept = [[YMAcceptViewController alloc]init];
+               self.hidesBottomBarWhenPushed  = YES;
+               accept.type = YMRewardList;
+               accept.isFromBindPhone =  YES;
+               accept.rewardDic = dict;
+               baseViewController = accept;
+           }
+         [self.navigationController pushViewController:baseViewController animated:YES];
+     }
+    //第三方登录
+     else
+     {
         YMRegisterViewController *regist = [[YMRegisterViewController alloc] init];
         regist.titleName = @"绑定手机";
         regist.method = YMBindPhone;
         regist.rewardDic = dict;
         self.hidesBottomBarWhenPushed  = YES;
         [self.navigationController pushViewController:regist animated:YES];
-    }
+     }
+//    }
 }
 //晒单
 -(void)displayButtonAction:(YMRecievedCell *)cell
 {
+    YMInfoCenter *infoCenter = [YMInfoCenter sharedManager];
+    YMUser       *mainUser = infoCenter.mainUser;
+    //暂时设置account == mobile相等
+    mainUser.YMUserMobile = mainUser.YMUserMobile;
+    //如果是手机登录
     
     NSIndexPath *indexPath =  (NSIndexPath *)[self.tableView indexPathForCell:cell];
     NSUInteger index = indexPath.row;
@@ -395,6 +415,7 @@ typedef NS_ENUM(NSUInteger,RefreshType)
         [images addObject:[UIImage imageNamed:@"add"]];
         YMShaiDanViewController *shanDanVC = [[YMShaiDanViewController alloc]initWithImageArray:images];
         shanDanVC.gsid = self.shaiDanDic[@"gsid"];
+        shanDanVC.grid = self.shaiDanDic[@"grid"];
         UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:shanDanVC];
         [self presentViewController:controller animated:YES completion:nil];
 
@@ -417,6 +438,13 @@ typedef NS_ENUM(NSUInteger,RefreshType)
     //移除观察者
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-#pragma mark   -----------------晒单管理------------------
+#pragma mark ---夺宝---
+-(void)duobao:(id) sener
+{
+    AppDelegate *delegate =  (AppDelegate *)[UIApplication sharedApplication].delegate;
+    YMTabBarController *tabbar =  (YMTabBarController *)delegate.window.rootViewController;
+    [tabbar setSelectedIndex:0];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 @end

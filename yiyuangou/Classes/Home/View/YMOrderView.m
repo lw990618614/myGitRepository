@@ -21,9 +21,9 @@
         UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 80, 80)];
         self.iconView = iconView;
         self.iconView.layer.borderColor = [UIColor colorWithHex:@"#EAEAEA"].CGColor;
-        self.iconView.layer.borderWidth = 1;
-        self.iconView.contentMode =  UIViewContentModeScaleAspectFill;
-        [self.iconView setClipsToBounds:YES];
+        self.iconView.layer.borderWidth = 0.5;
+//        self.iconView.contentMode =  UIViewContentModeScaleAspectFill;
+//        [self.iconView setClipsToBounds:YES];
         [self addSubview:iconView];
         
         
@@ -54,7 +54,7 @@
         productionLable.frame = CGRectMake(self.iconView.tmri_right +10, 20, kWIDTH - self.iconView.tmri_right -10-deleteView.width-10, 40);
 
         //分割线
-        UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(10, self.iconView.tmri_bottom +15, kWIDTH-20, 1)];
+        UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(10, self.iconView.tmri_bottom +15, kWIDTH-20, 0.5)];
         lineView1.backgroundColor = [UIColor colorWithHex:@"#EAEAEA"];
         [self addSubview:lineView1];
 
@@ -139,7 +139,7 @@
 
         [self addSubview:buyButton];
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, 1)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, 0.5)];
         lineView.backgroundColor = [UIColor colorWithHex:@"#EAEAEA"];
         [self addSubview:lineView];
     }
@@ -192,7 +192,6 @@
     if ([self.delegate respondsToSelector:@selector(orderButtonClickWith:)]) {
         [self.delegate orderButtonClickWith:self.orderResult];
     }
-    
 }
 -(void)delectClick
 {
@@ -210,7 +209,7 @@
     self.button.backgroundColor = [UIColor whiteColor];
     [self.button setTitleColor:[UIColor colorWithHex:@"#444444"] forState:UIControlStateNormal];
 
-    if (self.orderResult.left<[self.steper.countLabel.text intValue]) {
+    if (self.orderResult.left<[self.steper.countLabel.text intValue]||self.steper.countLabel.text.length > 7) {
         
         self.steper.countLabel.text = [NSString stringWithFormat:@"%ld",self.orderResult.left];
         self.steper.value =self.orderResult.left;
@@ -222,13 +221,6 @@
         self.steper.countLabel.text = [NSString stringWithFormat:@"%ld",(long)textAmount];
         self.orderResult.buyCount = [textField.text integerValue];
     }
-}
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
-{
-    if ([textField.text integerValue]<= self.orderResult.left) {
-        return YES;
-    }
-    return NO;
 }
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {

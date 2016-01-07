@@ -24,10 +24,9 @@
         //图片
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(self.selectButton.tmri_right , 15, 80, 80)];
         self.iconView.layer.borderColor = [UIColor colorWithHex:@"#EAEAEA"].CGColor;
-        self.iconView.layer.borderWidth = 1;
-        self.iconView.contentMode =  UIViewContentModeScaleAspectFill;
-        [self.iconView setClipsToBounds:YES];
-
+        self.iconView.layer.borderWidth = 0.5;
+//        self.iconView.contentMode =  UIViewContentModeScaleAspectFill;
+//        [self.iconView setClipsToBounds:YES];
         [self.contentView addSubview:self.iconView];
         
         
@@ -90,6 +89,17 @@
 -(id)configWithMode:(YMCarInfo *)result
 {
     __weak typeof(self)safeSelf = self;
+    self.numbersView.carinfo = result;
+    self.numbersView.valueChangedCallback = ^(PKYStepper *stepper, float count) {
+        safeSelf.numbersView.countLabel.text = [NSString stringWithFormat:@"%@", @(count)];
+        result.buyCount =[safeSelf.numbersView.countLabel.text integerValue];
+        result.allPrice = result.buyCount * [result.price intValue];
+        //        [safeSelf.lastButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        //        safeSelf.lastButton.backgroundColor = [UIColor whiteColor];
+        //        safeSelf.model.is_end  = 0;
+        [[NSNotificationCenter defaultCenter] postNotificationName:TEXT_CHANGE object:nil];
+    };
+
     self.numbersView.lastButton = self.lastButton;
     self.model = result;
     if (result.is_end) {
@@ -97,19 +107,6 @@
     }else{
         self.numbersView.value = result.buyCount;
     }
-    self.numbersView.carinfo = result;
-//    self.numbersView.value = 10.0f;
-    
-//    self.numbersView.value = [result.leftAmount intValue]>10?10.0:[result.leftAmount intValue];
-    self.numbersView.valueChangedCallback = ^(PKYStepper *stepper, float count) {
-        safeSelf.numbersView.countLabel.text = [NSString stringWithFormat:@"%@", @(count)];
-        result.buyCount =[safeSelf.numbersView.countLabel.text integerValue];
-        result.allPrice = result.buyCount * [result.price intValue];
-//        [safeSelf.lastButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//        safeSelf.lastButton.backgroundColor = [UIColor whiteColor];
-//        safeSelf.model.is_end  = 0;
-        [[NSNotificationCenter defaultCenter] postNotificationName:TEXT_CHANGE object:nil];
-    };
     
     [self.numbersView setup];
     if (result.is_selete) {
@@ -129,7 +126,7 @@
         self.lastButton.layer.borderWidth = 1;
     }
     NSString *imageUrl = [NSString stringWithFormat:@"%@",result.goodsImage];
-    [self.iconView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeHolder];
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:carPlaceHolder];
     
     self.productionLable.text = [NSString stringWithFormat:@"第%ld期  %@",(long)result.period,result.name];
     self.numbersView.maximum = [result.leftAmount intValue];
@@ -140,6 +137,13 @@
     self.detailLable.text = [NSString stringWithFormat:@"总需%@/剩余 ",result.expected];
     self.leftLable.text = result.leftAmount;
     self.selectButton.selected = result.is_selete;
+    if ([self.model.leftAmount integerValue] == 0) {
+        self.messageLable.text = @"本期商品库存不足";
+        self.messageLable.textColor = [UIColor colorWithHex:@"#DD2727"];
+    }else{
+        self.messageLable.text = @"最新一期奖品正在抢购中";
+        self.messageLable.textColor = [UIColor colorWithHex:@"#999999"];
+    }
     return self;
 }
 -(void)selectMe
@@ -158,7 +162,6 @@
 
         self.model.is_selete = YES;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:TEXT_CHANGE object:nil];
 
     self.selectButton.selected = !self.selectButton.selected;
 }
@@ -173,6 +176,9 @@
         self.model.lastis_selete = YES;
         self.model.is_end  = 1;
         self.model.buyCount = [self.model.leftAmount integerValue];
+        
+        self.model.allPrice = self.model.buyCount * [self.model.price intValue];
+
         button.backgroundColor = [UIColor  colorWithHex:@"#DD2727"];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }else{
@@ -181,12 +187,13 @@
         self.model.lastis_selete = NO;
         self.model.is_end = 0;
         button.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
-        self.model.buyCount = [self.model.leftAmount integerValue];
-//        self.model.buyCount =  [self.model.leftAmount intValue]>10?10.0:[self.model.leftAmount intValue];
+        self.model.buyCount=[self.model.leftAmount integerValue]>10?10:[self.model.leftAmount integerValue];
+        self.model.allPrice = self.model.buyCount * [self.model.price intValue];
         
         button.layer.borderWidth = 1;
     }
     self.numbersView.value = self.model.buyCount;
+    [[NSNotificationCenter defaultCenter] postNotificationName:TEXT_CHANGE object:nil];
 
 }
 -(void)centerAddAll
@@ -203,13 +210,11 @@
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    self.model.is_selete = NO;
-    self.selectButton.selected = NO;
 
     if (self.endEdtingBlock) {
         self.endEdtingBlock();
     }
-    if ([self.model.leftAmount intValue]<[self.numbersView.countLabel.text intValue]) {
+    if ([self.model.leftAmount intValue]<[self.numbersView.countLabel.text intValue]||self.model.leftAmount.length + 2<self.numbersView.countLabel.text.length ) {
     self.numbersView.countLabel.text = [NSString stringWithFormat:@"%@",self.model.leftAmount];
     }
     self.model.buyCount = [textField.text integerValue];
@@ -238,11 +243,7 @@
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {
-
-    if ([textField.text integerValue]<= [self.model.leftAmount integerValue]) {
-        return YES;
-    }
-    return NO;
+    return YES;
 }
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {

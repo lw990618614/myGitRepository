@@ -83,7 +83,7 @@
 -(NSString *)stringByReplacin:(NSString *)text withbegin:(int)begin withchangdu:(int)changdu;
 //用户名只能输入数字 字母 和中文
 -(BOOL)isValidUserName;
-
+-(BOOL)isValidQQ;
 //android用户id隐藏截取规则
 -(NSString *)subtringWithStart:(NSInteger)start End:(NSInteger)end;
 

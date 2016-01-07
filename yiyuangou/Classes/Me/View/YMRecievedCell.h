@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YMProgress.h"
 @class YMRecievedCell;
 @protocol YMReciveCellDelegate <NSObject>
 
@@ -22,6 +23,7 @@
 @property (strong, nonatomic) UILabel* timeLable;
 @property (strong, nonatomic) UIButton* recivedButton;
 @property (strong, nonatomic) UIButton* displayButton;
+@property(nonatomic,strong)   YMProgress   *progess;
 @property(nonatomic,assign) id<YMReciveCellDelegate> delegate;
 -(id)congfigWithModle:(NSDictionary *)dict;
 

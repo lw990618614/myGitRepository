@@ -32,11 +32,11 @@
         if (kWIDTH >=375) {
             self.timeLable.font = [UIFont systemFontOfSize:14.0];
         }
-
+        
         self.timeLable.text = @"2019-15-08";
-
+        
         //分割线
-        self.seperateView = [[UIView alloc] initWithFrame:CGRectMake(self.iconView.tmri_right + 10, 41, kWIDTH, 1)];
+        self.seperateView = [[UIView alloc] initWithFrame:CGRectMake(self.iconView.tmri_right + 10, 41, kWIDTH, 0.5)];
         self.seperateView.backgroundColor = [UIColor colorWithHex:@"#EAEAEA"];
         [self.contentView addSubview:self.seperateView];
         
@@ -47,17 +47,17 @@
         self.messgeLable.font = [UIFont systemFontOfSize:14];
         self.messgeLable.numberOfLines = 0;
         self.messgeLable.text = @"总于中奖了";
-
+        
         //审核
         self.stateLable = [UILabel labelWithFrame:CGRectMake(self.messgeLable.tmri_right , self.nameLable.tmri_bottom + 5,80, 15) textAlignment:NSTextAlignmentRight textColor:[UIColor blackColor]];
         self.stateLable.text = @"已发布";
         
         self.backView = [[TapImageView alloc] init];
-
+        
         self.describeLable = [UILabel labelWithFrame:CGRectMake(self.iconView.tmri_right + 10, self.backView.tmri_bottom +15, kWIDTH , 12) textAlignment:NSTextAlignmentLeft textColor:[UIColor colorWithHex:@"#999999"]];
         self.describeLable.text = @"(第765期) IPhone 玫瑰金64GB";
         
-
+        
         [self.contentView addSubview:self.iconView];
         [self.contentView addSubview:self.nameLable];
         [self.contentView addSubview:self.backView];
@@ -75,13 +75,14 @@
     for (id view in self.backView.subviews) {
         [view removeFromSuperview];
     }
-
+    
     [self.iconView sd_setImageWithURL:[NSURL URLWithString:model.face] placeholderImage:[UIImage imageNamed:@"head"]];
     
     //名字
     self.nameLable.text = model.sname;
     
     NSString *dateStr = [model.createTime getDateStringByFormat:@"yyyy-MM-dd HH:mm:SS" ToFormat:@"yyyy-MM-dd"];
+//    NSString *dateStr = model.createTime;
     NSString *stateString;
     NSString *allString;
     //时间
@@ -119,8 +120,8 @@
     }else{
         self.describeLable.tmri_top = self.backView.tmri_bottom + 15;
     }
-
-       //描述
+    
+    //描述
     self.messgeLable.text = model.descrip;
     //奖品信息
     self.describeLable.text = [NSString stringWithFormat:@"(第%@期) %@",model.period,model.name];

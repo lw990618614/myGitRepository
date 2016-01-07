@@ -29,7 +29,6 @@
     UIView          *markView;
     NSInteger       currentIndex;
    
-    TreasureResult *treasure;
     NSMutableArray *shareListArray;
     NSMutableArray *TreasureFrameArray;
     YMProductionCell *tapCell;
@@ -41,7 +40,7 @@
 @property (nonatomic,strong)UITableView *tableView;
 @property  (nonatomic,strong)YMNoDataView *notiView;
 @property(nonatomic,strong)UIScrollView *scrollview;
-
+@property (nonatomic,assign)BOOL isfirstLoad;
 @end
 
 @implementation TreasureViewController
@@ -49,24 +48,23 @@
 {
     [super viewDidDisappear:animated];
 //    [self tapImageViewTappedWithObject:self.sender];
-    [scrollPanel removeFromSuperview];
-    [markView removeFromSuperview];
-    [myScrollView removeFromSuperview];
-    scrollPanel = nil;
-    markView = nil;
-    myScrollView = nil;
+//    [scrollPanel removeFromSuperview];
+//    [markView removeFromSuperview];
+//    [myScrollView removeFromSuperview];
+//    scrollPanel = nil;
+//    markView = nil;
+//    myScrollView = nil;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self loadDataWithflag:0];
 
 }
 -(YMNoDataView *)notiView
 {
     if (_notiView == nil) {
         UIImage *img = [UIImage imageNamed:@"noData"];
-        _notiView  = [[YMNoDataView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64 )  title:@"暂无记录" image:img];
+        _notiView  = [[YMNoDataView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64) title:@"暂无记录" image:img btnTitle:@"马上夺宝" action:@selector(duobao:) tagert:self];
     }
     return _notiView;
 }
@@ -113,13 +111,15 @@
         [self addMoreHotstatus];
         [self.tableView.footer endRefreshing];
     }];
-
+    [self.tableView setSeparatorColor:[UIColor colorWithHex:@"#EAEAEA"]];
     [self initSubViews];
+    [self loadDataWithflag:0];
+
 
 }
 -(void) initSubViews
 {
-    scrollPanel = [[UIView alloc] initWithFrame:self.view.bounds];
+    scrollPanel = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT)];
     scrollPanel.backgroundColor = [UIColor clearColor];
     scrollPanel.alpha = 0;  //完全透明
     [self.view addSubview:scrollPanel];
@@ -129,7 +129,7 @@
     markView.alpha = 0.0;
     [scrollPanel addSubview:markView];
     
-    myScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    myScrollView = [[UIScrollView alloc] initWithFrame:scrollPanel.bounds];
     [scrollPanel addSubview:myScrollView];
     myScrollView.pagingEnabled  = YES;
     myScrollView.delegate       = self;
@@ -137,22 +137,24 @@
 #pragma mark UITableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return shareListArray.count;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%ld",shareListArray.count);
-    return shareListArray.count;
+    return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    YMTreasureFrame *frm = TreasureFrameArray[indexPath.row];
-//    NSInteger unHeight = frm.unPredictHeight;
-    ShareProduction *production  = shareListArray[indexPath.row];
+
+    ShareProduction *production  = shareListArray[indexPath.section];
     return production.height;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return HEIGHT_SERO;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -167,11 +169,10 @@
 {
     static NSString *productionCell = @"productionCell";
     YMProductionCell *cell = [tableView dequeueReusableCellWithIdentifier:productionCell];
-    ShareProduction *pro = shareListArray[indexPath.row];
-
+    ShareProduction *pro = shareListArray[indexPath.section];
+    
     if (cell == nil) {
         cell = [[YMProductionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:productionCell with:pro];
-        cell.delegate =self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     CGSize detaiSize = [[NSString stringWithFormat:@"%@",pro.descrip] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(kWIDTH-75, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
@@ -179,6 +180,7 @@
     cell.messgeLable.frame = CGRectMake(cell.iconView.tmri_right +10, cell.seperateView.tmri_bottom + 15, detaiSize.width, detaiSize.height);
     
     NSInteger count = pro.imageList.count>9?9:pro.imageList.count;
+    [cell.imageArray removeAllObjects];
 
     int totalloc=3;
     for (int i = 0; i < count; i ++)
@@ -196,7 +198,7 @@
         TapImageView *tmpView = [[TapImageView alloc] initWithFrame:CGRectMake(appviewx, appviewy, appvieww, appviewh)];
         tmpView.t_delegate = self;
         SharePicture *picture =  pro.imageList[i];
-        [tmpView sd_setImageWithURL:[NSURL URLWithString:picture.imageUrl] placeholderImage:placeHolder];
+        [tmpView sd_setImageWithURL:[NSURL URLWithString:picture.imageUrl] placeholderImage:carPlaceHolder];
         tmpView.tag = 10 + i;
         [cell.imageArray addObject:tmpView];
     }
@@ -222,7 +224,7 @@
     }
     TreasureViewController *controller = [[TreasureViewController alloc] init];
     controller.titleName = @"我的晒单";
-    
+    controller.ishidenTabar = YES;
     controller.isHiden = !self.isHiden;
     controller.uid = [YMInfoCenter userID];
     [self setHidesBottomBarWhenPushed:YES];
@@ -240,42 +242,48 @@
             self.isFirst = YES;
         }else{
             shareStart = ++self.shareStart;
+            self.isfirstLoad = NO;
+
         }
     }else{
       shareStart = self.shareStart; 
     }
-    [self.view makeToastActivity:kLoadingText];
+    if (!self.isfirstLoad) {
+        [self.view makeToastActivity:kLoadingText];
+        self.isfirstLoad = YES;
+    }
     SAFE;
     [[TreasureManager  sharedManager] treasureStatusWithUid:self.uid andGid:self.gid andPage:shareStart andflag:index  completion:^(id result, NSInteger statusCode, NSString *msg) {
         [weakSelf.view hideToastActivity];
         if (statusCode == 0) {
-            treasure = result;
+            TreasureResult *trea = result;
             if (index == 0) {//加载
-                for (ShareProduction *production in treasure.shareList) {
+                for (ShareProduction *production in trea.shareList) {
                     NSInteger  height =  [self calculateTheHeightWith:production];
-                    production.height = height + 113;
+                    production.height = height + 108;
                 }
-                [shareListArray addObjectsFromArray:treasure.shareList];
+                [shareListArray addObjectsFromArray:trea.shareList];
 
-                if (treasure.shareList.count == 0) {
+                if (trea.shareList.count == 0) {
                     weakSelf.tableView.footer = nil;
-                    [weakSelf.view makeToast:@"加载完毕"];
+//                    [weakSelf.view makeToast:@"加载完毕"];
 
                 }
-                if (treasure.shareList.count == 0&&shareListArray.count == 0) {
+                if (trea.shareList.count == 0&&shareListArray.count == 0) {
                     [weakSelf.view addSubview:weakSelf.notiView];
                 }
             }else{//
+                
                 [shareListArray removeAllObjects];
                 [TreasureFrameArray removeAllObjects];
-                for (ShareProduction *production in treasure.shareList) {
+                for (ShareProduction *production in trea.shareList) {
 
                     [shareListArray addObject:production];
                     NSInteger  height =  [self calculateTheHeightWith:production];
-                    production.height = height + 106;
+                    production.height = height + 113;
 
-                }
-                [shareListArray addObjectsFromArray:treasure.shareList];
+                    }
+
             }
                 [self.tableView reloadData];
         }else
@@ -300,12 +308,12 @@
 }
 -(NSInteger)calculateTheHeightWith:(ShareProduction *)production
 {
-    CGSize detailSize;
+    CGSize detailSize = CGSizeMake(0, 0);
     
     if (production.descrip.length != 0) {
         detailSize = [[NSString stringWithFormat:@"%@",production.descrip] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(kWIDTH-75, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
     }
-
+    
     
     NSInteger imageNumber = production.imageList.count;
     
@@ -350,15 +358,22 @@
 #pragma mark - custom delegate
 - (void) tappedWithObject:(id)sender
 {
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
+    if (!self.ishidenTabar) {
+        AppDelegate *delegate =  (AppDelegate *)[UIApplication sharedApplication].delegate;
+        YMTabBarController *tabbar =  (YMTabBarController *)delegate.window.rootViewController;
+        [tabbar.tabBar setHidden:YES];
+    }
+//    [UIApplication sharedApplication] setta
     [self.view bringSubviewToFront:scrollPanel];
 
     scrollPanel.alpha = 1.0;
-//    myScrollView.contentSize = CGSizeMake(myScrollView.subviews.count *kWIDTH, kh) ;
     TapImageView *tmpView = sender;
     currentIndex = tmpView.tag - 10;
     
-    tapCell = tmpView.identifier;
+    tapCell = (YMProductionCell *)[[[tmpView superview] superview] superview];
     
     //转换后的rect
     CGRect convertRect = [[tmpView superview] convertRect:tmpView.frame toView:self.view];
@@ -376,6 +391,8 @@
     [myScrollView addSubview:tmpImgScrollView];
     tmpImgScrollView.i_delegate = self;
     
+    [myScrollView setContentSize:CGSizeMake(kWIDTH * tapCell.imageArray.count, kHEIGHT)];
+
     [self performSelector:@selector(setOriginFrame:) withObject:tmpImgScrollView afterDelay:0.1];
 }
 #pragma mark - custom method
@@ -386,19 +403,24 @@
         [tmpView removeFromSuperview];
     }
     
-    for (int i = 0; i < 1; i ++)
+    for (int i = 0; i < tapCell.imageArray.count; i ++)
     {
         if (i == currentIndex)
         {
             continue;
         }
         
-        TapImageView *tmpView = (TapImageView *)[tapCell viewWithTag:10 + i];
+//        TapImageView *tmpView = (TapImageView *)[tapCell viewWithTag:10 + i];
+        TapImageView *tmpView=  (TapImageView *) tapCell.imageArray[i];
         
         //转换后的rect
         CGRect convertRect = [[tmpView superview] convertRect:tmpView.frame toView:self.view];
         
         ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){i*myScrollView.bounds.size.width,0,myScrollView.bounds.size}];
+        
+        
+        ImgScrollView *tmpImgScrollViww = [[ImgScrollView alloc] initWithFrame:(CGRect){i*myScrollView.bounds.size.width,0,myScrollView.bounds.size}];
+
         [tmpImgScrollView setContentWithFrame:convertRect];
         [tmpImgScrollView setImage:tmpView.image];
         [myScrollView addSubview:tmpImgScrollView];
@@ -416,7 +438,14 @@
 }
 - (void) tapImageViewTappedWithObject:(id)sender
 {
-    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+
+    if (!self.ishidenTabar) {
+        AppDelegate *delegate =  (AppDelegate *)[UIApplication sharedApplication].delegate;
+        YMTabBarController *tabbar =  (YMTabBarController *)delegate.window.rootViewController;
+        [tabbar.tabBar setHidden:NO];
+    }
     ImgScrollView *tmpImgView = sender;
     
     [UIView animateWithDuration:0.5 animations:^{
@@ -427,6 +456,14 @@
     }];
     
 }
-
+#pragma mark ---夺宝---
+-(void)duobao:(id) sener
+{
+//    AppDelegate
+    AppDelegate *delegate =  (AppDelegate *)[UIApplication sharedApplication].delegate;
+    YMTabBarController *tabbar =  (YMTabBarController *)delegate.window.rootViewController;
+    [tabbar setSelectedIndex:0];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 @end

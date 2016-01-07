@@ -1,4 +1,3 @@
 pod 'Masonry'
-pod 'UMengAnalytics'
+pod 'UMengAnalytics-NO-IDFA'
 pod 'SDCycleScrollView','~> 1.3'
-pod 'MJRefresh'

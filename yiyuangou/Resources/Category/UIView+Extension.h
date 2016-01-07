@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YMNoDataView.h"
 @interface UIView (Extension)
 
 /**
@@ -34,7 +34,6 @@
  *  获取或者更改控件的y坐标
  */
 @property(nonatomic,assign)CGFloat y;
-
 -(CGFloat)frameX;
 -(CGFloat)frameY;
 //添加点击事件
@@ -44,7 +43,6 @@
 //显示无数据
 -(void) showEmptyView;
 -(void) showEmptyView:(float) height;
-
 //隐藏无数据
 -(void) hideEmptyView;
 @end

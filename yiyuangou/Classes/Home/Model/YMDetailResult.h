@@ -44,7 +44,7 @@
 
 @property (nonatomic,copy) NSString * face;
 
-@property (nonatomic,copy) NSString * mobile;
+@property (nonatomic,copy) NSString * phone;
 
 @property (nonatomic,copy) NSString * time;
 
@@ -57,6 +57,11 @@
 @property (nonatomic,assign)NSInteger  newPeriod;
 
 @property (nonatomic,copy)NSString *sname;
+
+@property (nonatomic,copy)NSString *lastPhone;
+@property (nonatomic,copy)NSString *lastSname;
+
+
 
 @end
 

@@ -10,8 +10,8 @@
 
 @interface YMRewardResult : BaseResult
 
-@property (strong, nonatomic) NSMutableArray* flowList;
-@property (strong, nonatomic) NSMutableArray* lotteryList;
+@property (strong, nonatomic) NSArray* flowList;
+@property (strong, nonatomic) NSArray* lotteryList;
 
 @end
 
@@ -29,7 +29,7 @@
  *  图片地址
  */
 
-@property (nonatomic,copy) NSString * goodsImage;
+@property (nonatomic,copy) NSString * image100by100;
 
 @property (nonatomic,copy)NSString *price;
 
@@ -67,7 +67,7 @@
 @property (nonatomic,assign)NSInteger gsid;
 
 
-@property (nonatomic,copy) NSString * goodsImage;
+@property (nonatomic,copy) NSString * image100by100;
 
 
 @property (nonatomic,copy) NSString * name;

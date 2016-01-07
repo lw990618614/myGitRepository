@@ -27,6 +27,7 @@
 @property (strong, nonatomic) TapImageView *backView;
 @property (strong, nonatomic) UIImageView * pictureView;
 @property (strong, nonatomic) UILabel* describeLable;
+@property (assign,nonatomic)BOOL *hideState;
 //@property (strong, nonatomic) UIImageView *image;
 @property (strong, nonatomic) NSMutableArray *imageArray;
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier with:(ShareProduction *)model;

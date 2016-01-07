@@ -15,7 +15,7 @@
 @end
 
 @interface TapImageView : UIImageView
-
+@property (nonatomic,assign)NSInteger count;
 @property (nonatomic, strong) id identifier;
 
 @property (weak) id<TapImageViewDelegate> t_delegate;

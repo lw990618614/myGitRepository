@@ -15,10 +15,7 @@
              @"carList" : @"YMCarInfo"
              };
 }
-
 @end
 @implementation YMCarInfo
-
-
 
 @end

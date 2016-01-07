@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "YMVerfyResult.h"
 #import "YMRegisterViewController.h"
-@interface YMSetPassWordController : UIViewController
+@interface YMSetPassWordController : YMBaseViewController
 @property (strong, nonatomic) YMVerfyResult* model;
 @property(nonatomic,assign)inputMethod ways;
 @end

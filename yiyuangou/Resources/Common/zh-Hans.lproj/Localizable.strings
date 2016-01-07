@@ -10,3 +10,5 @@
 "OK"               = "好的";
 "title"            = "选择图片";
 "leftTitle"        = "选择相册";
+"Error"            = "错误";
+"privacySettings"  = "App 不能访问您的相册,请在设置-隐私中开启";

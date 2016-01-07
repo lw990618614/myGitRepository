@@ -42,16 +42,14 @@
     NSString    *IP;
 
 }
-@property(nonatomic,strong)    BMKLocationService  *locServicse;
-
-
+@property(nonatomic,strong) BMKLocationService  *locServicse;
 @end
 @implementation YMLoginViewController
 -(void)viewDidLoad
 {
     [super viewDidLoad];
     self.title = @"登录";
-    [self initBMK];
+//    [self initBMK];
     IP = [YMIPHelper deviceIPAdress];
     YMInfoCenter *infoCenter = [YMInfoCenter sharedManager];
     YMUser       *mainUser = infoCenter.mainUser;
@@ -172,6 +170,12 @@
     model.flag = @"1";
     model.address = usrLoginAddress;
     model.IP =  IP;
+    
+    YMInfoCenter *info =  [YMInfoCenter sharedManager];
+    YMUser      *mainUsr =  info.mainUser;
+    mainUsr.YMAccount = model.mobile;
+    [info saveUserAccount];
+    
     if (![[telephoneFiled.text trim] isValidPhoneNumber]) {
         [self.view makeToast:@"请输入正确的手机号码"];
         return;
@@ -256,7 +260,7 @@
     info.mainUser.YMAddressArray = loginresult.addressList;
     [info saveUserID];
     [MobClick event:ymLogin];
-    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SELF object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SELF object:nil userInfo:@{@"type":NSStringFromClass([self class])}];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 //    [self setHidesBottomBarWhenPushed:NO];
 //    MySettingViewController *controller = [[MySettingViewController alloc] init];
@@ -322,69 +326,96 @@
 -(void)qqBtnAction:(id) sender
 {
 
-    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
-
-    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+    @try {
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
         
-        //          获取微博用户名、uid、token等
-        if (response.responseCode == UMSResponseCodeSuccess) {
-        
-            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToQQ];
-            NSDictionary *loginDic  = @{
-                                        @"flag":@"4",
-                                        @"sname":snsAccount.userName,
-                                        @"loginName":snsAccount.usid
-                                        };
-            [self thirdPartyLogin:loginDic];
-            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+        snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
             
-        }});
+            //          获取微博用户名、uid、token等
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                
+                UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToQQ];
+                NSDictionary *loginDic  = @{
+                                            @"flag":@"4",
+                                            @"sname":snsAccount.userName,
+                                            @"loginName":snsAccount.usid
+                                            };
+                [self thirdPartyLogin:loginDic];
+                NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+                
+            }});
+    }
+    @catch (NSException *exception) {
+     }
+    @finally {
+    }
+    
+
 }
 #pragma mark ---微博登录-----
 -(void)sinaBtnAction:(id) sender
 {
-    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
-    
-    //登录
-    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+    @try {
         
-        //          获取微博用户名、uid、token等
-        if (response.responseCode == UMSResponseCodeSuccess) {
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
+        //登录
+        WEAKSELF;
+        snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
             
-            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToSina];
-            NSDictionary *loginDic  = @{
-                                        @"flag":@"5",
-                                        @"sname":snsAccount.userName,
-                                        @"loginName":snsAccount.usid
-                                        };
-            [self thirdPartyLogin:loginDic];
-            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
-            
-        }});
+            //          获取微博用户名、uid、token等
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                
+                UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:UMShareToSina];
+                NSDictionary *loginDic  = @{
+                                            @"flag":@"5",
+                                            @"sname":snsAccount.userName,
+                                            @"loginName":snsAccount.usid
+                                            };
+                [weakSelf thirdPartyLogin:loginDic];
+                NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+                
+            }});
+    }
+    @catch (NSException *exception) {
+
+    }
+    @finally {
+
+    }
+
 }
 #pragma mark --微信登录-----
 -(void)wxAction:(id) sender
 {
 
-    
-    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
-    
-    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+    WEAKSELF;
+    @try {
         
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            
-            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
-            NSDictionary *loginDic  = @{
-                                        @"flag":@"2",
-                                        @"sname":snsAccount.userName,
-                                        @"loginName":snsAccount.usid
-                                        };
-            [self thirdPartyLogin:loginDic];
-            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
-            
-        }
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
         
-    });
+        snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+            
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                
+                UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary]valueForKey:UMShareToWechatSession];
+                NSDictionary *loginDic  = @{
+                                            @"flag":@"2",
+                                            @"sname":snsAccount.userName,
+                                            @"loginName":snsAccount.usid
+                                            };
+                [weakSelf thirdPartyLogin:loginDic];
+                NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
+                
+            }
+            
+        });
+    }
+    @catch (NSException *exception) {
+     }
+    @finally {
+    }
+    
+
 
 }
 //-(void)viewWillAppear:(BOOL)animated
@@ -408,25 +439,33 @@
 #pragma mark ---第三方登录---
 -(void) thirdPartyLogin:(NSDictionary *) loginDic
 {
-    YMLoginModel *model = [[YMLoginModel alloc] init];
-    model.sname =  loginDic[@"sname"];
-    model.flag =  loginDic[@"flag"];
-    model.loginName = loginDic[@"loginName"];
-    model.address = usrLoginAddress == nil?@"中国":usrLoginAddress;
-    model.IP =  IP;
-    [[LoginManager sharedManager] LoginStatusWithModle:model completion:^(id result, NSInteger statusCode, NSString *msg) {
-        if (statusCode == 0) {
-            loginresult = result;
-            NSString *uid = [NSString stringWithFormat:@"%ld",loginresult.uid];
-            [MobClick profileSignInWithPUID:uid provider:loginDic[@"loginName"]];
-            [self login];
-        }
-        else
-        {
-            [self.view makeToast:msg];
-        }
-        
-    }];
+    
+
+        YMLoginModel *model = [[YMLoginModel alloc] init];
+        model.sname =  loginDic[@"sname"];
+        model.flag =  loginDic[@"flag"];
+        model.loginName = loginDic[@"loginName"];
+        model.address = usrLoginAddress == nil?@"中国":usrLoginAddress;
+        model.IP =  IP;
+    
+        [[LoginManager sharedManager] LoginStatusWithModle:model completion:^(id result, NSInteger statusCode, NSString *msg) {
+            if (statusCode == 0) {
+                loginresult = result;
+                YMInfoCenter *info =  [YMInfoCenter sharedManager];
+                YMUser *mainUsr =  info.mainUser;
+                mainUsr.isNewUsr = loginresult.flag;
+                NSString *uid = [NSString stringWithFormat:@"%ld",loginresult.uid];
+                [MobClick profileSignInWithPUID:uid provider:loginDic[@"loginName"]];
+                [self login];
+            }
+            else
+            {
+                [self.view makeToast:msg];
+            }
+            
+        }];
+    
+
     //
 }
 //- (void)textFieldDidEndEditing:(UITextField *)textField
@@ -523,17 +562,6 @@
 {
     
     if (textField == telephoneFiled) {
-        //        NSMutableString *newtxt = [NSMutableString stringWithString:textField.text];
-        //        [newtxt replaceCharactersInRange:range withString:string];
-        //        BOOL change = YES;
-        //        if ([newtxt length] >= KMAXLength) {
-        //            change = NO;
-        //        }
-        //        //如果是删除的情况 则允许删除
-        //        if (range.length == 1) {
-        //            change = YES;
-        //        }
-        //        return change;
         return [YMTextFieldInputHandle isInputText:textField range:range replaceStr:string maxLegnth:12];
     }
     return YES;

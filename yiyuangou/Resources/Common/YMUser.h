@@ -29,4 +29,5 @@
 //用户收获地址列表
 @property(nonatomic,strong)  NSArray * YMAddressArray;
 @property(nonatomic,strong)  NSString* YMTotalIncome;//抢币余额
+@property(nonatomic,assign)  BOOL isNewUsr;//是否是新用户
 @end

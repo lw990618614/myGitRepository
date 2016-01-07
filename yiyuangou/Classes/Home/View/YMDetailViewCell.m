@@ -29,8 +29,8 @@
 }
 -(id)configWithModel:(YMTotalList *)list
 {
-    [self.iconView sd_setImageWithURL:[NSURL URLWithString:list.face] placeholderImage:nil];
-    self.personLable.text = [NSString stringWithFormat:@"%@  (%@)",list.mobile.length?list.mobile:list.sname,list.place.length?list.place:@"未知"];
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:list.face] placeholderImage:headIconHolder];
+    self.personLable.text = [NSString stringWithFormat:@"%@  (%@)",list.mobile.length?list.mobile:list.sname,list.place.length?list.place:@"广州市"];
     
     self.detailLable.text = [NSString stringWithFormat:@"参与次数: %@次  %@",list.times,list.createTime];
 

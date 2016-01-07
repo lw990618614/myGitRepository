@@ -9,7 +9,7 @@
 #import "ELCAsset.h"
 #import "ELCConsole.h"
 #import "ELCOverlayImageView.h"
-
+#import "ELCImagePickerHeader.h"
 @interface ELCAssetCell ()
 
 @property (nonatomic, strong) NSArray *rowAssets;
@@ -58,6 +58,16 @@
         if (i < [_imageViewArray count]) {
             UIImageView *imageView = [_imageViewArray objectAtIndex:i];
             imageView.image = [UIImage imageWithCGImage:asset.asset.thumbnail];
+            
+            //        //添加如下代码造成TableView非常卡顿
+
+//                    UIImageView *unSelect = [[UIImageView alloc] initWithFrame:CGRectMake(imgWidth - 25, 5, 20, 20)];
+//                    unSelect.image = [UIImage imageNamed:@"imageUnselected"];
+//                    unSelect.layer.cornerRadius = unSelect.width/2.0;
+//                    unSelect.clipsToBounds   = YES;
+//                    [unSelect.layer setMasksToBounds:YES];
+//                    [unSelect setContentMode:UIViewContentModeScaleAspectFill];
+//                    [imageView addSubview:unSelect];
         } else {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithCGImage:asset.asset.thumbnail]];
             [_imageViewArray addObject:imageView];
@@ -83,7 +93,7 @@
 {
     CGPoint point = [tapRecognizer locationInView:self];
     int c = (int32_t)self.rowAssets.count;
-    CGFloat totalWidth = c * 75 + (c - 1) * 4;
+    CGFloat totalWidth = c * imgWidth + (c - 1) * 4;
     CGFloat startX;
     
     if (self.alignmentLeft) {
@@ -92,7 +102,7 @@
         startX = (self.bounds.size.width - totalWidth) / 2;
     }
     
-	CGRect frame = CGRectMake(startX, 2, 75, 75);
+	CGRect frame = CGRectMake(startX, 2, imgWidth, imgWidth);
 	
 	for (int i = 0; i < [_rowAssets count]; ++i) {
         if (CGRectContainsPoint(frame, point)) {
@@ -120,7 +130,7 @@
 {
     int c = (int32_t)self.rowAssets.count;
     
-    CGFloat totalWidth = c * 75 + (c - 1) * 4;
+    CGFloat totalWidth = c * imgWidth + (c - 1) * 4;
     
     CGFloat startX;
     
@@ -130,12 +140,22 @@
         startX = (self.bounds.size.width - totalWidth) / 2;
     }
     //做屏幕适配
-    float width = (kWIDTH - 4*5) / 4.0;
-	CGRect frame = CGRectMake(startX, 2, width, 75);
+	CGRect frame = CGRectMake(startX, 2, imgWidth, imgWidth);
 	
 	for (int i = 0; i < [_rowAssets count]; ++i) {
 		UIImageView *imageView = [_imageViewArray objectAtIndex:i];
+        //添加按钮
 		[imageView setFrame:frame];
+        
+        //添加如下代码造成TableView非常卡顿
+        
+//        UIImageView *unSelect = [[UIImageView alloc] initWithFrame:CGRectMake(imgWidth - 25, 5, 20, 20)];
+//        unSelect.image = [UIImage imageNamed:@"imageUnselected"];
+//        unSelect.layer.cornerRadius = unSelect.width/2.0;
+//        unSelect.clipsToBounds   = YES;
+//        [unSelect.layer setMasksToBounds:YES];
+//        [unSelect setContentMode:UIViewContentModeScaleAspectFill];
+//        [imageView addSubview:unSelect];
 		[self addSubview:imageView];
         
         ELCOverlayImageView *overlayView = [_overlayViewArray objectAtIndex:i];

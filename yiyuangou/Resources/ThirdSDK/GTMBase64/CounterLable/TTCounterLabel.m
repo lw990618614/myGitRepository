@@ -164,7 +164,7 @@
     self.running = YES;
     self.isRunning = self.running;
     
-    self.clockTimer = [NSTimer timerWithTimeInterval:0.02
+    self.clockTimer = [NSTimer timerWithTimeInterval:0.09
                                               target:self
                                             selector:@selector(clockDidTick:)
                                             userInfo:nil repeats:YES];

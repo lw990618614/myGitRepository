@@ -15,19 +15,28 @@
 #import "MySettingViewController.h"
 #import "MyMD5.h"
 #import "YMTextFieldInputHandle.h"
-@interface YMSetPassWordController()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
+#import <BaiduMapAPI_Base/BMKUserLocation.h>
+#import <BaiduMapAPI_Location/BMKLocationService.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
+#import <BaiduMapAPI_Map/BMKPointAnnotation.h>
+@interface YMSetPassWordController()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,BMKLocationServiceDelegate,BMKGeneralDelegate,BMKGeoCodeSearchDelegate>
 {
     UITextField *telephoneFiled;
     UITextField *passwordFiled;
     UITableView *mainTableView;
-
+    BMKGeoCodeSearch* _geocodesearch;
+    NSString    *usrLoginAddress;//用户登录地址
 }
+@property(nonatomic,strong) BMKLocationService  *locServicse;
+
 @end
+
 @implementation YMSetPassWordController
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
+//    [self initBMK];
     self.title =@"设置密码";
     self.view.backgroundColor  = [UIColor redColor];
     telephoneFiled = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, kWIDTH - 110, 40)];
@@ -128,19 +137,28 @@
             YMLoginModel *model = [[YMLoginModel alloc] init];
             model.mobile = self.model.mobile;
             model.password = [passwordFiled.text trim];
+            model.address  = usrLoginAddress;
             model.flag = @"0";
             WEAKSELF;
             [[LoginManager sharedManager] LoginStatusWithModle:model completion:^(id result, NSInteger statusCode, NSString *msg) {
                 if (statusCode == 0) {
                     YMInfoCenter *infoCenter = [YMInfoCenter sharedManager];
+                    NSDictionary *dict =  [result keyValues];
                     YMUser *mainUser = infoCenter.mainUser;
                     mainUser.YMAccount = weakSelf.model.mobile;
+                    [infoCenter saveUserAccount];
+                    mainUser.YMUserID = [dict[@"uid"] integerValue];
+                    mainUser.isNewUsr = [dict[@"flag"] boolValue];
+                    [infoCenter saveUserID];
                     mainUser.YMUserPassword = [passwordFiled.text trim];
-                    YMLoginViewController *loginVC = [[YMLoginViewController alloc]init];
-                    [weakSelf.navigationController pushViewController:loginVC animated:YES];
+
+                    NSLog(@"%@",weakSelf.navigationController);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SELF object:nil userInfo:@{@"type":NSStringFromClass([self class])}];
+
+
+                    [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
                 }else if(statusCode == 6){
-                    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"登录失败" message:@"请输入正确的帐号和密码" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                    [alterView show];
+                    
                 }
             }];
 
@@ -162,6 +180,7 @@
                 YMUser *mainUser = infoCenter.mainUser;
                 mainUser.YMAccount = weakSelf.model.mobile;
                 mainUser.YMUserPassword = [passwordFiled.text trim];
+                [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SELF object:nil];
                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
             } failure:^(NSError *error) {
                 
@@ -198,5 +217,63 @@
     return YES;
     
 }
+#pragma mark -------百度地图定位--------
+//初始化百度地图定位
+-(void) initBMK
+{
+    _locServicse = [[BMKLocationService alloc]init];
+    _locServicse.delegate = self;
+    _geocodesearch = [[BMKGeoCodeSearch alloc]init];
+    _geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    //启动LocationService
+    [_locServicse startUserLocationService];
+}
+//实现相关delegate 处理位置信息更新
+//处理方向变更信息
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
+{
+    //NSLog(@"heading is %@",userLocation.heading);
+}
+//处理位置坐标更新
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
+{
+    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    double locaLatitude = userLocation.location.coordinate.latitude;//纬度
+    double locaLongitude = userLocation.location.coordinate.longitude;//精度
+    BMKCoordinateRegion region;
+    //将定位的点居中显示
+    region.center.latitude=locaLatitude;
+    region.center.longitude=locaLongitude;
+    
+    //反地理编码出地理位置
+    CLLocationCoordinate2D pt=(CLLocationCoordinate2D){0,0};
+    
+    pt=(CLLocationCoordinate2D){locaLatitude,locaLongitude};
+    
+    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    reverseGeocodeSearchOption.reverseGeoPoint = pt;
+    BOOL flag =  [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    if (flag) {
+        NSLog(@"反检索成功");
+    }
+    else
+    {
+        NSLog(@"反检索失败");
+    }
+}
+
+-(void) onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+{
+    
+    if (error == 0) {
+        BMKPointAnnotation* item = [[BMKPointAnnotation alloc]init];
+        item.coordinate = result.location;
+        item.title = result.addressDetail.city;
+        NSString* titleStr;
+        titleStr = @"反向地理编码";
+        usrLoginAddress = [NSString stringWithFormat:@"%@",item.title];
+    }
+}
+
 @end
 

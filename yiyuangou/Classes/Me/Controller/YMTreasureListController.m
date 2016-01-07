@@ -13,18 +13,21 @@
 #import "AppDelegate.h"
 #import "YMTabBarController.h"
 #import "YMDetailProductionController.h"
+#import "YMLuckNumView.h"
+#import "YMNoDataView.h"
 @interface YMTreasureListController()<CustomSegmentViewDelegate,YMListCellProtol,UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)NSMutableArray *contiuesArray;          //进行中数组
 @property(nonatomic,strong)NSMutableArray *finishArray;            //已经开奖数组
 @property(nonatomic,strong)NSArray *showArray;              //展示的数组
 @property(nonatomic,assign)NSUInteger  index;
-@property(nonatomic,strong) UITableView *countinueTableView;//进行中表格
-@property(nonatomic,strong) UITableView *finishTableView;   //已开奖表格
-@property(nonatomic,assign)  BOOL       isFirstFinsh;//是否是第一次进入已经开奖页面
-@property(nonatomic,assign)  NSUInteger countiuns;
-@property(nonatomic,assign)  NSUInteger finish;
-@property(nonatomic,assign)  NSUInteger refreshCountiuns;
-@property(nonatomic,assign)  NSUInteger refreshFinish;
+@property(nonatomic,strong)UITableView *countinueTableView;//进行中表格
+@property(nonatomic,strong)UITableView *finishTableView;   //已开奖表格
+@property(nonatomic,assign)BOOL         isFirstFinsh;//是否是第一次进入已经开奖页面
+@property(nonatomic,assign)NSUInteger countiuns;
+@property(nonatomic,assign)NSUInteger finish;
+@property(nonatomic,assign)NSUInteger refreshCountiuns;
+@property(nonatomic,assign)NSUInteger refreshFinish;
+@property(nonatomic,strong)YMNoDataView *notiView;
 @end
 @implementation YMTreasureListController
 
@@ -41,20 +44,15 @@
     [self.view addSubview:segmentView];
     self.view.backgroundColor =[UIColor whiteColor];
     
-    UIImage *btnImage = [UIImage imageNamed:@"nav_back"];
+    UIImage *btnImage = [UIImage imageNamed:@"返回"];
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(0,0, btnImage.size.width, btnImage.size.height);
     [backBtn setBackgroundImage:btnImage forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(poptoMysetting) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-
-//    UIButton *leftBtn = [UIButton buttonWithFrame:CGRectMake(0, 0, 40, 44) target:self action:@selector(poptoMysetting) title:@"返回" cornerRadius:0];
-//    leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-//    leftBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    
-    
-//    UIBarButtonItem*rightItem=[[UIBarButtonItem alloc]initWithCustomView:barBtn];
-    self.navigationItem.leftBarButtonItem=self.isHidenRight?barBtn:nil;
+    if (self.isHidenRight) {
+        self.navigationItem.leftBarButtonItem = barBtn;
+    }
 
     self.countinueTableView= [[UITableView alloc] initWithFrame:CGRectMake(0, 44, kWIDTH, kHEIGHT - 64 -44) style:UITableViewStyleGrouped];
     self.countinueTableView.delegate = self;
@@ -108,6 +106,14 @@
     [self loadDataProcess];
     [self.view bringSubviewToFront:self.countinueTableView];
     
+}
+-(YMNoDataView *)notiView
+{
+    if (_notiView == nil) {
+        UIImage *img = [UIImage imageNamed:@"noData"];
+        _notiView  = [[YMNoDataView alloc] initWithFrame:CGRectMake(0,44, kWIDTH, kHEIGHT - 70 -44) title:@"暂无记录" image:img btnTitle:@"马上夺宝" action:@selector(duobao:) tagert:self];
+    }
+    return _notiView;
 }
 //购物车
 -(void) rightCar
@@ -187,11 +193,10 @@
    if(index == 0 )
    {
        if (self.contiuesArray.count == 0) {
-           [self.countinueTableView showEmptyView];
+           [self.view bringSubviewToFront:self.notiView];
        }
        else
        {
-           [self.countinueTableView hideEmptyView];
            [self.view bringSubviewToFront:self.countinueTableView];
        }
 
@@ -207,12 +212,11 @@
         {
           if (self.finishArray.count == 0) {
               [self.view bringSubviewToFront:self.finishTableView];
-            [self.finishTableView showEmptyView];
+              [self.view bringSubviewToFront:self.notiView];
 
           }
           else
           {
-            [self.finishTableView hideEmptyView];
             [self.view bringSubviewToFront:self.finishTableView];
          }
         }
@@ -241,7 +245,8 @@
             [muDic setValue:dict[@"data"][@"period"] forKey:@"period"];
             [muDic setValue:dict[@"data"][@"luckyNumList"] forKey:@"luckyNumList"];
             [muDic setValue:goodsDic[@"name"] forKey:@"name"];
-            LuckNumView *luckNum  = [[LuckNumView alloc]initWithDic:muDic frame:self.view.bounds];
+            YMLuckNumView *luckNum  = [[YMLuckNumView alloc] initWithLuckArray:muDic[@"luckyNumList"] frame:CGRectMake(0, 0, kWIDTH, kHEIGHT)];
+            
             UIWindow *window = [UIApplication sharedApplication].keyWindow;
             if (!window) {
                 window  = [[UIApplication sharedApplication].windows objectAtIndex:0];
@@ -278,7 +283,8 @@
             [weakSelf.contiuesArray addObjectsFromArray:tmpArray];
             [weakSelf.view hideToastActivity];
             if (weakSelf.contiuesArray.count == 0) {
-                [weakSelf.countinueTableView showEmptyView:0];
+                [weakSelf.view addSubview:weakSelf.notiView];
+                [weakSelf.view bringSubviewToFront:weakSelf.notiView];
             }
             [weakSelf.countinueTableView reloadData];
         }
@@ -305,7 +311,9 @@
             [weakSelf.view hideToastActivity];
             if (weakSelf.finishArray.count == 0) {
                 weakSelf.isFirstFinsh = NO;
-                [weakSelf.finishTableView showEmptyView:0];
+//                [weakSelf.finishTableView showEmptyView:0];
+                [weakSelf.view addSubview:weakSelf.notiView];
+                [weakSelf.view bringSubviewToFront:weakSelf.notiView];
             }
             else
             {
@@ -396,4 +404,13 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 
 }
+#pragma mark ---夺宝---
+-(void)duobao:(id) sener
+{
+    AppDelegate *delegate =  (AppDelegate *)[UIApplication sharedApplication].delegate;
+    YMTabBarController *tabbar =  (YMTabBarController *)delegate.window.rootViewController;
+    [tabbar setSelectedIndex:0];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 @end

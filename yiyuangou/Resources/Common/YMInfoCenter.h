@@ -17,17 +17,14 @@
 + (id)sharedManager;
 
 + (NSUInteger)userID;
+-(NSString *)getAccount;
 - (NSUInteger)getUserID;
-
 - (BOOL)checkClockin;
-
 - (BOOL) updateLastClockin;
-/**
- *    @author Simon, 15-10-01 03:10:15
- *
- *    保存user ID 到defaults
- *
- *    @since 0.1
- */
 - (void)saveUserID;
+//保存账户信息
+-(void) saveUserAccount;
++(void) savestr:(NSString *)str forkey:(NSString *)key;
++(NSString *) getforkey:(NSString *) key;
+-(NSString *) mobile:(NSString *)key;
 @end

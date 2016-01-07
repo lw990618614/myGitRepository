@@ -23,6 +23,7 @@
 {
     YMSettingResult *settiingResult;
     YMNotifiyController *notifi;
+    BOOL flag;
 }
 @end
 
@@ -31,12 +32,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title =@"我的";
+    flag = YES;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
     //隐藏返回按钮
     self.navigationItem.hidesBackButton = YES;
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWIDTH, kHEIGHT - 64) style:UITableViewStyleGrouped];
+    //设置分割线
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -45,15 +48,14 @@
     }
    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:REFRESH_SELF object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshUserInfo) name:ymNotificationRefreshUserInfo object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData:) name:REFRESH_SELF object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshUserInfo:) name:ymNotificationRefreshUserInfo object:nil];
 
     [self loadData];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self showTabBar];
     YMInfoCenter *center = [YMInfoCenter sharedManager];
     if ([center getUserID]) {
         [self noLogin];
@@ -73,18 +75,54 @@
     [self.view addSubview:notifi.view];
     [self addChildViewController:notifi];
 }
+
+//登录
 -(void) noLogin
 {
+
     [notifi.view removeFromSuperview];
     [notifi removeFromParentViewController];
 }
--(void)refreshUserInfo
+-(void)viewDidAppear:(BOOL)animated
 {
+    YMInfoCenter *info =  [YMInfoCenter sharedManager];
+    YMUser *mainUsr =  info.mainUser;
+    UIAlertView *alert;
+    if (mainUsr.isNewUsr && flag) {
+        alert   = [[UIAlertView alloc] initWithTitle:@"注册成功！" message:@"获得一个抢币奖励" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        flag = NO;
+        [alert show];
+        
+    }
+}
+-(void)refreshData:(id) sender
+{
+    NSNotification *noti  = (NSNotification*) sender;
+    NSDictionary   *dict = [noti userInfo];
+    if ([dict[@"type"] isEqualToString:@"YMSetPassWordController"] || [dict[@"type"] isEqualToString:@"YMLoginViewController"]) {
+        flag =  YES;
+    }
+    [self loadData];
+    
+}
+-(void)refreshUserInfo:(id) sender
+{
+    NSNotification *noti = (NSNotification *)sender;
+    NSDictionary *dict = [noti userInfo];
+    NSString *type = dict[@"type"];
     YMInfoCenter *infoCenter = [YMInfoCenter sharedManager];
     YMUser       *mainUsr = infoCenter.mainUser;
     YMSettingCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    cell.userNameLable.text = mainUsr.YMNickName;
-    cell.iconView.image  = [UIImage imageWithData:mainUsr.YMUserHeaderImg];
+
+    if ([type isEqualToString:@"changeAccount"]) {
+        cell.userNameLable.text = [NSString stringWithFormat:@"昵称:%@", mainUsr.YMNickName];
+        cell.iconView.image  = [UIImage imageWithData:mainUsr.YMUserHeaderImg];
+
+    }
+    else if([type isEqualToString:@"bindPhone"])
+    {
+       cell.accountLable.text = [NSString stringWithFormat:@"账号:%@",mainUsr.YMAccount];
+    }
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -128,7 +166,6 @@
         [cell.fillButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [cell.fillButton setBackgroundColor:[UIColor  colorWithHex:@"#DD2727"]];
         [cell.contentView addSubview:cell.fillButton];
-//        cell.fillButton.centerY = 50;
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -236,10 +273,18 @@
             YMUser       *mainUser = infoCenter.mainUser;
             mainUser.YMUserAvatarURL = settiingResult.picture_ulr;
             mainUser.YMAccount  = settiingResult.account;
+            [infoCenter saveUserAccount];
             mainUser.YMNickName = settiingResult.name;
             mainUser.YMTotalIncome = settiingResult.LeftMoney;
+            mainUser.YMUserMobile =  settiingResult.mobile;
             mainUser.YMAddressArray = settiingResult.addressList;
             [self.tableView reloadData];
+        }else if(statusCode == 5)
+        {
+
+//            [weakSelf.view makeToast:@"请登录"];
+        }else{
+            [weakSelf.view makeToast:msg];
         }
     }];
 }

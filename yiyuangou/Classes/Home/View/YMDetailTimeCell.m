@@ -19,7 +19,7 @@
         self.productionLable.font  =  [UIFont systemFontOfSize:16];
         [self.contentView addSubview:self.productionLable];
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, kWIDTH, 1)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, kWIDTH, 0.5)];
         lineView.backgroundColor  = [UIColor  colorWithHex:@"#EAEAEA"];
         [self.contentView addSubview:lineView];
 
@@ -28,7 +28,7 @@
         self.timeString.font = [UIFont  systemFontOfSize:15];
         [self.contentView addSubview:self.timeString];
         
-        self.notiButton = [UIButton buttonWithFrame:CGRectMake(10, lineView.tmri_bottom , kWIDTH -20, 50) target:nil action:nil title:@"揭晓中..." cornerRadius:1];
+        self.notiButton = [UIButton buttonWithFrame:CGRectMake(10, lineView.tmri_bottom , kWIDTH -20, 40) target:nil action:nil title:@"揭晓中..." cornerRadius:1];
         self.notiButton.backgroundColor = [UIColor  colorWithHex:@"#DD2727"];
         [self.contentView addSubview:self.notiButton];
         
@@ -42,8 +42,9 @@
         self.timelable.textColor = [UIColor  colorWithHex:@"#DD2727"];
         [self.contentView addSubview:self.timelable];
         
-        self.luckButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [self.luckButton setTitleColor: [UIColor colorWithHex:@"#999999"] forState:UIControlStateNormal];
+        self.luckButton = [UIButton buttonWithFrame:CGRectMake(kWIDTH - 130, self.timelable.centerY +10, 120, 20) target:nil action:nil title:@"查看我的幸运码" cornerRadius:2];
+        self.luckButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [self.luckButton setTitleColor: [UIColor colorWithHex:@"#DD2727"] forState:UIControlStateNormal];
         self.luckButton.titleLabel.font = [UIFont systemFontOfSize:15];
         [self.contentView addSubview:self.luckButton];
         
@@ -63,9 +64,17 @@
 //    self.timelable.hidden = NO;
 //    self.timeString.hidden = NO;
 //    self.ruleButton.hidden = NO;
-
-    self.timelable.startValue = [model.progress floatValue] +6000;
-    [self.timelable start];
+    if ([model.progress integerValue] >=60 *60 *1000-6000) {
+        self.notiButton.hidden = NO;
+        self.timelable.hidden = YES;
+        self.timeString.hidden = YES;
+        self.ruleButton.hidden = YES;
+        self.luckButton.hidden = YES;
+        [self.notiButton setTitle:@"等待开奖..." forState:UIControlStateNormal];
+    }else{
+        self.timelable.startValue = [model.progress floatValue] +6000;
+        [self.timelable start];
+    }
     return self;
 }
 - (void)countdownDidEnd

@@ -20,6 +20,8 @@
 
 #import "YMCashParam.h"
 #import "YMCashResult.h"
+#import "YMResiltParam.h"
+#import "YMCheckRusult.h"
 @implementation MyCarManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(MyCarManager)
 +(MyCarManager *)sharedManager
@@ -48,7 +50,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MyCarManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
 
     }];
 
@@ -84,7 +86,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MyCarManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
 
 }
@@ -105,7 +107,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MyCarManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
 
     }];
 }
@@ -131,7 +133,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MyCarManager)
             block(nil,r.code,r.msg);
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
 
     }];
 
@@ -155,7 +157,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MyCarManager)
             }
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
     }];
 
 
@@ -176,7 +178,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MyCarManager)
             }
         }
     } failure:^(NSError *error) {
-        block(nil,C100007,@"网络异常");
+        block(nil,C100007,@"网络不给力T_T");
+    }];
+
+}
+-(void)payresultWith:(NSInteger)oid:(ManagerBlock)block
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",BaseServerURL,@"/order/detail"];
+    YMResiltParam *param = [[YMResiltParam alloc] init];
+    param.oid = oid;
+    [YMBaseHttpTool POST:urlStr params:[param keyValues] success:^(id result) {
+        YMCheckRusult *r = result;
+        if ([r isSuceess]) {
+            YMCheckRusult *re = [[YMCheckRusult alloc] init];
+            re =  [YMCheckRusult objectWithKeyValues:r.data];
+            if (block) {
+                block(re,r.code,r.msg);
+            }
+        }else{
+            if (block) {
+                block(nil,r.code,r.msg);
+            }
+        }
+    } failure:^(NSError *error) {
+        block(nil,C100007,@"网络不给力T_T");
     }];
 
 }

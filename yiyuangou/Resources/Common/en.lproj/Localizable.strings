@@ -10,3 +10,5 @@
 "title"            = "Pick photos";
 "leftTitle"        = "select an Album";
 "OK"               = "Okay";
+"Error"            = "Error";
+"privacySettings"  = "This app does not have access to your photos or videos. You can enable access in Privacy Settings";

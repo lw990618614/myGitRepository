@@ -151,6 +151,11 @@
 {
     return [UIColor colorWithHex:@"999999"];
 }
+//#DD2727
++(UIColor *) redColor
+{
+    return [UIColor colorWithHex:@"DD2727"];
+}
 +(UIColor *)heightBlacKColor
 {
     return [UIColor colorWithHex:@"444444"];
