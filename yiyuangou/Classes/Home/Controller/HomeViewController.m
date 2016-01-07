@@ -115,6 +115,9 @@
     //初始化四个返回数据模型
     hotListArray = [[NSMutableArray alloc] init];
     flowListArray = [[NSMutableArray alloc] init];
+    
+    
+    
     imageArray = [[NSMutableArray alloc] init];
     messageArray = [[NSMutableArray alloc] init];
     lotteryArray = [[NSMutableArray alloc] init];
