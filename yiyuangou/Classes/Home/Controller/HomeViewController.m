@@ -116,7 +116,7 @@
     hotListArray = [[NSMutableArray alloc] init];
     flowListArray = [[NSMutableArray alloc] init];
     
-    /***************/
+    /******* 我想看看看我的变化在哪里********/
     
     imageArray = [[NSMutableArray alloc] init];
     messageArray = [[NSMutableArray alloc] init];
