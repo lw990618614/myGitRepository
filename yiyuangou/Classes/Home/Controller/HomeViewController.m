@@ -118,6 +118,10 @@
     imageArray = [[NSMutableArray alloc] init];
     messageArray = [[NSMutableArray alloc] init];
     lotteryArray = [[NSMutableArray alloc] init];
+    
+    /********** 我是一只小熊********/
+    /********** 我是一只小熊猫********/
+
 
     //初始化第一个headerView
     [self makeThefirstView];
