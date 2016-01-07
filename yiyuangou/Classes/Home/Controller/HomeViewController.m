@@ -115,13 +115,18 @@
     //初始化四个返回数据模型
     hotListArray = [[NSMutableArray alloc] init];
     flowListArray = [[NSMutableArray alloc] init];
+    
+    /******* dgfsdfds大侠 ********/
+    
     imageArray = [[NSMutableArray alloc] init];
     messageArray = [[NSMutableArray alloc] init];
     lotteryArray = [[NSMutableArray alloc] init];
     
-    /********** 我是一只小熊********/
-    /********** 我是一只都过的感受感受\熊猫********/
-    /********** 我是一gsdfg只大熊猫********/
+    /********** 我是一只小dsfg熊********/
+    /********** 我是一只sdfg小熊猫********/
+    /********** 我是一只dsgf大熊猫********/
+    /********** 我是一只都过的感dsf受感受\熊猫********/
+    /********** 我是一dsf只大熊猫********/
 
 
     //初始化第一个headerView
