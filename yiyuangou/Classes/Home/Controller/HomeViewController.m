@@ -116,7 +116,7 @@
     hotListArray = [[NSMutableArray alloc] init];
     flowListArray = [[NSMutableArray alloc] init];
     
-    /******* ********/
+    /******* sdfsdf ********/
     
     imageArray = [[NSMutableArray alloc] init];
     messageArray = [[NSMutableArray alloc] init];
