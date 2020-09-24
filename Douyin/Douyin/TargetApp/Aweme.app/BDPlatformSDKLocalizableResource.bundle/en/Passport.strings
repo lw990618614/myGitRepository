@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ will get following permissions:";
+
+"%@授权登录" = "%@ Login Authorization";
+
+"加载中" = "Loading";
+
+"取消" = "Cancel";
+
+"取消授权" = "Cancel authorization";
+
+"当前网络不可用" = "Network connection unavailable";
+
+"当前网络不可用，请稍后重试" = "Network error. Please try again.";
+
+"授权失败" = "Authorization failed";
+
+"授权并登录" = "Authorize and Login";
+
+"授权登录" = "Authorized to login";
+
+"是否继续？" = "Continue?";
+
+"用户取消" = "User canceled authorization";
+
+"登录中" = "Logging in";
+
+"登录失败" = "Login failed";
+
+"确定" = "OK";
+
+"确认" = "Confirm";
+
+"系统繁忙，请稍后重试" = "Server busy. Please try again later.";
+
+"网络请求返回数据异常" = "Network request error";
+
+"该应用将%@" = "This app will %@";
+
+"重试" = "Retry";

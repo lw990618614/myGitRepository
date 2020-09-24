@@ -1,0 +1,62 @@
+{
+    "faceID": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "faceSDKType": 2,
+    "filters": [
+        {
+            "filterTitle": "Lips(Keypoint)",
+            "filterType": "lips_keypoint",
+            "intensity": 0.3,
+            "lookup_resources": {
+                "imageCount": 1,
+                "imageInterval": 0.05,
+                "name": "lips_lut",
+                "path": "lips_lut_1544503198/"
+            },
+            "mask_resources": {
+                "imageCount": 1,
+                "imageInterval": 0.05,
+                "name": "lipsKMask",
+                "path": "lipsKMask_1544503198/"
+            },
+            "rect": {
+                "height": 1280,
+                "width": 1280,
+                "x": 0,
+                "y": 0
+            },
+            "zPosition": 50000
+        },
+        {
+            "2d_sequence_resources": {
+                "imageCount": 1,
+                "imageInterval": 0.5,
+                "name": "dhieitwl1544502779_",
+                "path": "dhieitwl1544502779/"
+            },
+            "blendMode": 0,
+            "filterTitle": "Mask",
+            "filterType": "mask",
+            "intensity": 0.2,
+            "rect": {
+                "height": 209,
+                "width": 489,
+                "x": 395,
+                "y": 520
+            },
+            "zPosition": 49999
+        }
+    ],
+    "standardFaceKeyPoints": "mask/texcoord.txt",
+    "standardFaceSize": {
+        "height": 1280,
+        "width": 1280
+    },
+    "version": "1.1"
+}

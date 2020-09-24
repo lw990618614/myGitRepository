@@ -1,0 +1,18 @@
+//"messageUserNameColor" = "@color/c4Color";
+// PK
+
+"live_pk_background_gradient_start_color" = "#51022c";
+"live_pk_background_gradient_end_color" = "#161823";
+"live_pk_connecting_cancel_button_title_color" = "#161823";
+
+
+"live_finish_background_begin_color" = "#ff1764";
+"live_finish_background_end_color" = "#ed3495";
+
+"feedBannerBackgroundColor" = "#161823";
+
+//backTip
+"backTipColorBegin" = "#FF4E33/0.88";
+"backTipColorEnd" = "#FF4E33/0.88";
+"backTipShandowColor" = "#FF358d/0.0";
+"filterPickerViewBgColor" = "#000000/0.6";

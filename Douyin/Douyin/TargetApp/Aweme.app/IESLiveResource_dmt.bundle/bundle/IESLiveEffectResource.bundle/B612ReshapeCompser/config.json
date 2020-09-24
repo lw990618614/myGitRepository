@@ -1,0 +1,13 @@
+{
+    "effect": {
+        "Link": [
+            {
+                "type": "FaceDistortion",
+                "zorder": 10000,
+                "path": "distortion_test/"
+            }
+        ]
+    },
+    "name": "distortion_test",
+    "version": "2.8.0"
+}

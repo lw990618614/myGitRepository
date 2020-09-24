@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ kommer att få följande behörigheter:";
+
+"%@授权登录" = "Inloggningsauktorisering för %@";
+
+"加载中" = "Laddar";
+
+"取消" = "Avbryt";
+
+"取消授权" = "Avbryt auktorisering";
+
+"当前网络不可用" = "Det finns ingen tillgänglig nätverksanslutning";
+
+"当前网络不可用，请稍后重试" = "Nätverksfel. Försök igen.";
+
+"授权失败" = "Det gick inte att auktorisera";
+
+"授权并登录" = "Auktorisera och logga in";
+
+"授权登录" = "Auktorisera för att logga in";
+
+"是否继续？" = "Fortsätt?";
+
+"用户取消" = "Användaren avbröt auktorisering";
+
+"登录中" = "Loggar in";
+
+"登录失败" = "Inloggning misslyckades";
+
+"确定" = "OK";
+
+"确认" = "Bekräfta";
+
+"系统繁忙，请稍后重试" = "Servern är upptagen. Försök igen senare.";
+
+"网络请求返回数据异常" = "Nätverksbegäran misslyckades";
+
+"该应用将%@" = "Den här appen kommer att %@";
+
+"重试" = "Försök igen";

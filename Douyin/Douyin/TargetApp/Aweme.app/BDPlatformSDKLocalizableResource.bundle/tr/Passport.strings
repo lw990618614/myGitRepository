@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ aşağıdaki izinleri alacaktır:";
+
+"%@授权登录" = "%@ Giriş Yetkilendirme";
+
+"加载中" = "Yükleniyor";
+
+"取消" = "İptal";
+
+"取消授权" = "Yetkilendirmeyi iptal edin";
+
+"当前网络不可用" = "Ağ bağlantısı mevcut değil";
+
+"当前网络不可用，请稍后重试" = "Ağ sorunu. Lütfen tekrar deneyin.";
+
+"授权失败" = "Yetkilendirme başarısız";
+
+"授权并登录" = "Yetkilendirin ve Oturum Açın";
+
+"授权登录" = "Oturum açmaya yetkilendirildi";
+
+"是否继续？" = "Devam?";
+
+"用户取消" = "Kullanıcı yetkilendirmeyi iptal etti";
+
+"登录中" = "Giriş yapılıyor";
+
+"登录失败" = "Giriş başarısız";
+
+"确定" = "TAMAM";
+
+"确认" = "Onayla";
+
+"系统繁忙，请稍后重试" = "Sunucu meşgul. Lütfen daha sonra tekrar deneyin.";
+
+"网络请求返回数据异常" = "Ağ talebi hatası";
+
+"该应用将%@" = "Bu uygulama %@";
+
+"重试" = "Tekrar dene";

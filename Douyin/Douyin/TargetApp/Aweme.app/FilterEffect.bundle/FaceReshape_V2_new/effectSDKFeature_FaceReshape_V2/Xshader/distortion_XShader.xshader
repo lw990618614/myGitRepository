@@ -1,0 +1,50 @@
+%YAML 1.1
+--- !XShader &1
+name: distortion_XShader
+techniques:
+  - __class: Technique
+    name: ""
+    renderQueue: 2000
+    renderType: Opaque
+    passes:
+      - __class: Pass
+        name: ""
+        shaders:
+          __class: Map
+          gles2:
+            - {localId: 2}
+            - {localId: 3}
+        semantics:
+          __class: Map
+          attUV:
+            __class: VertexAttribType
+            value: TEXCOORD0
+          attPosition:
+            __class: VertexAttribType
+            value: POSITION
+        renderState:
+          __class: RenderState
+          name: ""
+          depthstencil:
+            __class: DepthStencilState
+            name: ""
+            depthTestEnable: false
+            depthCompareOp:
+              __class: CompareOp
+              value: ALWAYS
+            depthWriteEnable: true
+            stencilTestEnable: false
+            stencilFront: false
+            stencilBack: false
+--- !Shader &2
+name: ""
+type:
+  __class: ShaderType
+  value: VERTEX
+source: "\n#define KeyPointCount 20\n#define MaxFace 2\n#define MaxFace_KeyPointCount (KeyPointCount*MaxFace)\n\nprecision highp float;\nattribute vec2 attPosition;\nattribute vec2 attUV;\nvarying vec2 textureCoordinate;\nuniform vec2 u_centers[MaxFace_KeyPointCount];\nuniform vec2 u_radius[MaxFace_KeyPointCount];\nuniform float u_scales[MaxFace_KeyPointCount];\nuniform float u_angles[MaxFace_KeyPointCount];\nuniform float u_mins[MaxFace_KeyPointCount];\nuniform float u_maxs[MaxFace_KeyPointCount];\nuniform float u_types[MaxFace_KeyPointCount];\nuniform float u_intensitys[MaxFace_KeyPointCount];\nuniform float u_counts[MaxFace];\nuniform float u_faceRoll[MaxFace];\nuniform float u_aspectRatio;\n\nvoid main() {\n    gl_Position = vec4(attPosition, 0.0, 1.0);\n//    vec2 uv = (attPosition + vec2(1.0)) * 0.5;\n    vec2 uv = attUV;\n    \n    for (int face = 0; face < MaxFace; face++) {\n        for (int i = 0; i < int(u_counts[face]); i++) {\n            int pointIdx = i+face*KeyPointCount;\n            if(u_scales[pointIdx] == 0.0 || u_types[pointIdx] <= 0.5) {\n                continue;\n            }\n            vec2 textureCoordinateToUse = uv;\n            \n            vec2 coordinateFromCenter = textureCoordinateToUse - u_centers[pointIdx];\n            float coordinateWithRotateX = coordinateFromCenter.x*cos(u_faceRoll[face]) - coordinateFromCenter.y*sin(u_faceRoll[face])*u_aspectRatio;\n            float coordinateWithRotateY = coordinateFromCenter.x*sin(u_faceRoll[face])/u_aspectRatio + coordinateFromCenter.y*cos(u_faceRoll[face]);\n            float e1 = ( coordinateWithRotateX ) / ( u_radius[pointIdx].x );\n            float e2 = ( coordinateWithRotateY ) / ( u_radius[pointIdx].y  / u_aspectRatio );\n            float d = (e1 * e1) + (e2 * e2);\n            \n            if (d < 1.0) {\n                if(u_types[pointIdx] <= 1.5) {\n                    vec2 dist = vec2(d * u_radius[pointIdx].x, d * u_radius[pointIdx].y);\n                    textureCoordinateToUse -= u_centers[pointIdx];\n                    vec2 delta = ((u_radius[pointIdx] - dist) / u_radius[pointIdx]);\n                    float deltaScale = u_scales[pointIdx];\n                    if(deltaScale > 0.0) {\n                        deltaScale = smoothstep(u_mins[pointIdx], u_maxs[pointIdx], deltaScale);\n                    }\n                    vec2 percent = 1.0 - ((delta * deltaScale) * u_intensitys[pointIdx]);\n                    textureCoordinateToUse = textureCoordinateToUse * percent;\n                    uv = textureCoordinateToUse + u_centers[pointIdx];\n                } else if(u_types[pointIdx] <= 2.5) {\n                    float dist = 1.0 - d;\n                    float delta = u_scales[pointIdx] * dist * u_intensitys[pointIdx];\n                    float deltaScale = smoothstep(u_mins[pointIdx], u_maxs[pointIdx], dist);\n                    float directionX = cos(u_angles[pointIdx]) * deltaScale;\n                    float directionY = sin(u_angles[pointIdx]) * deltaScale / (3.0/4.0 * u_aspectRatio);\n                    uv = vec2(textureCoordinateToUse.x - (delta * directionX), textureCoordinateToUse.y - (delta * directionY));\n                }\n            }\n        }\n    }\n    textureCoordinate = uv;\n}\n"
+--- !Shader &3
+name: ""
+type:
+  __class: ShaderType
+  value: FRAGMENT
+source: "\nprecision highp float;\nuniform sampler2D inputImageTexture1;\nvarying vec2 textureCoordinate;\n\nvoid main() {\n    gl_FragColor = texture2D(inputImageTexture1, textureCoordinate);\n}\n"

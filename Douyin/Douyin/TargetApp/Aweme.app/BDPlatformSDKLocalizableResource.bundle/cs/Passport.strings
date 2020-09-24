@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ získá následující oprávnění:";
+
+"%@授权登录" = "Ověření přihlášení %@";
+
+"加载中" = "Načítání";
+
+"取消" = "Zrušit";
+
+"取消授权" = "Zrušit autorizaci";
+
+"当前网络不可用" = "Síťové připojení není k dispozici";
+
+"当前网络不可用，请稍后重试" = "Chyba sítě. Zkus to znovu.";
+
+"授权失败" = "Autorizace se nezdařila";
+
+"授权并登录" = "Autorizovat a přihlásit";
+
+"授权登录" = "Autorizováno pro přihlášení";
+
+"是否继续？" = "Pokračovat?";
+
+"用户取消" = "Autorizace zrušena uživatelem";
+
+"登录中" = "Přihlašování";
+
+"登录失败" = "Přihlášení se nezdařilo";
+
+"确定" = "OK";
+
+"确认" = "Potvrdit";
+
+"系统繁忙，请稍后重试" = "Server je zaneprázdněn. Zkus to znovu později.";
+
+"网络请求返回数据异常" = "Chyba síťového požadavku";
+
+"该应用将%@" = "Tato aplikace bude moct %@";
+
+"重试" = "Zkusit znovu";

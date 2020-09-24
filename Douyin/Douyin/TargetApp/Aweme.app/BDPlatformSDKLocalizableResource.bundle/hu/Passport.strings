@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ az alábbi engedélyeket kapja meg:";
+
+"%@授权登录" = "%@ Bejelentkezési azonosítás";
+
+"加载中" = "Betöltés";
+
+"取消" = "Mégse";
+
+"取消授权" = "Engedélyezés visszavonása";
+
+"当前网络不可用" = "Nincs elérhető hálózati kapcsolat";
+
+"当前网络不可用，请稍后重试" = "Hálózati hiba. Próbáld meg újra.";
+
+"授权失败" = "Engedélyezés sikertelen";
+
+"授权并登录" = "Engedélyezés és bejelentkezés";
+
+"授权登录" = "Bejelentkezés engedélyezve";
+
+"是否继续？" = "Folytatás?";
+
+"用户取消" = "A felhasználó visszavonta az engedélyt";
+
+"登录中" = "Bejelentkezés";
+
+"登录失败" = "Bejelentkezés nem sikerült";
+
+"确定" = "OK";
+
+"确认" = "Megerősítés";
+
+"系统繁忙，请稍后重试" = "A kiszolgáló túlterhelt, próbáld újra később.";
+
+"网络请求返回数据异常" = "Hálózati kérelem hiba";
+
+"该应用将%@" = "Ez az alkalmazás: %@";
+
+"重试" = "Újrapróbálkozás";

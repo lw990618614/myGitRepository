@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ makakuha og mosunod nga mga pagtugot:";
+
+"%@授权登录" = "%@ Pag-login og Awtorisasyon";
+
+"加载中" = "Nag-loading";
+
+"取消" = "Kanselaha";
+
+"取消授权" = "Kanselaha ang awtorisasyon";
+
+"当前网络不可用" = "Walay koneksyon sa network nga makuha";
+
+"当前网络不可用，请稍后重试" = "Isyu sa network. Palihug sulayi pag-usab.";
+
+"授权失败" = "Napakyas ang awtorisasyon";
+
+"授权并登录" = "Awtorisa ug Mag-Login";
+
+"授权登录" = "Gi-awtorisahan sa pag-login";
+
+"是否继续？" = "Padayon?";
+
+"用户取消" = "Ang awtorisasyon gikansela sa tiggamit";
+
+"登录中" = "Nag-log in";
+
+"登录失败" = "Pag-login pakyas";
+
+"确定" = "OK";
+
+"确认" = "Kompirmaha";
+
+"系统繁忙，请稍后重试" = "Ang serber bisi. Palihug sulayi pag-usab unya.";
+
+"网络请求返回数据异常" = "Error sa hangyo sa network";
+
+"该应用将%@" = "Kini nga app mag %@";
+
+"重试" = "Sulayi pag-usab";

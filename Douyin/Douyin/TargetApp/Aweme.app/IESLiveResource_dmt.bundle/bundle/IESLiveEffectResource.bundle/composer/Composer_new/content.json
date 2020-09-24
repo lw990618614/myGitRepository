@@ -1,0 +1,12 @@
+{
+  "content": {
+    "type": 4,
+    "nodes": [
+    ]
+  },
+  "tag": "Composer_2492c39d0dd4376db33e6cc955cbad3c_1540817748818",
+  "requirement": {
+    "faceDetect": true
+  },
+  "version": "2.8.0"
+}

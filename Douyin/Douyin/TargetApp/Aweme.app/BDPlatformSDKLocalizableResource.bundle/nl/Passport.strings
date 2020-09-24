@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ zal de volgende machtigingen krijgen:";
+
+"%@授权登录" = "%@ loginautorisatie";
+
+"加载中" = "Laden ...";
+
+"取消" = "Annuleren";
+
+"取消授权" = "Autorisatie annuleren";
+
+"当前网络不可用" = "Netwerkverbinding niet beschikbaar";
+
+"当前网络不可用，请稍后重试" = "Netwerkfout. Probeer het opnieuw.";
+
+"授权失败" = "Autorisatie mislukt";
+
+"授权并登录" = "Autoriseren en inloggen";
+
+"授权登录" = "Autoriseren om in te loggen";
+
+"是否继续？" = "Doorgaan?";
+
+"用户取消" = "De gebruiker heeft de autorisatie geannuleerd";
+
+"登录中" = "Inloggen ...";
+
+"登录失败" = "Inloggen mislukt";
+
+"确定" = "Oké";
+
+"确认" = "Bevestigen";
+
+"系统繁忙，请稍后重试" = "De server is bezet. Probeer het later opnieuw.";
+
+"网络请求返回数据异常" = "Netwerkverzoekfout";
+
+"该应用将%@" = "Deze app zal %@";
+
+"重试" = "Opnieuw";

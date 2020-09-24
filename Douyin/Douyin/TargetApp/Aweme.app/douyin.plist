@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>douYin_help_data</key>
+	<string>{&quot;status_code&quot;:0,&quot;refresh_code&quot;:1,&quot;version_code&quot;:&quot;1.0&quot;,&quot;mobile_info&quot;:{&quot;platform&quot;:&quot;ios&quot;,&quot;timestamp&quot;:1582015075333,&quot;openudid&quot;:&quot;dcb65db7b9ec2b24ff0e73b0b51ec2c2c65269ac&quot;,&quot;idfa&quot;:&quot;B774E8E7-6D11-902E-7811-3AC4DBF56F5F&quot;,&quot;idfv&quot;:&quot;54339FC1-339B-8221-A1F7-24E3A66E2A12&quot;,&quot;location&quot;:&quot;&quot;,&quot;user_name&quot;:&quot;rowen&quot;,&quot;iphone_version&quot;:9.2},&quot;task_info&quot;:{&quot;type&quot;:1,&quot;userid&quot;:&quot;wangjuxing888&quot;}}</string>
+</dict>
+</plist>

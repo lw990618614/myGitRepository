@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ e tla hwetša ditumelelo tše di latelago:";
+
+"%@授权登录" = "Tiišetšo ya go Tsena ya %@";
+
+"加载中" = "E a louta";
+
+"取消" = "Khansela";
+
+"取消授权" = "Khansela tiišetšo";
+
+"当前网络不可用" = "Kgokganyo ya netwke ga e gona";
+
+"当前网络不可用，请稍后重试" = "Mathata a netweke. Hle leka gape.";
+
+"授权失败" = "Tiišetšo e padile";
+
+"授权并登录" = "Tiišetša gomme o Tsene";
+
+"授权登录" = "Tiišetša go tsena";
+
+"是否继续？" = "Tšwela pele?";
+
+"用户取消" = "Go khansela ga mošomiši go amogetšwe";
+
+"登录中" = "E a tsena";
+
+"登录失败" = "Go tsena go padile";
+
+"确定" = "Go Lokile";
+
+"确认" = "Tiišetša";
+
+"系统繁忙，请稍后重试" = "Sebara e sa swaregile, hle leka gape ka moragonyana.";
+
+"网络请求返回数据异常" = "Bothata bja kgopelo ya netweke";
+
+"该应用将%@" = "Tirišo ye e tla %@";
+
+"重试" = "Leka gape";

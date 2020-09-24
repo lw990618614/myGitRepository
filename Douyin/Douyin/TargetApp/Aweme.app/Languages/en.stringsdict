@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>"%@"共获得 %@ 个赞</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ received %@ like</string>
+			<key>other</key>
+			<string>%@ received a total of %@ likes across all videos</string>
+		</dict>
+	</dict>
+	<key>%.0f分钟前</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%.0fm</string>
+			<key>other</key>
+			<string>%.0fm</string>
+		</dict>
+	</dict>
+	<key>%.0f周前</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%.0f week ago</string>
+			<key>other</key>
+			<string>%.0f weeks ago</string>
+		</dict>
+	</dict>
+	<key>%.0f天前</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>yesterday</string>
+			<key>other</key>
+			<string>%.0f days ago</string>
+		</dict>
+	</dict>
+	<key>%.0f小时前</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%.0f hour ago</string>
+			<key>other</key>
+			<string>%.0f hours ago</string>
+		</dict>
+	</dict>
+	<key>%.0f秒前</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>just now</string>
+			<key>other</key>
+			<string>%.0f seconds ago</string>
+		</dict>
+	</dict>
+	<key>%@ 次播放</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ view</string>
+			<key>other</key>
+			<string>%@ views</string>
+		</dict>
+	</dict>
+	<key>%@个视频</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ video</string>
+			<key>other</key>
+			<string>%@ videos</string>
+		</dict>
+	</dict>
+	<key>%@人使用</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ video</string>
+			<key>other</key>
+			<string>%@ videos</string>
+		</dict>
+	</dict>
+	<key>%@人参与</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ user</string>
+			<key>other</key>
+			<string>%@ users</string>
+		</dict>
+	</dict>
+	<key>%@人参加</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ user</string>
+			<key>other</key>
+			<string>%@ users</string>
+		</dict>
+	</dict>
+	<key>%@人用过</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Used by %@ user</string>
+			<key>other</key>
+			<string>Used by %@ users</string>
+		</dict>
+	</dict>
+	<key>%@人看过</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ view</string>
+			<key>other</key>
+			<string>%@ views</string>
+		</dict>
+	</dict>
+	<key>%@人赞过</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ like</string>
+			<key>other</key>
+			<string>%@ likes</string>
+		</dict>
+	</dict>
+	<key>%@参与</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ participated</string>
+			<key>other</key>
+			<string>%@ participated</string>
+		</dict>
+	</dict>
+	<key>%@条新消息</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ new message</string>
+			<key>other</key>
+			<string>%@ new messages</string>
+		</dict>
+	</dict>
+	<key>%@条更新</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ new post</string>
+			<key>other</key>
+			<string>%@ new posts</string>
+		</dict>
+	</dict>
+	<key>%@次播放</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%@ view</string>
+			<key>other</key>
+			<string>%@ views</string>
+		</dict>
+	</dict>
+	<key>%@次点燃</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>lit once</string>
+			<key>other</key>
+			<string>lit for %@ times</string>
+		</dict>
+	</dict>
+	<key>%@秒后可重新发送验证码</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Resend in %@ s</string>
+			<key>other</key>
+			<string>Resend in %@ s</string>
+		</dict>
+	</dict>
+	<key>%ld 个视频使用</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Used by %ld video</string>
+			<key>other</key>
+			<string>Used by %ld videos</string>
+		</dict>
+	</dict>
+	<key>%ld年</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%ld year</string>
+			<key>other</key>
+			<string>%ld years</string>
+		</dict>
+	</dict>
+	<key>%ld月</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%ld month</string>
+			<key>other</key>
+			<string>%ld months</string>
+		</dict>
+	</dict>
+	<key>%ld条新互动</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%ld new message</string>
+			<key>other</key>
+			<string>%ld new messages</string>
+		</dict>
+	</dict>
+	<key>%ld条评论</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%ld comment</string>
+			<key>other</key>
+			<string>%ld comments</string>
+		</dict>
+	</dict>
+	<key>%ld次点燃</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%ld once</string>
+			<key>other</key>
+			<string>lit for %ld times</string>
+		</dict>
+	</dict>
+	<key>%lu秒后可重新发送验证码</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Resend in %lu s</string>
+			<key>other</key>
+			<string>Resend in %lu s</string>
+		</dict>
+	</dict>
+	<key>LIVE_SUMMARY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%u more live video</string>
+			<key>other</key>
+			<string>%u more live videos</string>
+		</dict>
+	</dict>
+	<key>MESSAGE_SUMMARY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%u more message</string>
+			<key>other</key>
+			<string>%u more messages</string>
+		</dict>
+	</dict>
+	<key>VIDEO_SUMMARY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>%u more video</string>
+			<key>other</key>
+			<string>%u more videos</string>
+		</dict>
+	</dict>
+	<key>[%@条]</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>[%@ message]</string>
+			<key>other</key>
+			<string>[%@ messages]</string>
+		</dict>
+	</dict>
+	<key>一次最多只能转发%ld人</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Up to %ld people</string>
+			<key>other</key>
+			<string>Up to %ld people</string>
+		</dict>
+	</dict>
+	<key>一次最多只能选择%ld人</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>You can add up to %ld person</string>
+			<key>other</key>
+			<string>You can add up to %ld persons</string>
+		</dict>
+	</dict>
+	<key>个视频</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>video</string>
+			<key>other</key>
+			<string>videos</string>
+		</dict>
+	</dict>
+	<key>作品</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Video</string>
+			<key>other</key>
+			<string>Videos</string>
+		</dict>
+	</dict>
+	<key>你有%@条未读会话，升级到多闪查看</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>You have %@ unread message. Upgrade to Doshine to view messages</string>
+			<key>other</key>
+			<string>You have %@ unread messages. Upgrade to Doshine to view messages</string>
+		</dict>
+	</dict>
+	<key>你有%@条未读会话，安装多闪查看</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>你有%@条未读会话，安装多闪查看</string>
+			<key>other</key>
+			<string>You have %@ unread messages. Install Doshine app to check it out</string>
+		</dict>
+	</dict>
+	<key>动态</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>post</string>
+			<key>other</key>
+			<string>posts</string>
+		</dict>
+	</dict>
+	<key>只能选择%d张照片</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>You can select up to %d photo</string>
+			<key>other</key>
+			<string>You can select up to %d photos</string>
+		</dict>
+	</dict>
+	<key>喜欢</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Like</string>
+			<key>other</key>
+			<string>Likes</string>
+		</dict>
+	</dict>
+	<key>喜欢了%lu个作品</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>liked %lu video</string>
+			<key>other</key>
+			<string>liked %lu videos</string>
+		</dict>
+	</dict>
+	<key>展开%d条回复</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>View %d comments</string>
+			<key>other</key>
+			<string>View %d comments</string>
+		</dict>
+	</dict>
+	<key>当前群人数大于%ld</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Number of group member exceeds %ld.</string>
+			<key>other</key>
+			<string>Number of group member exceeds %ld.</string>
+		</dict>
+	</dict>
+	<key>最多可以添加%@种语言</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Add up to %@ language</string>
+			<key>other</key>
+			<string>Add up to %@ languages</string>
+		</dict>
+	</dict>
+	<key>每个邀请码仅可被使用%ld次</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Every invitation code can be used for once only</string>
+			<key>other</key>
+			<string>Every invitation code can be used for %ld times</string>
+		</dict>
+	</dict>
+	<key>等%@人赞过</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>and %@ other user liked</string>
+			<key>other</key>
+			<string>and %@ other users liked</string>
+		</dict>
+	</dict>
+	<key>粉丝</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Follower</string>
+			<key>other</key>
+			<string>Followers</string>
+		</dict>
+	</dict>
+	<key>获赞</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Like</string>
+			<key>other</key>
+			<string>Likes</string>
+		</dict>
+	</dict>
+	<key>邀请好友 每天得%ld张</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Invite friends to get %ld daily</string>
+			<key>other</key>
+			<string>Invite friends to get %ld daily</string>
+		</dict>
+	</dict>
+	<key>音乐</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format_key@</string>
+		<key>format_key</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>one</key>
+			<string>Sound</string>
+			<key>other</key>
+			<string>Sounds</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

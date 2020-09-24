@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ bakal entuk izin ngetutake:";
+
+"%@授权登录" = "Otorisasi Login %@";
+
+"加载中" = "Ngamot";
+
+"取消" = "Wurung";
+
+"取消授权" = "Wurungake otorisasi";
+
+"当前网络不可用" = "Sambungan jaringan ora sumadhiya";
+
+"当前网络不可用，请稍后重试" = "Jaringan error. Cobanen maneh.";
+
+"授权失败" = "Otorisasi gagal";
+
+"授权并登录" = "Otorisasi lan Login";
+
+"授权登录" = "Wis diotorisasi kanggo login";
+
+"是否继续？" = "Terusake?";
+
+"用户取消" = "Otorisasi diwurungake pangguna";
+
+"登录中" = "Lagi login";
+
+"登录失败" = "Login gagal";
+
+"确定" = "OK";
+
+"确认" = "Konfirmasi";
+
+"系统繁忙，请稍后重试" = "Server sibuk. Cobanen maneh mengko.";
+
+"网络请求返回数据异常" = "Panjalukan jaringan error";
+
+"该应用将%@" = "Apl iki bakal %@";
+
+"重试" = "Coba maneh";

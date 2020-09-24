@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ va obține următoarele permisiuni:";
+
+"%@授权登录" = "Autorizare de conectare %@";
+
+"加载中" = "Încărcare";
+
+"取消" = "Anulează";
+
+"取消授权" = "Anulează autorizarea";
+
+"当前网络不可用" = "Nu există conexiune la rețea";
+
+"当前网络不可用，请稍后重试" = "Eroare de rețea. Te rugăm să încerci din nou.";
+
+"授权失败" = "Autorizare eșuată";
+
+"授权并登录" = "Autorizează și conectează";
+
+"授权登录" = "Autorizează pentru conectare";
+
+"是否继续？" = "Continuă?";
+
+"用户取消" = "Utilizatorul a anulat autorizarea";
+
+"登录中" = "Conectare în curs";
+
+"登录失败" = "Autentificare eșuată";
+
+"确定" = "OK";
+
+"确认" = "Confirmă";
+
+"系统繁忙，请稍后重试" = "Server ocupat. Te rugăm să încerci din nou mai târziu.";
+
+"网络请求返回数据异常" = "Eroare solicitare rețea";
+
+"该应用将%@" = "Această aplicație va %@";
+
+"重试" = "Reîncearcă";

@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ ay makakakuha ng mga sumusunod na pahintulot:";
+
+"%@授权登录" = "%@ Awtorisasyon sa Pag-login";
+
+"加载中" = "Nag-loload";
+
+"取消" = "Kanselahin";
+
+"取消授权" = "Kanselahin ang awtorisasyon";
+
+"当前网络不可用" = "Walang makukuhang koneksyon ng network";
+
+"当前网络不可用，请稍后重试" = "Isyu ng network. Mangyaring subukin muli.";
+
+"授权失败" = "Nabigo ang awtorisasyon";
+
+"授权并登录" = "Pahintulutan at Mag-login";
+
+"授权登录" = "Awtorisadong mag-login";
+
+"是否继续？" = "Magpatuloy?";
+
+"用户取消" = "Kinansela ang awtorisasyon ng user";
+
+"登录中" = "Nag-log in";
+
+"登录失败" = "Nabigong mag-login";
+
+"确定" = "OK";
+
+"确认" = "Kumpirmahin";
+
+"系统繁忙，请稍后重试" = "Ang server ay busy. Mangyaring subukin ulit mamaya.";
+
+"网络请求返回数据异常" = "Error sa kahilingan sa network";
+
+"该应用将%@" = "Ang app na ito ay %@";
+
+"重试" = "Subukin muli";

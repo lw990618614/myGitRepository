@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ obtendrá los siguientes permisos:";
+
+"%@授权登录" = "Autorización de inicio de sesión en %@";
+
+"加载中" = "Cargando";
+
+"取消" = "Cancelar";
+
+"取消授权" = "Cancelar autorización";
+
+"当前网络不可用" = "Conexión de red no disponible";
+
+"当前网络不可用，请稍后重试" = "Error de red, inténtalo de nuevo.";
+
+"授权失败" = "No se pudo autorizar";
+
+"授权并登录" = "Autorizar e iniciar sesión";
+
+"授权登录" = "Autorizado para el inicio de sesión";
+
+"是否继续？" = "Continuar?";
+
+"用户取消" = "El usuario canceló la autorización";
+
+"登录中" = "Iniciando sesión";
+
+"登录失败" = "Fallo de inicio de sesión";
+
+"确定" = "Aceptar";
+
+"确认" = "Confirmar";
+
+"系统繁忙，请稍后重试" = "El servidor está ocupado. Por favor, inténtalo de nuevo más tarde.";
+
+"网络请求返回数据异常" = "Error de solicitud de red";
+
+"该应用将%@" = "Esta aplicación va a %@";
+
+"重试" = "Volver a intentar";

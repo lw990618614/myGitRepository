@@ -1,0 +1,13 @@
+{
+    "effect": {
+        "Link": [
+            {
+                "type": "Composer",
+                "zorder": 10000,
+                "path": "Composer_new/"
+            }
+        ]
+    },
+    "name": "EP_e065d2da3eb7c0527eee586fae257cf0",
+    "version": "2.8.0"
+}

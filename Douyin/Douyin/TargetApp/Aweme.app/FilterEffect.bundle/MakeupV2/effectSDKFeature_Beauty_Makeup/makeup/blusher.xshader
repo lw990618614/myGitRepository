@@ -1,0 +1,56 @@
+%YAML 1.1
+--- !XShader &1
+name: makeup
+techniques:
+  - __class: Technique
+    name: ""
+    renderQueue: 2000
+    renderType: Opaque
+    passes:
+      - __class: Pass
+        name: ""
+        shaders:
+          __class: Map
+          gles2:
+            - {localId: 2}
+            - {localId: 3}
+        semantics:
+          __class: Map
+          texcoord0:
+            __class: VertexAttribType
+            value: TEXCOORD0
+          position:
+            __class: VertexAttribType
+            value: POSITION
+        renderState:
+          __class: RenderState
+          name: ""
+          color0Blend:
+            __class: ColorBlendAttachmentState
+            name: ""
+            blendEnable: true
+            srcColorBlendFactor:
+              __class: BlendFactor
+              value: ONE
+            dstColorBlendFactor:
+              __class: BlendFactor
+              value: ONE_MINUS_SRC_ALPHA
+            srcAlphaBlendFactor:
+              __class: BlendFactor
+              value: ONE
+            dstAlphaBlendFactor:
+              __class: BlendFactor
+              value: ONE_MINUS_SRC_ALPHA
+            colorWriteMask: 15
+--- !Shader &2
+name: ""
+type:
+  __class: ShaderType
+  value: VERTEX
+source: "precision highp float;\n\nattribute vec4 position;\nattribute vec2 texcoord0;\nvarying vec2 fUV0;\nvarying vec2 fUV1;\nuniform mat4 u_MVP;\nuniform vec4 _stCol0, _stCol1, _stCol2, _stCol3;\nvoid main(){\n    mat4 _st = mat4(_stCol0, _stCol1, _stCol2, _stCol3);\n    gl_Position = u_MVP * position;\n    fUV0 = gl_Position.xy * 0.5 + 0.5;\n    fUV1 = (_st * vec4(texcoord0.xy, 0.0, 1.0)).xy;\n}\n"
+--- !Shader &3
+name: ""
+type:
+  __class: ShaderType
+  value: FRAGMENT
+source: "precision highp float;\n\nvarying vec2 fUV0;\nvarying vec2 fUV1;\nuniform sampler2D _tex0; // 原图\nuniform sampler2D _tex1; // 素材\nuniform float _blendMode;\nuniform float _intensity;\nuniform float _uniAlpha;\n\nvec4 blendFunc(vec4 base, vec4 blend, float blendMode){\n    vec4 result = vec4(0., 0., 0., 1.);\n    if(blendMode < 0.5) // normal\n        result.rgb = blend.rgb;\n    else if(blendMode < 1.5) // add\n        result.rgb = clamp(base.rgb+blend.rgb, 0., 1.);\n    else if(blendMode < 2.5) // average\n        result.rgb = clamp((base.rgb+blend.rgb)/2., 0., 1.);\n    else if(blendMode < 3.5) // color burn\n        result.rgb = clamp((base.rgb+blend.rgb-1.)/blend.rgb, 0., 1.);\n    else if(blendMode < 4.5) // color dodge\n        result.rgb = clamp(blend.rgb/(1.-base.rgb), 0., 1.);\n    else if(blendMode < 5.5) // color darken\n        result.rgb = clamp(min(base.rgb, blend.rgb), 0., 1.);\n    else if(blendMode < 6.5) // difference\n        result.rgb = clamp(abs(base.rgb-blend.rgb), 0., 1.);\n    else if(blendMode < 7.5) // exclusion\n        result.rgb = clamp(base.rgb+blend.rgb-2.*base.rgb*blend.rgb, 0., 1.);\n    // glow\n    else if(blendMode < 9.5) // hard light\n        result.rgb = clamp(mix(2.*blend.rgb*base.rgb, 1.-2.*(1.-base.rgb)*(1.-blend.rgb), step(0.5, blend.rgb)), 0., 1.);\n    else if(blendMode < 10.5) // hard mix\n        result.rgb = clamp(step(1.-base.rgb, blend.rgb), 0., 1.);\n    else if(blendMode < 11.5) // lighten\n        result.rgb = clamp(max(base.rgb,blend.rgb), 0., 1.);\n    else if(blendMode < 12.5) // linear burn\n        result.rgb = clamp(base.rgb+blend.rgb-1., 0., 1.);\n    else if(blendMode < 13.5) // linear dodge\n        result.rgb = clamp(base.rgb+blend.rgb, 0., 1.);\n    else if(blendMode < 14.5) // linear light\n        result.rgb = clamp(blend.rgb+2.*base.rgb-1., 0., 1.);\n    else if(blendMode < 15.5) // multiply\n        result.rgb = clamp(blend.rgb*base.rgb, 0., 1.);\n    // negation\n    else if(blendMode < 17.5) // overlay\n        result.rgb = clamp(mix(2.*blend.rgb*base.rgb, 1.-2.*(1.-base.rgb)*(1.-blend.rgb), step(0.5, base.rgb)), 0., 1.);\n    // phoenix\n    else if(blendMode < 19.5){ // pin light\n        result.rgb = mix(2.*blend.rgb-1., base.rgb, step(2.*blend.rgb-1., base.rgb));\n        result.rgb = clamp(mix(1.*blend.rgb, result.rgb, step(blend.rgb, 2.*base.rgb)), 0., 1.);\n    }\n    //reflect\n    else if(blendMode < 21.5) // screen\n        result.rgb = clamp(1.-(1.-base.rgb)*(1.-blend.rgb), 0., 1.);\n    else if(blendMode < 22.5) // soft light\n        result.rgb = clamp(mix(2.*blend.rgb*base.rgb+base.rgb*base.rgb*(1.-2.*blend.rgb), 2.*base.rgb*(1.-blend.rgb)+sqrt(base.rgb)*(2.*blend.rgb-1.), step(0.5, blend.rgb)), 0., 1.);\n    else if(blendMode < 23.5) // substract\n        result.rgb = clamp(base.rgb-blend.rgb, 0., 1.);\n    else if(blendMode < 24.5) // vivid\n        result.rgb = clamp(mix(2.*blend.rgb+base.rgb-1., base.rgb/(2.*(1.-blend.rgb)), step(0.5, blend.rgb)), 0., 1.);\n    else if(blendMode < 25.5){ // color\n        \n    }\n    else if(blendMode < 26.5){ // hue\n        \n    }\n    // result.rgb = mix(base.rgb, result.rgb, base.a);\n    //            result = mix(base, result, blend.a);\n    // 输入默认为有预乘\n    result.rgb = result.rgb * clamp(blend.a * 100.0, 0.0, 1.0) * _intensity * _uniAlpha;\n    // result = vec4(result.rgb * _intensity + (1.0 - blend.a * _intensity) * base.rgb, 1.0);\n    return result;\n}\n\nvoid main(){\n    vec4 base = texture2D(_tex0, fUV0);\n    vec4 blend = texture2D(_tex1, fUV1);\n    // gl_FragColor = mix(base, blendFunc(base, blend, _blendMode), _intensity);\n    gl_FragColor = vec4(blendFunc(base, blend, _blendMode).rgb, blend.a * _intensity * _uniAlpha);\n    }\n"

@@ -1,0 +1,14 @@
+{
+    "content": {
+        "picture_mode": false,
+        "intensity": 1.0
+    },
+    "requirement": {
+        "matting": false,
+        "faceDetect": false,
+        "hdrnet":true,
+        "FaceAttributes":false
+    },
+    "tag": "Hdrnet_buildinconfig_qw1e245",
+    "version": "1.0"
+}

@@ -1,0 +1,67 @@
+%YAML 1.1
+--- !Mesh &1
+name: quad
+boundingBox: {min: {x: 3.402823e+38, y: 3.402823e+38, z: 3.402823e+38}, max: {x: -3.402823e+38, y: -3.402823e+38, z: -3.402823e+38}}
+vertices:
+  - -1
+  - -1
+  - 0
+  - 1
+  - 0
+  - 0
+  - 1
+  - 0
+  - 0
+  - 1
+  - -1
+  - 0
+  - 1
+  - 0
+  - 0
+  - 1
+  - 1
+  - 0
+  - 1
+  - 1
+  - 0
+  - 1
+  - 0
+  - 0
+  - 1
+  - 1
+  - 1
+  - -1
+  - 1
+  - 0
+  - 1
+  - 0
+  - 0
+  - 1
+  - 0
+  - 1
+materialIndex: 4294967295
+vertexAttribs:
+  - __class: VertexAttribDesc
+    name: ""
+    semantic:
+      __class: VertexAttribType
+      value: POSITION
+  - __class: VertexAttribDesc
+    name: ""
+    semantic:
+      __class: VertexAttribType
+      value: COLOR
+  - __class: VertexAttribDesc
+    name: ""
+    semantic:
+      __class: VertexAttribType
+      value: TEXCOORD0
+submeshes:
+  - __class: SubMesh
+    name: ""
+    boundingBox: {min: {x: 3.402823e+38, y: 3.402823e+38, z: 3.402823e+38}, max: {x: -3.402823e+38, y: -3.402823e+38, z: -3.402823e+38}}
+    indices16: [0, 1, 2, 3]
+    primitive:
+      __class: Primitive
+      value: TRIANGLE_FAN
+    mesh: true

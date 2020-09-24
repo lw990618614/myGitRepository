@@ -1,0 +1,16 @@
+%YAML 1.1
+--- !Material &1
+name: distortion_material
+xshader: {localId: 1, path: Xshader/distortion_XShader.xshader}
+properties:
+  __class: PropertySheet
+  name: distortion_propertySheet
+  floatmap:
+    __class: Map
+    u_aspectRatio: 1.777777791023254
+  vec4map:
+    __class: Map
+  texmap:
+    __class: Map
+    inputImageTexture1: {localId: 1, path: share://input.texture}
+renderQueue: 1

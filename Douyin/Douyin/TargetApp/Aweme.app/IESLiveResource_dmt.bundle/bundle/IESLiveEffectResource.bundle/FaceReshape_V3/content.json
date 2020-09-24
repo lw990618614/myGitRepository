@@ -1,0 +1,12 @@
+{
+  "tag": "distortionV3_default_beauty_sEdRf",
+  "version": "1.0", 
+  "requirement": {
+    "faceDetect": true,
+    "matting": false
+  },
+  "content": {
+    "pointsFile": "represent_Plasticine.txt",
+    "organsFile": "represent_Plasticine_organs.txt"
+  }
+}

@@ -1,0 +1,25 @@
+cinemaFeatureViewStyle {
+    color: #87b6c4;
+    border-color:#87b6c4;
+    border-radius: 2.0;
+    border-width: 1;
+    font: 10;
+}
+
+followButtonStyle {
+    border-color:#e8e8e8;
+    border-radius: 4.0;
+    border-width: 0;
+    overflow: visible;  /*overflow:visible/hidden -> clipsToBounds = YES/NO */
+}
+
+fontStyle {
+    font-family: PingFangSC-Medium;  /*font-family -> fontName */
+    font-size: 11;
+    font-weight: UIFontWeightMedium; /*font-weight -> UIFontWeight */
+}
+
+feed_watch_font {
+    font-family: DINCondensed-Bold;
+    font-size: 16;
+}

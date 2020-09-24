@@ -1,0 +1,233 @@
+%YAML 1.1
+--- !Scene &1
+name: EffectSDKFeature_FaceReshape_V2
+entities:
+  - {localId: 2}
+  - {localId: 8}
+  - {localId: 5}
+visible: true
+--- !Entity &2
+name: distortion_script_entity
+scene: {localId: 1}
+selfvisible: true
+tag: 0
+components:
+  - {localId: 3}
+  - {localId: 7}
+layer: 0
+--- !Transform &3
+name: distortion_scriptTrans
+enabled: true
+localPosition: {x: 0, y: 0, z: 0}
+localScale: {x: 1, y: 1, z: 1}
+localOrientation: {w: 1, x: 0, y: 0, z: 0}
+children:
+  - {localId: 4}
+--- !Transform &4
+name: distortion_transform
+enabled: true
+localPosition: {x: 0, y: 0, z: 0}
+localScale: {x: 1, y: 1, z: 1}
+localOrientation: {w: 1, x: 0, y: 0, z: 0}
+parent: {localId: 3}
+--- !Entity &5
+name: distortion
+scene: {localId: 1}
+selfvisible: true
+tag: 3
+components:
+  - {localId: 4}
+  - {localId: 6}
+layer: 0
+--- !MeshRenderer &6
+name: distortionmeshRender
+enabled: true
+materials:
+  - {localId: 1, path: Material/distortion_material.material}
+props:
+  __class: MaterialPropertyBlock
+  name: ""
+mesh: {localId: 1, path: Mesh/distortion.mesh}
+castShadow: true
+--- !ScriptComponent &7
+name: ""
+enabled: true
+path: lua/distortionScript.lua
+properties:
+  __class: Map
+  distortionParams:
+    - 180
+    - 23
+    - 0
+    - 0.7643678188323975
+    - -0.3448275923728943
+    - 3.821429014205933
+    - 2
+    - 1
+    - 3.821429014205933
+    - 0.1000000014901161
+    - 225
+    - 19
+    - 0
+    - 0.300000011920929
+    - 0.07999999821186066
+    - 4.800000190734863
+    - 2
+    - 1.009258985519409
+    - 4.800000190734863
+    - 0.75
+    - 315
+    - 13
+    - 0
+    - -0.300000011920929
+    - 0.07999999821186066
+    - 4.800000190734863
+    - 2
+    - 1
+    - 4.800000190734863
+    - 0.753363311290741
+    - 270
+    - 105
+    - 0
+    - -0.25
+    - -0.239999994635582
+    - 0.7099999785423279
+    - 1
+    - 1
+    - 0.7099999785423279
+    - 4.369999885559082
+    - 0
+    - 9
+    - 0
+    - -0.1099999994039536
+    - -0.2599999904632568
+    - 6
+    - 2
+    - 1
+    - 6
+    - 0.08071748912334442
+    - 0
+    - 74
+    - 0
+    - 0.05000000074505806
+    - 0
+    - 1.669999957084656
+    - 1
+    - 1
+    - 1.669999957084656
+    - 5.75
+    - 180
+    - 24
+    - 0
+    - -0.1700000017881393
+    - -0.2599999904632568
+    - 6
+    - 2
+    - 1
+    - 6
+    - 0.07999999821186066
+    - 225
+    - 20
+    - 0
+    - 0
+    - 0.02999999932944775
+    - 7.429999828338623
+    - 2
+    - 1
+    - 7.429999828338623
+    - 0.6499999761581421
+    - 270
+    - 104
+    - 0
+    - 0.2528735995292664
+    - -0.2356321960687637
+    - 0.714285671710968
+    - 1
+    - 1
+    - 0.714285671710968
+    - 4.372197151184082
+    - 315
+    - 12
+    - 0
+    - 0
+    - 0.02999999932944775
+    - 7.429999828338623
+    - 2
+    - 1
+    - 7.429999828338623
+    - 0.6499999761581421
+    - 0
+    - 8
+    - 0
+    - 0
+    - -0.1899999976158142
+    - 4.679999828338623
+    - 2
+    - 1
+    - 4.679999828338623
+    - 0.5515695214271545
+    - 0
+    - 77
+    - 0
+    - -0.05000000074505806
+    - 0
+    - 1.669999957084656
+    - 1
+    - 1
+    - 1.669999957084656
+    - 5.75
+    - 0
+    - 10
+    - 0
+    - -0.7599999904632568
+    - -0.3400000035762787
+    - 3.819999933242798
+    - 2
+    - 1
+    - 3.819999933242798
+    - 0.1000000014901161
+    - 180
+    - 25
+    - 0
+    - 0
+    - -0.1899999976158142
+    - 4.679999828338623
+    - 2
+    - 1
+    - 4.679999828338623
+    - 0.550000011920929
+  faceEyeIntensity: [0.300000011920929, 0.25]
+  definedFaceList: [0, 1]
+className: distortionScript
+--- !Entity &8
+name: distortion_camera_entity
+scene: {localId: 1}
+selfvisible: true
+tag: 0
+components:
+  - {localId: 9}
+  - {localId: 10}
+layer: 0
+--- !Transform &9
+name: distortion_camera_transform
+enabled: true
+localPosition: {x: 0, y: 0, z: 10}
+localScale: {x: 1, y: 1, z: 1}
+localOrientation: {w: 1, x: 0, y: 0, z: 0}
+--- !Camera &10
+name: distortion_camera_camera
+enabled: true
+layerVisibleMask: 1
+renderOrder: 1
+type:
+  __class: CameraType
+  value: ORTHO
+clearColor: {r: 0, g: 0, b: 0, a: 0}
+clearType:
+  __class: CameraClearType
+  value: COLOR_DEPTH
+viewport: {x: 0, y: 0, w: 1, h: 1}
+fovy: 60
+orthoScale: 1
+zNear: 0.1000000014901161
+zFar: 1000

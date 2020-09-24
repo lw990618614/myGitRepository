@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ erhält folgende Berechtigungen:";
+
+"%@授权登录" = "%@-Anmeldeautorisierung";
+
+"加载中" = "Laden";
+
+"取消" = "Abbrechen";
+
+"取消授权" = "Autorisierung aufheben";
+
+"当前网络不可用" = "Netzwerkverbindung nicht verfügbar";
+
+"当前网络不可用，请稍后重试" = "Netzwerkfehler. Bitte versuche es erneut.";
+
+"授权失败" = "Autorisierung fehlgeschlagen";
+
+"授权并登录" = "Autorisieren und anmelden";
+
+"授权登录" = "Autorisieren zum Anmelden";
+
+"是否继续？" = "Weiter?";
+
+"用户取消" = "Benutzer hat Autorisierung aufgehoben";
+
+"登录中" = "Anmeldung läuft";
+
+"登录失败" = "Anmelden fehlgeschlagen";
+
+"确定" = "OK";
+
+"确认" = "Bestätigen";
+
+"系统繁忙，请稍后重试" = "Der Server ist beschäftigt. Bitte versuche es später erneut.";
+
+"网络请求返回数据异常" = "Netzwerkanfragefehler";
+
+"该应用将%@" = "Diese App wird %@";
+
+"重试" = "Erneut versuchen";

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>live_pk_stop_tip_corner_radius_p</key>
+	<integer>8</integer>
+	<key>followGuidePopup_p</key>
+	<real>22.7</real>
+	<key>studio_p</key>
+	<string>AWEStu</string>
+	<key>toolbar.sort.anchor_p</key>
+	<array>
+		<string>comment</string>
+	</array>
+	<key>dic_p</key>
+	<dict>
+		<key>key_p</key>
+		<string>value_p</string>
+	</dict>
+</dict>
+</plist>

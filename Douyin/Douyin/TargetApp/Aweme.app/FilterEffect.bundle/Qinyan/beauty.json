@@ -1,0 +1,15 @@
+{
+    "tag": "ies_beauty_group",
+    "version": "1.1",
+    "requirement": {
+        "faceDetect": false,
+        "matting": false
+    },
+    "content": {
+        "lookupPath":"beauty/lookup.png",
+        "lookUpGray":"beauty/lookUpGray.png",
+        "lookUpCustom":"beauty/lookUpCustom.png",
+        "lookUpOrigin":"beauty/lookUpOrigin.png",
+        "lookUpSkin":"beauty/lookUpSkin.png"
+    }
+}

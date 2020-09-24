@@ -1,0 +1,41 @@
+
+"%@将获得以下权限" = "%@ sal die volgende toestemmings kry:";
+
+"%@授权登录" = "%@-aanmeld-magtiging";
+
+"加载中" = "Laai tans";
+
+"取消" = "Kanselleer";
+
+"取消授权" = "Kanselleer magtiging";
+
+"当前网络不可用" = "Netwerkverbinding onbeskikbaar";
+
+"当前网络不可用，请稍后重试" = "Netwerkprobleem. Probeer gerus weer.";
+
+"授权失败" = "Kon nie magtig nie";
+
+"授权并登录" = "Magtig en meld aan";
+
+"授权登录" = "Gemagtig om aan te meld";
+
+"是否继续？" = "Gaan voort?";
+
+"用户取消" = "Gebruiker het magtiging gekanselleer";
+
+"登录中" = "Teken tans in";
+
+"登录失败" = "Kon nie aanmeld nie";
+
+"确定" = "Oukei";
+
+"确认" = "Bevestig";
+
+"系统繁忙，请稍后重试" = "Bediener is tans besig. Probeer gerus later weer.";
+
+"网络请求返回数据异常" = "Netwerkversoekfout";
+
+"该应用将%@" = "Hierdie miniprogram sal %@";
+
+"重试" = "Probeer weer";
+ 

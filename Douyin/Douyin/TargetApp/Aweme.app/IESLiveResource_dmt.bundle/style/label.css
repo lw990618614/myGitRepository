@@ -1,0 +1,197 @@
+broadcastRoomStartButtonTextFont {
+font-size: 17;
+    font-weight: UIFontWeightMedium;
+}
+broadcastRoomTitleTextFont {
+font-size: 21;
+    font-weight: UIFontWeightMedium;
+}
+cinemaFeatureViewStyle {
+color: #87b6c4;
+    border-color:#87b6c4;
+    border-radius: 2.0;
+    border-width: 1;
+    font: 10;
+}
+comment_playcontrol_placeholder_font {
+font-family: PingFangSC-Regular;
+    font-size: 15;
+}
+comment_toolbar_placeholder_font {
+font-family: PingFangSC-Regular;
+    font-size: 15;
+}
+e-sport_cell_label_font_11 {
+font-family: PingFangSC-Regular;
+    font-size:11;
+}
+e-sport_cell_label_font_13 {
+font-family: PingFangSC-Regular;
+    font-size:11;
+}
+e-sport_cell_label_font_19 {
+font-family: DINAlternate-Bold;
+    font-size:19;
+}
+e-sport_cell_label_font_31 {
+font-family: DINAlternate-Bold;
+    font-size:31;
+}
+followButtonStyle {
+border-color:#e8e8e8;
+    border-radius: 4.0;
+    border-width: 0;
+    overflow: visible;  /*overflow:visible/hidden -> clipsToBounds = YES/NO */
+}
+follow_popupview_hint_font {
+font-family: PingFangSC-Regular;
+    font-size: 12;
+}
+follow_popupview_name_font {
+font-family: PingFangSC-Regular;
+    font-size: 15;
+}
+follow_userpreview_font {
+font-family: PingFangSC-Medium;
+    font-size: 16;
+}
+fontStyle {
+font-family: PingFangSC-Medium;  /*font-family -> fontName */
+    font-size: 11;
+    font-weight: UIFontWeightMedium; /*font-weight -> UIFontWeight */
+}
+landscape_follow_button_font {
+font-family: PingFangSC-Medium;
+    font-size: 15;
+}
+live_audience_list_bottom_font {
+font-family: PingFangSC-Regular;
+    font-size: 10;
+}
+live_audience_list_bottom_rank_completely_off_font {
+font-family: HS_FONTS;
+    font-size: 20;
+}
+live_audience_list_bottom_rank_in_font {
+font-family: DINCondensed-Bold;
+    font-size: 20;
+}
+live_audience_list_bottom_rank_off_font {
+font-family: PingFangSC-Medium;
+    font-size: 12;
+}
+live_audience_list_cell_fire_power_font {
+font-family: PingFangSC-Regular;
+    font-size: 13;
+}
+live_audience_list_head_font {
+font-family: PingFangSC-Medium;
+    font-size: 14;
+}
+live_audience_list_name_font {
+font-family: PingFangSC-Medium;
+    font-size: 15;
+}
+live_audience_list_rank_in_font {
+font-family: DINCondensed-Bold;
+    font-size: 20;
+}
+live_audience_list_rank_off_font {
+font-family: DINCondensed-Bold;
+    font-size: 18;
+}
+live_audience_play_control_landscape_playback_time_font {
+font-family: DINAlternate-Bold;
+    font-size: 13;
+}
+live_audience_play_control_portrait_playback_time_font {
+font-family: DINAlternate-Bold;
+    font-size: 11;
+}
+live_audience_play_control_user_count_font {
+font-family: PingFangSC-Semibold;
+    font-size: 13;
+}
+live_charge_diamond_font {
+font-family: DINAlternate-Bold;
+    font-size: 24;
+}
+live_charge_giving_diamond_font {
+font-family: DINAlternate-Bold;
+    font-size: 13;
+}
+live_contribute_ranklist_font {
+font-family: PingFangSC-Semibold;
+    font-size: 16;
+}
+live_feed_location_compact_font {
+font-family: PingFangSC-Semibold;
+    font-size: 12;
+}
+live_feed_location_font {
+font-family: PingFangSC-Semibold;
+    font-size: 14;
+}
+live_feed_title_compact_font {
+font-family: PingFangSC-Semibold;
+    font-size: 14;
+}
+live_feed_title_font {
+font-family: PingFangSC-Semibold;
+    font-size: 16;
+}
+live_feed_watch_compact_font {
+font-family: DINCondensed-Bold;
+    font-size: 14;
+}
+live_feed_watch_font {
+font-family: DINCondensed-Bold;
+    font-size: 16;
+}
+live_finish_number_big_font {
+font-family: DINCondensed-Bold;
+    font-size: 24;
+}
+live_finish_number_small_font {
+font-family: DINCondensed-Bold;
+    font-size: 16;
+}
+live_gift_send_choose_key_font {
+font-family: PingFangSC-Medium;
+    font-size: 14;
+}
+live_interactive_audience_panel_title_font {
+font-weight: UIFontWeightBold;
+    font-size: 18;
+}
+live_pk_nav_bar_title_font {
+font-size: 18;
+    font-weight: UIFontWeightMedium;
+}
+live_pk_random_mode_button_font {
+font-size: 16;
+    font-weight: UIFontWeightRegular;
+}
+live_room_avatar_label_font {
+font-family: PingFangSC-Medium;
+    font-size:8;
+}
+live_small_gift_combo_font {
+font-family: Arial-BoldItalicMT;
+    font-size: 18;
+}
+live_userText1_font {
+font-family: DINCondensed-Bold;
+    font-size: 24;
+}
+live_userText2_font {
+font-family: DINCondensed-Bold;
+    font-size: 16;
+}
+rankListSendGiftBtnStyle {
+border-radius: 2.0;
+}
+segmentedControlViewStyle {
+border-color:#000000;
+    border-width: 1.0;
+}

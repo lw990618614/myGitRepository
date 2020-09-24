@@ -1,0 +1,199 @@
+{
+    "effect": [
+        {
+            "name": "blur1",
+            "viewport": [0, 0, 324, 576],
+            "vertexShader": "resource1/boxBlur.vsh",
+            "vUniforms": [
+                {
+                    "name": "texelWidthOffset",
+                    "type": 3,
+                    "data": [0.0]
+                },
+                {
+                    "name": "texelHeightOffset",
+                    "type": 3,
+                    "data": [0.00260417]
+                }
+            ],
+            "fragmentShader": "resource1/boxBlur.fsh",
+            "fUniforms": [
+                {
+                    "name": "inputImageTexture1",
+                    "type": 100
+                }
+            ]
+        },
+        {
+            "name": "blur2",
+            "viewport": [0, 0, 324, 576],
+            "inputEffect": ["blur1"],
+            "vertexShader": "resource1/boxBlur.vsh",
+            "vUniforms": [
+                {
+                    "name": "texelWidthOffset",
+                    "type": 3,
+                    "data": [0.00462963]
+                },
+                {
+                    "name": "texelHeightOffset",
+                    "type": 3,
+                    "data": [0.0]
+                }
+            ],
+            "fragmentShader": "resource1/boxBlur.fsh",
+            "fUniforms": [
+                {
+                    "name": "inputImageTexture1",
+                    "type": 1000,
+                    "inputEffectIndex": 0
+                }
+            ]
+        },
+        {
+            "name": "var",
+            "inputEffect": ["blur2"],
+            "vertexShader": "resource1/var.vsh",
+            "vUniforms": [],
+            "fragmentShader": "resource1/var.fsh",
+            "fUniforms": [
+                {
+                    "name": "inputImageTexture1",
+                    "type": 100
+                },
+                {
+                    "name": "inputImageTexture2",
+                    "type": 1000,
+                    "inputEffectIndex": 0
+                }
+            ]
+        },
+        {
+            "name": "blur3",
+            "viewport": [0, 0, 324, 576],
+            "inputEffect": ["var"],
+            "vertexShader": "resource1/boxBlur.vsh",
+            "vUniforms": [
+                {
+                    "name": "texelWidthOffset",
+                    "type": 3,
+                    "data": [0.0]
+                },
+                {
+                    "name": "texelHeightOffset",
+                    "type": 3,
+                    "data": [0.00260417]
+                }
+            ],
+            "fragmentShader": "resource1/boxBlur.fsh",
+            "fUniforms": [
+                {
+                    "name": "inputImageTexture1",
+                    "type": 1000,
+                    "inputEffectIndex": 0
+                }
+            ]
+        },
+        {
+            "name": "blur4",
+            "viewport": [0, 0, 324, 576],
+            "inputEffect": ["blur3"],
+            "vertexShader": "resource1/boxBlur.vsh",
+            "vUniforms": [
+                {
+                    "name": "texelWidthOffset",
+                    "type": 3,
+                    "data": [0.00462963]
+                },
+                {
+                    "name": "texelHeightOffset",
+                    "type": 3,
+                    "data": [0.0]
+                }
+            ],
+            "fragmentShader": "resource1/boxBlur.fsh",
+            "fUniforms": [
+                {
+                    "name": "inputImageTexture1",
+                    "type": 1000,
+                    "inputEffectIndex": 0
+                }
+            ]
+        },
+        {
+            "name": "epm",
+            "inputEffect": ["blur2", "blur4"],
+            "vertexShader": "resource1/epm.vsh",
+            "vUniforms": [
+                {
+                    "name": "widthOffset",
+                    "type": 3,
+                    "data": [0.00138889]
+                },
+                {
+                    "name": "heightOffset",
+                    "type": 3,
+                    "data": [0.00078125]
+                },
+                {
+                    "name": "blurAlpha",
+                    "type": 3,
+                    "data": [0.0]
+                },
+                {
+                    "name": "sharpen",
+                    "type": 3,
+                    "data": [0.0]
+                },
+                {
+                    "name": "whiten",
+                    "type": 3,
+                    "data": [0.0]
+                }
+            ],
+            "fragmentShader": "resource1/epm.fsh",
+            "fUniforms": [
+                {
+                    "name": "inputImageTexture1",
+                    "type": 100
+                },
+                {
+                    "name": "inputImageTexture2",
+                    "type": 1000,
+                    "inputEffectIndex": 0
+                },
+                {
+                    "name": "inputImageTexture3",
+                    "type": 1000,
+                    "inputEffectIndex": 1
+                },
+                {
+                    "name": "lookUp",
+                    "type": 1,
+                    "data": ["resource1/beauty/lookup.png"]
+                },
+                {
+                    "name": "lookUpGray",
+                    "type": 1,
+                    "data": ["resource1/beauty/lookUpGray.png"]
+                },
+                {
+                    "name": "lookUpCustom",
+                    "type": 1,
+                    "data": ["resource1/beauty/lookUpCustom.png"]
+                },
+                {
+                    "name": "lookUpOrigin",
+                    "type": 1,
+                    "data": ["resource1/beauty/lookUpOrigin.png"]
+                },
+                {
+                    "name": "lookUpSkin",
+                    "type": 1,
+                    "data": ["resource1/beauty/lookUpSkin.png"]
+                }
+            ]
+        }
+    ],
+    "version": 1.1
+}

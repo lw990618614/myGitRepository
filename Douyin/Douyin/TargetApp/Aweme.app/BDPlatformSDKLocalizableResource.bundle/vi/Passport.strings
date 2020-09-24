@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ sẽ nhận các quyền sau:";
+
+"%@授权登录" = "%@ Ủy quyền Đăng nhập";
+
+"加载中" = "Đang tải";
+
+"取消" = "Hủy bỏ";
+
+"取消授权" = "Hủy ủy quyền";
+
+"当前网络不可用" = "Không có kết nối mạng";
+
+"当前网络不可用，请稍后重试" = "Lỗi mạng. Vui lòng thử lại.";
+
+"授权失败" = "Ủy quyền thất bại";
+
+"授权并登录" = "Ủy quyền và đăng nhập";
+
+"授权登录" = "Đã ủy quyền để đăng nhập";
+
+"是否继续？" = "Tiếp tục?";
+
+"用户取消" = "Người dùng đã hủy ủy quyền";
+
+"登录中" = "Đang đăng nhập";
+
+"登录失败" = "Đăng nhập thất bại";
+
+"确定" = "OK";
+
+"确认" = "Xác nhận";
+
+"系统繁忙，请稍后重试" = "Máy chủ bận. Vui lòng thử lại sau.";
+
+"网络请求返回数据异常" = "Lỗi yêu cầu mạng";
+
+"该应用将%@" = "Ứng dụng này sẽ %@";
+
+"重试" = "Thử lại";

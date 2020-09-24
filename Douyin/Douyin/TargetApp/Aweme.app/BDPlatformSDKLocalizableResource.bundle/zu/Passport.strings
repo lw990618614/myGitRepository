@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "I-%@ izothola lezi zimvume ezilandelayo:";
+
+"%@授权登录" = "Isiqinisekiso Sokungena se-%@";
+
+"加载中" = "Kusavula";
+
+"取消" = "Khansela";
+
+"取消授权" = "Khansela isiqinisekiso";
+
+"当前网络不可用" = "Akukho msinga wenethiwekhi";
+
+"当前网络不可用，请稍后重试" = "Inkinga ngenethiwekhi. Sicela uzame futhi.";
+
+"授权失败" = "Isiqnisekiso sehlulekile";
+
+"授权并登录" = "Qinisekisa futhi Ungene";
+
+"授权登录" = "Qinisekisa ukuba ungene";
+
+"是否继续？" = "Qhubeka?";
+
+"用户取消" = "Umsebenzisi ukhansele isiqinisekiso";
+
+"登录中" = "Uyangena";
+
+"登录失败" = "Kuhlulekile ukungena";
+
+"确定" = "OK";
+
+"确认" = "Qinisekisa";
+
+"系统繁忙，请稍后重试" = "Iseva imatasa. Sicela uzame futhi kamuva.";
+
+"网络请求返回数据异常" = "Inkinga yesicelo Senethiwekhi";
+
+"该应用将%@" = "Lolu hlelo luzo %@";
+
+"重试" = "Zama futhi";

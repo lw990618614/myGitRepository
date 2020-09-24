@@ -1,0 +1,28 @@
+followButtonStyle {
+    border-color:#e8e8e8;
+    border-radius: 4.0;
+    border-width: 0;
+    overflow: visible;  /*overflow:visible/hidden -> clipsToBounds = YES/NO */
+
+}
+
+fontStyle {
+    font-family: PingFangSC-Medium;  /*font-family -> fontName */
+    font-size: 11;
+    font-weight: UIFontWeightMedium; /*font-weight -> UIFontWeight */
+}
+
+segmentedControlViewStyle {
+    border-color:#000000;
+    border-width: 1.0;
+}
+
+pk_random_mode_button_font {
+    font-size: 16;
+    font-weight: UIFontWeightRegular;
+}
+
+rank_completely_off_font {
+    font-family: HS_FONTS;
+    font-size: 20;
+}

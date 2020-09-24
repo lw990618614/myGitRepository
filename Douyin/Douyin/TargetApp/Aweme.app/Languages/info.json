@@ -1,0 +1,12 @@
+[
+    {
+        "locale": "zh-Hans-CN",
+        "displayName": "简体中文",
+        "localizedDisplayName": "简体中文"
+    },
+    {
+        "locale": "en",
+        "displayName": "英语",
+        "localizedDisplayName": "English"
+    }
+]

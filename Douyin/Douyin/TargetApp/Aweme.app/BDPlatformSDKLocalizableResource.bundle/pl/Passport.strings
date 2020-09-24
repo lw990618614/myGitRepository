@@ -1,0 +1,40 @@
+
+"%@将获得以下权限" = "%@ nabędzie następujące uprawnienia:";
+
+"%@授权登录" = "Uprawnienia do logowania z %@";
+
+"加载中" = "Wczytywanie";
+
+"取消" = "Anuluj";
+
+"取消授权" = "Cofnij autoryzację";
+
+"当前网络不可用" = "Połączenia z siecią niedostępne";
+
+"当前网络不可用，请稍后重试" = "Błąd siecią. Spróbuj ponownie.";
+
+"授权失败" = "Autoryzacja nieudana";
+
+"授权并登录" = "Autoryzuj i zaloguj się";
+
+"授权登录" = "Logowanie autoryzowane";
+
+"是否继续？" = "Kontynuuj?";
+
+"用户取消" = "Użytkownik cofnął autoryzację";
+
+"登录中" = "Logowanie";
+
+"登录失败" = "Nieudane logowanie";
+
+"确定" = "OK";
+
+"确认" = "Potwierdź";
+
+"系统繁忙，请稍后重试" = "Serwer jest zajęty. Spróbuj ponownie później.";
+
+"网络请求返回数据异常" = "Błąd żądania sieci";
+
+"该应用将%@" = "Aplikacja będzie %@";
+
+"重试" = "Spróbuj ponownie";

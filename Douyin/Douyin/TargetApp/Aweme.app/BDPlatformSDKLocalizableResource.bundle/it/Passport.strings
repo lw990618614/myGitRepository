@@ -1,0 +1,42 @@
+
+"%@将获得以下权限" = "%@ otterrà i seguenti permessi:";
+
+"%@授权登录" = "Autorizzazione all'accesso su %@";
+
+"加载中" = "Caricamento";
+
+"取消" = "Annulla";
+
+"取消授权" = "Annulla il permesso";
+
+"当前网络不可用" = "Connessione di rete non disponibile";
+
+"当前网络不可用，请稍后重试" = "Errore di rete, riprova.";
+
+"授权失败" = "Autorizzazione non riuscita";
+
+"授权并登录" = "Concedi e accedi";
+
+"授权登录" = "Autorizzato all'accesso";
+
+"是否继续？" = "Continua?";
+
+"用户取消" = "Autorizzazione utente annullata";
+
+"登录中" = "Accesso";
+
+"登录后应用将获得以下权限" = "%@ otterrà i seguenti permessi:";
+
+"登录失败" = "Accesso non riuscito";
+
+"确定" = "OK";
+
+"确认" = "Conferma";
+
+"系统繁忙，请稍后重试" = "Server occupato. Riprova più tardi.";
+
+"网络请求返回数据异常" = "Errore di richiesta di rete";
+
+"该应用将%@" = "L'app potrà %@";
+
+"重试" = "Riprova";
